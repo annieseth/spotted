@@ -7,10 +7,17 @@ import { CommonActions } from '@react-navigation/native';
 
 class HomeScreen extends Component { 
   render() {
+    // const [isEnabled, setIsEnabled] = useState(false);
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Availability</Text>
-        <Switch />
+        {/* View for Status Bar */}
+        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+          <Text>Availability</Text>
+          <Switch />        
+        </View>
+
+        
         <Text>Friends</Text>
         <Button
           title="Annie Seth"
