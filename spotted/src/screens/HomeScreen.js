@@ -1,6 +1,5 @@
 import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
 import { Component } from 'react';
-import {EventRequestScreen} from './EventRequestScreen';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
@@ -37,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("Home")}></Button>
           <Button 
             title="Invites" style={styles.navButton}
-            onPress={() => navigation.navigate("Event Request")}></Button>
+            onPress={() => navigation.navigate("Invites")}></Button>
         </View>
       </View>
       

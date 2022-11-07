@@ -1,5 +1,4 @@
 import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
-import { Component } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
@@ -27,10 +26,9 @@ const InvitesScreen = ({ navigation }) => {
         <Text>Daniel Wang</Text>
         <Button
           title="Accept"
-          onPress={navigation.navigate('Home')}
+          onPress={() => navigation.navigate('Home')}
         />
       </View>
-      
       
       <View style={styles.bottom}>
         <View style={styles.row}>
