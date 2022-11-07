@@ -73,6 +73,7 @@ class EventRequestScreen extends Component {
               
           </Button>
       </View>
+      
     );
     }
     

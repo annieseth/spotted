@@ -1,41 +1,44 @@
 import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
 import { Component } from 'react';
-import {EventRequestScreen} from './EventReq';
+import {HomeScreen} from './HomeScreen';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 
-class HomeScreen extends Component { 
+class InvitesScreen extends Component { 
   render() {
     // const [isEnabled, setIsEnabled] = useState(false);
 
     return (
       <View style={styles.container}>
-        {/* View for Status Bar */}
-        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-          <Text>Availability</Text>
-          <Switch />        
-        </View>
+        
+        
 
         
-        <Text>Friends</Text>
-        <Button
-          title="Annie Seth"
-          onPress={() => this.props.navigation.navigate("Event Request")}
-          /*onPress={() => navigation.dispatch(
-            CommonActions.navigate({
-              name: 'Event Request'
-            })
-          )} */
-        />
-        <Button
-          title="Daniel Wang"
-          onPress={() => this.props.navigation.navigate("Event Request")}
-        />
-        <Button
-          title="Rahul Bhatnagar"
-          onPress={() => this.props.navigation.navigate("Event Request")}
-        />
+        <Text>Invites</Text>
+        <View style={styles.row}>
+          <Text>Annie Seth</Text>
+          <Button
+            title="Accept"
+            onPress={() => this.props.navigation.navigate("Event Request")}
+          />
+        </View>
+        <View style={styles.row}>
+          <Text>Rushi Shah</Text>
+          <Button
+            title="Accept"
+            onPress={() => this.props.navigation.navigate("Event Request")}
+          />
+        </View>
+        <View style={styles.row}>
+          <Text>Daniel Wang</Text>
+          <Button
+            title="Accept"
+            onPress={() => this.props.navigation.navigate("Event Request")}
+          />
+        </View>
+        
+        
         <View style={styles.bottom}>
           <View style={styles.row}>
             <Button 
@@ -77,4 +80,4 @@ class HomeScreen extends Component {
     
   });
 
-  export {HomeScreen, EventRequestScreen};
+  export {HomeScreen, InvitesScreen};

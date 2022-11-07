@@ -5,20 +5,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {HomeScreen} from './src/screens/HomeScreen'
 import {EventRequestScreen} from './src/screens/EventReq';
+import {InvitesScreen} from './src/screens/InvitesScreen';
 
 
 
 
 
 
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +25,7 @@ class App extends Component {
         <Stack.Screen name="Home" component={HomeScreen} />
         
         <Stack.Screen name="Event Request" component={EventRequestScreen} />
+        <Stack.Screen name="Invites" component={InvitesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
