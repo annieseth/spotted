@@ -24,7 +24,7 @@ class EventRequestScreen extends Component {
     //const [text, onChangeText] = useState("A");
     return (
       // Main View for the PAge
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' , width:'100%'}}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' , width:'100%'}}>  
       <Text>Fill out the Information below to send the Invite</Text>
         {/* View for the When Text input Form */}
         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
