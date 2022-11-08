@@ -1,34 +1,35 @@
 import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
-import { Component } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
-// import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
-
-
-const HomeScreen = ({ navigation }) => {
+  
+const InvitesScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      {/* View for Status Bar */}
-      <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-        <Text>Availability</Text>
-        <Switch />        
-      </View>
 
+      <Text>Invites</Text>
+      <View style={styles.row}>
+        <Text>Annie Seth</Text>
+        <Button
+          title="Accept"
+          onPress={() => navigation.navigate("Home")}
+        />
+      </View>
+      <View style={styles.row}>
+        <Text>Rushi Shah</Text>
+        <Button
+          title="Accept"
+          onPress={() => navigation.navigate("Home")}
+        />
+      </View>
+      <View style={styles.row}>
+        <Text>Daniel Wang</Text>
+        <Button
+          title="Accept"
+          onPress={() => navigation.navigate('Home')}
+        />
+      </View>
       
-      <Text>Friends</Text>
-      <Button
-        title="Annie Seth"
-        onPress={() => navigation.navigate("Event Request")}
-      />
-      <Button
-        title="Daniel Wang"
-        onPress={() => navigation.navigate("Event Request")}
-      />
-      <Button
-        title="Rahul Bhatnagar"
-        onPress={() => navigation.navigate("Event Request")}
-      />
       <View style={styles.bottom}>
         <View style={styles.row}>
           <Button 
@@ -69,4 +70,5 @@ const styles = StyleSheet.create({
   
 });
 
-export default HomeScreen;
+export default InvitesScreen
+  
