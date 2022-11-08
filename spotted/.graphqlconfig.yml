@@ -1,0 +1,12 @@
+projects:
+  spotted:
+    schemaPath: Users/annieseth/Desktop/MobApps/spotted/spotted/graphql/schema.json
+    includes:
+      - src/graphql/**/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: src/graphql

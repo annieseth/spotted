@@ -15,6 +15,9 @@
       "auth": {
         "spottedc2146045": {},
         "userPoolGroups": {}
+      },
+      "api": {
+        "spotted": {}
       }
     }
   }

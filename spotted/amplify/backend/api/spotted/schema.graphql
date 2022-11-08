@@ -1,0 +1,7 @@
+type client
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
+  id: ID!
+  name: String!
+  availability: Boolean
+}
