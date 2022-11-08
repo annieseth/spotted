@@ -46,3 +46,51 @@ export const deleteClient = /* GraphQL */ `
     }
   }
 `;
+export const createEvent = /* GraphQL */ `
+  mutation CreateEvent(
+    $input: CreateEventInput!
+    $condition: ModeleventConditionInput
+  ) {
+    createEvent(input: $input, condition: $condition) {
+      id
+      who
+      when
+      where
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateEvent = /* GraphQL */ `
+  mutation UpdateEvent(
+    $input: UpdateEventInput!
+    $condition: ModeleventConditionInput
+  ) {
+    updateEvent(input: $input, condition: $condition) {
+      id
+      who
+      when
+      where
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteEvent = /* GraphQL */ `
+  mutation DeleteEvent(
+    $input: DeleteEventInput!
+    $condition: ModeleventConditionInput
+  ) {
+    deleteEvent(input: $input, condition: $condition) {
+      id
+      who
+      when
+      where
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;

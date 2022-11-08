@@ -3,15 +3,29 @@ import { Component } from 'react';
 import {useState} from 'react';
 import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import {Auth, API, graphqlOperation} from 'aws-amplify';
+import { createEvent } from '../graphql/mutations';
   
 const EventRequestScreen = ({ navigation }) => {
   const [time, setTime] = useState("15 minutes");
   const [location, setLocation] = useState("Scheller");
 
-  const handlePress = () => {
+  const handlePress = async () => {
     console.log(time);
     console.log(location);
-  }
+
+    //const user = await Auth.currentAuthenticatedUser();
+
+    Promise.resolve();
+    await API.graphql({ query: createEvent, variables: {input: {
+      who: "Dummy Name",
+      where: location,
+      when: time,
+    }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
+    console.log("Locations IS " + location);
+    console.log("time IS " + time);
+  };
 
   return (
     <View >  
