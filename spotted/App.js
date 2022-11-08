@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 const Stack = createNativeStackNavigator();
 
 
-export default function App() {
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
