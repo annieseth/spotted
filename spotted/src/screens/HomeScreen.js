@@ -1,14 +1,41 @@
 import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
-import { Component } from 'react';
+import { Component, useState } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
-// import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
+import FriendItem from '../components/FriendItem';
+import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 
 const HomeScreen = ({ navigation }) => {
+
+  const [friends, setFriends] = useState(
+    [
+      {
+        id: 0,
+        name: 'John Smith',
+        activeSince: '1:53pM'
+      },
+      {
+        id: 1,
+        name: 'Granny Jones',
+        activeSince: '2:22PM'
+      },
+      {
+        id: 0,
+        name: 'Jack Hungry',
+        activeSince: '2:53PM'
+      },
+      {
+        id: 0,
+        name: 'Kindle Salt',
+        activeSince: '1:34PM'
+      },
+    ]
+  )
+
   return (
     <View style={styles.container}>
       {/* View for Status Bar */}
@@ -19,18 +46,17 @@ const HomeScreen = ({ navigation }) => {
 
       
       <Text>Friends</Text>
-      <Button
-        title="Annie Seth"
-        onPress={() => navigation.navigate("Event Request")}
-      />
-      <Button
-        title="Daniel Wang"
-        onPress={() => navigation.navigate("Event Request")}
-      />
-      <Button
-        title="Rahul Bhatnagar"
-        onPress={() => navigation.navigate("Event Request")}
-      />
+      {
+        friends.map((item, index) => (
+          <FriendItem
+            key={index}
+            nav={navigation}
+            name={item.name}
+            activeSince={item.activeSince}
+            index={item.id}
+          />
+        ))
+      }
       <View style={styles.bottom}>
         <View style={styles.row}>
           <Button 
