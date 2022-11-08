@@ -9,7 +9,7 @@ import EventRequestScreen from './src/screens/EventRequestScreen';
 import InvitesScreen from './src/screens/InvitesScreen';
 
 import { withAuthenticator } from 'aws-amplify-react-native'
-import {Auth} from 'aws-amplify';
+import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 
 
@@ -36,6 +36,14 @@ const styles = StyleSheet.create({
   },
 });
 
+async function confirmSignUp() {
+  try {
+    await Auth.confirmSignUp(username, code);
+    console.log('IMPLEMENTED NEW SIGNUP METHOD', error);
+  } catch (error) {
+      console.log('error confirming sign up', error);
+  }
+}
 
 const Stack = createNativeStackNavigator();
 

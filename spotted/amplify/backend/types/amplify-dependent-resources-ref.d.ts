@@ -12,5 +12,11 @@ export type AmplifyDependentResourcesAttributes = {
         "userPoolGroups": {
             "clientsGroupRole": "string"
         }
+    },
+    "api": {
+        "spotted": {
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
     }
 }

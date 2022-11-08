@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 // import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 
+import {Auth, API, graphqlOperation} from 'aws-amplify';
+
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -37,6 +39,9 @@ const HomeScreen = ({ navigation }) => {
           <Button 
             title="Invites" style={styles.navButton}
             onPress={() => navigation.navigate("Invites")}></Button>
+          <Button 
+            title="Sign Out" style={styles.navButton}
+            onPress={() => {Auth.signOut();}}></Button>
         </View>
       </View>
       
