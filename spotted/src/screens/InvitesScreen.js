@@ -2,33 +2,56 @@ import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
-  
+import Invitation from '../components/Invitation';
+import {useState} from 'react';
+
 const InvitesScreen = ({ navigation }) => {
+
+  const [invites, setInvites] = useState(
+    [{
+      id:0,
+      name: "Annie Seth"
+    },
+    {
+      id:1,
+      name:"Daniel Wang"
+    },
+    {
+      id:2,
+      name:"Bob Jack"
+    },
+    {
+      id:3,
+      name:"Mcdonalds H"
+    },
+    {
+      id:4,
+      name:"John Smith"
+    },
+    ]
+  )
+
+  const handleRemove = (id) => {
+    console.log(id)
+    const newInvites = invites.filter((item) => item.id !== id);
+
+    setInvites(newInvites);
+  }
+
   return (
     <View style={styles.container}>
 
-      <Text>Invites</Text>
-      <View style={styles.row}>
-        <Text>Annie Seth</Text>
-        <Button
-          title="Accept"
-          onPress={() => navigation.navigate("Home")}
-        />
-      </View>
-      <View style={styles.row}>
-        <Text>Rushi Shah</Text>
-        <Button
-          title="Accept"
-          onPress={() => navigation.navigate("Home")}
-        />
-      </View>
-      <View style={styles.row}>
-        <Text>Daniel Wang</Text>
-        <Button
-          title="Accept"
-          onPress={() => navigation.navigate('Home')}
-        />
-      </View>
+      {
+        invites.map((item, index) => (
+          <Invitation
+            key={index}
+            nav={navigation}
+            name={item.name}
+            index={item.id}
+            handleRemove={handleRemove}
+          />
+        ))
+      }
       
       <View style={styles.bottom}>
         <View style={styles.row}>
