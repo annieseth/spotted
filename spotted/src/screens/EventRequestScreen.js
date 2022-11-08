@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import {useState} from 'react';
-import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
+import { Button, View, Text, Switch, TextInput, StyleSheet, Alert } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { createEvent } from '../graphql/mutations';
@@ -14,7 +14,7 @@ const EventRequestScreen = ({ navigation }) => {
     console.log(time);
     console.log(location);
 
-    //const user = await Auth.currentAuthenticatedUser();
+    const user = await Auth.currentAuthenticatedUser();
 
     Promise.resolve();
     await API.graphql({ query: createEvent, variables: {input: {
@@ -25,6 +25,19 @@ const EventRequestScreen = ({ navigation }) => {
 
     console.log("Locations IS " + location);
     console.log("time IS " + time);
+
+    /* This block is used for phones */
+    // Alert.alert(
+    //   "Request submitted!",
+    //   [
+    //     { text: "OK", onPress: () => console.log("OK Pressed") }
+    //   ]
+    // )
+
+    /* This block is used for web development */
+    alert("Request submitted!")
+    navigation.navigate("Home")
+
   };
 
   return (
