@@ -5,11 +5,24 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {HomeScreen} from './src/screens/HomeScreen'
 import {EventRequestScreen} from './src/screens/EventReq';
+import Icon from 'react-native-vector-icons/FontAwesome'
+
+import { withAuthenticator } from 'aws-amplify-react-native'
+import {Auth} from 'aws-amplify';
 
 
 
+import Amplify from 'aws-amplify';
+import awsconfig from './aws-exports';
 
 
+
+Amplify.configure({
+  ...awsconfig,
+  Analytics: {
+    disabled: true,
+  },
+});
 
 const styles = StyleSheet.create({
   input: {
@@ -17,13 +30,21 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },   logOutBtn: {
+    marginLeft: 10,
   },
 });
+
+
+
+
+
 
 const Stack = createNativeStackNavigator();
 
 class App extends Component {
   render() {
+    
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -36,4 +57,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withAuthenticator(App);
