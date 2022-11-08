@@ -5,3 +5,12 @@ type client
   name: String!
   availability: Boolean
 }
+
+type event
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
+  id: ID!
+  who: String
+  when: String
+  where: String
+}

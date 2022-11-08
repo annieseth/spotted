@@ -32,3 +32,36 @@ export const listClients = /* GraphQL */ `
     }
   }
 `;
+export const getEvent = /* GraphQL */ `
+  query GetEvent($id: ID!) {
+    getEvent(id: $id) {
+      id
+      who
+      when
+      where
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listEvents = /* GraphQL */ `
+  query ListEvents(
+    $filter: ModeleventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        who
+        when
+        where
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
