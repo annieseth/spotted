@@ -4,9 +4,11 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 import FriendItem from '../components/FriendItem';
-import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
+//import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
+//import{graphqlMutation} from 'aws-appsync-react'
+import { updateUser, getUser } from '../graphql/mutations';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -35,13 +37,52 @@ const HomeScreen = ({ navigation }) => {
       },
     ]
   )
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = async function() {
+    setIsEnabled(previousState => !previousState);
+    Auth.currentAuthenticatedUser().then(async(user) => {
+      
+    
+
+    const response = await API.graphql({ query: updateUser, variables: {
+      input : {
+        id: user.attributes.sub,
+        availability : !isEnabled
+      }
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
+    
+
+    /*response = await API.graphql(graphqlOperation(updateUsers, {
+      input : {
+        username: "test1",
+        availability : "false",
+        
+      }
+    }))*/
+
+    
+
+
+    console.log("Something Happened")
+    console.log(response)
+  });
+    Promise.resolve();
+  }
+  
 
   return (
     <View style={styles.container}>
       {/* View for Status Bar */}
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
         <Text>Availability</Text>
-        <Switch />        
+        <Switch 
+        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+        />        
       </View>
 
       

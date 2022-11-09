@@ -1,6 +1,6 @@
 projects:
   spotted:
-    schemaPath: Users/annieseth/Desktop/MobApps/spotted/spotted/graphql/schema.json
+    schemaPath: amplify/backend/api/spotted/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:
@@ -10,6 +10,6 @@ projects:
         codeGenTarget: javascript
         generatedFileName: ''
         docsFilePath: src/graphql
-extensions:
-  amplify:
-    version: 3
+        region: us-east-1
+        apiId: null
+        maxDepth: 2
