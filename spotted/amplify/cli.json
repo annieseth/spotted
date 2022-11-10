@@ -4,12 +4,15 @@
       "addmissingownerfields": true,
       "validatetypenamereservedwords": true,
       "useexperimentalpipelinedtransformer": false,
-      "enableiterativegsiupdates": false,
+      "enableiterativegsiupdates": true,
       "securityEnhancementNotification": false,
       "showFieldAuthNotification": false
     },
     "project": {
       "overrides": true
     }
+  },
+  "debug": {
+    "shareProjectConfig": true
   }
 }

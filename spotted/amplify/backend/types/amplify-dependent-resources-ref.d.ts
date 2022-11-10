@@ -8,9 +8,6 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientIDWeb": "string",
             "AppClientID": "string",
             "AppClientSecret": "string"
-        },
-        "userPoolGroups": {
-            "clientsGroupRole": "string"
         }
     },
     "api": {

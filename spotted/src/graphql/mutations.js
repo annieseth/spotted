@@ -1,13 +1,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createClient = /* GraphQL */ `
-  mutation CreateClient(
-    $input: CreateClientInput!
-    $condition: ModelclientConditionInput
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    createClient(input: $input, condition: $condition) {
+    createUser(input: $input, condition: $condition) {
       id
+      username
       name
       availability
       createdAt
@@ -16,13 +17,14 @@ export const createClient = /* GraphQL */ `
     }
   }
 `;
-export const updateClient = /* GraphQL */ `
-  mutation UpdateClient(
-    $input: UpdateClientInput!
-    $condition: ModelclientConditionInput
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    updateClient(input: $input, condition: $condition) {
+    updateUser(input: $input, condition: $condition) {
       id
+      username
       name
       availability
       createdAt
@@ -31,13 +33,14 @@ export const updateClient = /* GraphQL */ `
     }
   }
 `;
-export const deleteClient = /* GraphQL */ `
-  mutation DeleteClient(
-    $input: DeleteClientInput!
-    $condition: ModelclientConditionInput
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    deleteClient(input: $input, condition: $condition) {
+    deleteUser(input: $input, condition: $condition) {
       id
+      username
       name
       availability
       createdAt
@@ -49,13 +52,13 @@ export const deleteClient = /* GraphQL */ `
 export const createEvent = /* GraphQL */ `
   mutation CreateEvent(
     $input: CreateEventInput!
-    $condition: ModeleventConditionInput
+    $condition: ModelEventConditionInput
   ) {
     createEvent(input: $input, condition: $condition) {
       id
-      who
-      when
-      where
+      inviteeUsername
+      location
+      meetTime
       createdAt
       updatedAt
       owner
@@ -65,13 +68,13 @@ export const createEvent = /* GraphQL */ `
 export const updateEvent = /* GraphQL */ `
   mutation UpdateEvent(
     $input: UpdateEventInput!
-    $condition: ModeleventConditionInput
+    $condition: ModelEventConditionInput
   ) {
     updateEvent(input: $input, condition: $condition) {
       id
-      who
-      when
-      where
+      inviteeUsername
+      location
+      meetTime
       createdAt
       updatedAt
       owner
@@ -81,13 +84,13 @@ export const updateEvent = /* GraphQL */ `
 export const deleteEvent = /* GraphQL */ `
   mutation DeleteEvent(
     $input: DeleteEventInput!
-    $condition: ModeleventConditionInput
+    $condition: ModelEventConditionInput
   ) {
     deleteEvent(input: $input, condition: $condition) {
       id
-      who
-      when
-      where
+      inviteeUsername
+      location
+      meetTime
       createdAt
       updatedAt
       owner

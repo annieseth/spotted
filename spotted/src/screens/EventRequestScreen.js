@@ -21,9 +21,9 @@ const EventRequestScreen = ({ navigation }) => {
 
     Promise.resolve();
     await API.graphql({ query: createEvent, variables: {input: {
-      who: "Dummy Name",
-      where: location,
-      when: time,
+      inviteeUsername: "Dummy Name",
+      location: location,
+      meetTime: time,
     }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
     console.log("Locations IS " + location);

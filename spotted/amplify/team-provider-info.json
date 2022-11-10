@@ -13,8 +13,7 @@
     },
     "categories": {
       "auth": {
-        "spottedc2146045": {},
-        "userPoolGroups": {}
+        "spottedc2146045": {}
       },
       "api": {
         "spotted": {}
