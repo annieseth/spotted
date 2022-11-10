@@ -4,7 +4,7 @@ import {useState} from 'react';
 import { Button, View, Text, Switch, TextInput, StyleSheet, Alert } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-//import { createEvent } from '../graphql/mutations';
+import { createEvent } from '../graphql/mutations';
   
 const EventRequestScreen = ({ navigation }) => {
   const [time, setTime] = useState("15 minutes");
@@ -17,14 +17,14 @@ const EventRequestScreen = ({ navigation }) => {
     const user = await Auth.currentAuthenticatedUser();
 
     Promise.resolve();
-    /*await API.graphql({ query: createEvent, variables: {input: {
-      who: "Dummy Name",
-      where: location,
-      when: time,
+    await API.graphql({ query: createEvent, variables: {input: {
+      inviteeUsername: "Dummy Name",
+      location: location,
+      meetTime: time,
     }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
     console.log("Locations IS " + location);
-    console.log("time IS " + time);*/
+    console.log("time IS " + time);
 
     /* This block is used for phones */
     // Alert.alert(
