@@ -51,20 +51,7 @@ const HomeScreen = ({ navigation }) => {
       }
     }, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
-    
-
-    /*response = await API.graphql(graphqlOperation(updateUsers, {
-      input : {
-        username: "test1",
-        availability : "false",
-        
-      }
-    }))*/
-
-    
-
-
-    console.log("Something Happened")
+  
     console.log(response)
   });
     Promise.resolve();

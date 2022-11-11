@@ -35,8 +35,12 @@ const EventRequestScreen = ({ navigation }) => {
     // )
 
     /* This block is used for web development */
+    
     alert("Request submitted!")
     navigation.navigate("Home")
+
+
+
 
   };
 
