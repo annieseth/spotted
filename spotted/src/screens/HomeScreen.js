@@ -17,23 +17,27 @@ const HomeScreen = ({ navigation }) => {
     [
       {
         id: 0,
-        name: 'John Smith',
-        activeSince: '1:53pM'
+        name: 'Annie Seth',
+        activeSince: '1:53PM',
+        avail : true
       },
       {
         id: 1,
         name: 'Granny Jones',
-        activeSince: '2:22PM'
+        activeSince: '2:22PM',
+        avail : false
       },
       {
         id: 0,
         name: 'Jack Hungry',
-        activeSince: '2:53PM'
+        activeSince: '2:53PM',
+        avail : false
       },
       {
         id: 0,
         name: 'Kindle Salt',
-        activeSince: '1:34PM'
+        activeSince: '1:34PM',
+        avail : false
       },
     ]
   )
@@ -82,6 +86,7 @@ const HomeScreen = ({ navigation }) => {
             name={item.name}
             activeSince={item.activeSince}
             index={item.id}
+            avail={item.avail}
           />
         ))
       }
