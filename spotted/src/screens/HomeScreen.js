@@ -3,7 +3,8 @@ import { Component, useState } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
-import FriendItem from '../components/FriendItem';
+import ActiveButtons from '../components/ActiveButtons';
+import InactiveText from '../components/InactiveText';
 //import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
@@ -39,6 +40,42 @@ const HomeScreen = ({ navigation }) => {
         activeSince: '1:34PM',
         active: 'True'
       },
+    ]
+  )
+
+  const [inactivefriends] = useState(
+    [
+      {
+        id: 0,
+        name: 'John Smith',
+        activeSince: '1:53pM',
+        active: 'False'
+      },
+      {
+        id: 0,
+        name: 'Jack Hungry',
+        activeSince: '2:53PM',
+        active: 'False'
+      }
+    ]
+  )
+
+  const [activefriends] = useState(
+    [
+      
+      {
+        id: 1,
+        name: 'Granny Jones',
+        activeSince: '2:22PM',
+        active: 'True'
+      },
+      
+      {
+        id: 0,
+        name: 'Kindle Salt',
+        activeSince: '1:34PM',
+        active: 'True'
+      }
     ]
   )
   const [isEnabled, setIsEnabled] = useState(false);
@@ -90,18 +127,34 @@ const HomeScreen = ({ navigation }) => {
       </View>
 
       
-      <Text>Friends</Text>
+      <Text style={styles.text} >Active Friends</Text>
       {
-        friends.map((item, index) => (
-          <FriendItem
+        activefriends.map((item, index) => (
+          <ActiveButtons
             key={index}
             nav={navigation}
             name={item.name}
             activeSince={item.activeSince}
             index={item.id}
+            active={item.active}
           />
         ))
       }
+
+    <Text style={styles.text}>Inactive Friends</Text>
+      {
+        inactivefriends.map((item, index) => (
+          <InactiveText
+            key={index}
+            nav={navigation}
+            name={item.name}
+            activeSince={item.activeSince}
+            index={item.id}
+            active={item.active}
+          />
+        ))
+      }
+
       <View style={styles.bottom}>
         <View style={styles.row}>
           <Button 
@@ -121,6 +174,9 @@ const HomeScreen = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    fontSize: 22
+  },  
   input: {
     height: 40,
     margin: 12,
