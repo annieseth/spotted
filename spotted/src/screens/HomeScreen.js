@@ -18,22 +18,26 @@ const HomeScreen = ({ navigation }) => {
       {
         id: 0,
         name: 'John Smith',
-        activeSince: '1:53pM'
+        activeSince: '1:53pM',
+        active: 'False'
       },
       {
         id: 1,
         name: 'Granny Jones',
-        activeSince: '2:22PM'
+        activeSince: '2:22PM',
+        active: 'True'
       },
       {
         id: 0,
         name: 'Jack Hungry',
-        activeSince: '2:53PM'
+        activeSince: '2:53PM',
+        active: 'False'
       },
       {
         id: 0,
         name: 'Kindle Salt',
-        activeSince: '1:34PM'
+        activeSince: '1:34PM',
+        active: 'True'
       },
     ]
   )
@@ -140,5 +144,4 @@ const styles = StyleSheet.create({
   },
   
 });
-
 export default HomeScreen;
