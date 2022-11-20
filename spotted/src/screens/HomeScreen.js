@@ -40,33 +40,33 @@ const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = async function() {
     setIsEnabled(previousState => !previousState);
-    Auth.currentAuthenticatedUser().then(async(user) => {
+  //   Auth.currentAuthenticatedUser().then(async(user) => {
       
     
 
-    const response = await API.graphql({ query: updateUser, variables: {
-      input : {
-        id: user.attributes.sub,
-        availability : !isEnabled
-      }
-    }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+  //   const response = await API.graphql({ query: updateUser, variables: {
+  //     input : {
+  //       id: user.attributes.sub,
+  //       availability : !isEnabled
+  //     }
+  //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
     
 
-    /*response = await API.graphql(graphqlOperation(updateUsers, {
-      input : {
-        username: "test1",
-        availability : "false",
+  //   /*response = await API.graphql(graphqlOperation(updateUsers, {
+  //     input : {
+  //       username: "test1",
+  //       availability : "false",
         
-      }
-    }))*/
+  //     }
+  //   }))*/
 
     
 
 
-    console.log("Something Happened")
-    console.log(response)
-  });
+  //   console.log("Something Happened")
+  //   console.log(response)
+  // });
     Promise.resolve();
   }
   
@@ -106,9 +106,9 @@ const HomeScreen = ({ navigation }) => {
           <Button 
             title="Invites" style={styles.navButton}
             onPress={() => navigation.navigate("Invites")}></Button>
-          <Button 
+          {/* <Button 
             title="Sign Out" style={styles.navButton}
-            onPress={() => {Auth.signOut();}}></Button>
+            onPress={() => {Auth.signOut();}}></Button> */}
         </View>
       </View>
       
