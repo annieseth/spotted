@@ -8,22 +8,22 @@ import HomeScreen from './src/screens/HomeScreen'
 import EventRequestScreen from './src/screens/EventRequestScreen';
 import InvitesScreen from './src/screens/InvitesScreen';
 
-// import { withAuthenticator } from 'aws-amplify-react-native'
+import { withAuthenticator } from 'aws-amplify-react-native'
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 
 
-// import Amplify from 'aws-amplify';
-// import awsconfig from './aws-exports';
+import Amplify from 'aws-amplify';
+import awsconfig from './aws-exports';
 
 
 
-// Amplify.configure({
-//   ...awsconfig,
-//   Analytics: {
-//     disabled: true,
-//   },
-// });
+Amplify.configure({
+  ...awsconfig,
+  Analytics: {
+    disabled: true,
+  },
+});
 
 const styles = StyleSheet.create({
   input: {
@@ -55,5 +55,5 @@ function App() {
 }
 
 
-// export default withAuthenticator(App);
-export default App;
+export default withAuthenticator(App);
+// export default App;
