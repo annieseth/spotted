@@ -63,7 +63,28 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+    borderRadius: 25
   },
+  container:{
+ 
+    justifycontent: 'center',
+    alignItems: 'center',
+    padding: 10
+  },
+  textbox: {
+    paddingHorizontal: 10,
+    fontSize: 20
+  },
+  mainTitle: {
+    fontSize:25,
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: 10
+  },
+  buttonFont: {
+    color: '#FF9900',
+  }
+
 });
 
 export default FriendRequestScreen;
