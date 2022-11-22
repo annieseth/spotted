@@ -166,6 +166,18 @@ const EventRequestScreen = ({ navigation }) => {
           color = '#FF9900'
           onPress={() => handlePress()}>      
       </Button>
+
+      <View style={{padding: 20}}/>
+         
+  
+      <Text style={{textAlign: 'center', fontSize: 20}}>
+        AD IN SPACE BELOW 
+
+      </Text>
+        <View style={styles.adBox}>
+          
+        </View>
+
     </View>
   )
 }
@@ -179,10 +191,10 @@ const styles = StyleSheet.create({
     borderRadius: 25
   },
   container:{
- 
     justifycontent: 'center',
     alignItems: 'center',
-    padding: 10
+    padding: 10,
+    flexDirection: 'column'
   },
   textbox: {
     paddingHorizontal: 10,
@@ -192,13 +204,16 @@ const styles = StyleSheet.create({
     fontSize:25,
     alignItems: 'center',
     textAlign: 'center',
-    padding: 10
+    padding: 10,
   },
   buttonFont: {
     color: '#FF9900',
+  },
+  adBox: {
+    flex:1,
+    backgroundColor: '#d3d3d3',
+    padding: 40,
   }
-
-  
 });
 
 export default EventRequestScreen;
