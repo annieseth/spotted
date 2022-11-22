@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Component } from 'react';
 import {useState} from 'react';
 import { Button, View, Text, Switch, TextInput, StyleSheet, Alert } from 'react-native';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
@@ -8,27 +7,33 @@ import { createEvent } from '../graphql/mutations';
 const FriendRequestScreen = ({ navigation }) => {
   const [ search, setSearch]    = useState('');
   
-  const [friends, setFriends] = useState(
+  // TODO this users list should be populated with friends who aren't friended
+  const [users, setUsers] = useState(
     [
       {
         id: 0,
         name: 'John Smith',
-        activeSince: '1:53pM'
+        activeSince: '1:53pM',
+        username: 'User1'
       },
       {
         id: 1,
         name: 'Granny Jones',
-        activeSince: '2:22PM'
+        activeSince: '2:22PM',
+        username: 'User2'
+
       },
       {
         id: 0,
         name: 'Jack Hungry',
-        activeSince: '2:53PM'
+        activeSince: '2:53PM',
+        username: 'User3'
       },
       {
         id: 0,
         name: 'Kindle Salt',
-        activeSince: '1:34PM'
+        activeSince: '1:34PM',
+        username: 'User4',
       },
     ]
   )
@@ -38,15 +43,28 @@ const FriendRequestScreen = ({ navigation }) => {
 
   const handlePress = async () => {
 
-    
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username === search) {
+        console.log("Friend Exists")
+      }
+    } 
 
   };
 
   return (
 
     
-    <View style={{padding:20}}>  
-    <Text>Search for Friend Below</Text>
+    <View>  
+    <Text style={styles.mainTitle}>Search for Friend Below</Text>
+
+      {/* View for the Where Text input Form */}
+      <View style={{padding:20}}>
+        <TextInput
+          style={styles.input}
+          onChangeText={setSearch}
+          placeholder={"Ex: Username"}
+        />  
+      </View>
 
      
       <Button 
@@ -69,11 +87,11 @@ const styles = StyleSheet.create({
  
     justifycontent: 'center',
     alignItems: 'center',
-    padding: 10
+    padding: 20
   },
   textbox: {
     paddingHorizontal: 10,
-    fontSize: 20
+    fontSize: 40
   },
   mainTitle: {
     fontSize:25,
