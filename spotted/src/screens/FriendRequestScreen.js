@@ -4,10 +4,9 @@ import {useState} from 'react';
 import { Button, View, Text, Switch, TextInput, StyleSheet, Alert } from 'react-native';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { createEvent } from '../graphql/mutations';
-import { SearchBar } from 'react-native-elements';
   
 const FriendRequestScreen = ({ navigation }) => {
-  const [time, setTime] = useState("15 minutes");
+  const [ search, setSearch]    = useState('');
   
   const [friends, setFriends] = useState(
     [
@@ -39,7 +38,7 @@ const FriendRequestScreen = ({ navigation }) => {
 
   const handlePress = async () => {
 
-    navigation.navigate("Home")
+    
 
   };
 
@@ -49,15 +48,11 @@ const FriendRequestScreen = ({ navigation }) => {
     <View style={{padding:20}}>  
     <Text>Search for Friend Below</Text>
 
-      <SearchBar
-        placeholder="Search Here"
-        onSearchIcon={setTime}
-      />
-
-      {/* <Button 
+     
+      <Button 
           title='Submit'
           onPress={() => handlePress()}>      
-      </Button> */}
+      </Button>
     </View>
   )
 }
