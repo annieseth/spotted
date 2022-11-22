@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
-import { Button, View, Text, Switch, TextInput, StyleSheet, Alert } from 'react-native';
+import { Button, 
+         View, Text, Keyboard, TextInput, StyleSheet, Alert, TouchableWithoutFeedback } from 'react-native';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { createEvent } from '../graphql/mutations';
   
@@ -11,29 +12,28 @@ const FriendRequestScreen = ({ navigation }) => {
   const [users, setUsers] = useState(
     [
       {
-        id: 0,
         name: 'John Smith',
         activeSince: '1:53pM',
-        username: 'User1'
+        username: 'User1',
+        friend: true,
       },
       {
-        id: 1,
         name: 'Granny Jones',
         activeSince: '2:22PM',
-        username: 'User2'
-
+        username: 'User2',
+        friend: false,
       },
       {
-        id: 0,
         name: 'Jack Hungry',
         activeSince: '2:53PM',
-        username: 'User3'
+        username: 'User3',
+        friend: false,
       },
       {
-        id: 0,
         name: 'Kindle Salt',
         activeSince: '1:34PM',
         username: 'User4',
+        friend: true,
       },
     ]
   )
@@ -44,8 +44,12 @@ const FriendRequestScreen = ({ navigation }) => {
   const handlePress = async () => {
 
     for (let i = 0; i < users.length; i++) {
-      if (users[i].username === search) {
-        console.log("Friend Exists")
+      if (users[i].username === search && users[i].friend) {
+        Alert.alert("Already Friends")
+      }
+      else if (users[i].username === search && !users[i].friend) {
+        users[i].friend = true;
+        Alert.alert("Friend Exists")
       }
     } 
 
@@ -53,25 +57,37 @@ const FriendRequestScreen = ({ navigation }) => {
 
   return (
 
-    
-    <View>  
-    <Text style={styles.mainTitle}>Search for Friend Below</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View styles={styles.container} >  
+      <Text style={styles.mainTitle}>Search for Friend Below</Text>
 
-      {/* View for the Where Text input Form */}
-      <View style={{padding:20}}>
-        <TextInput
-          style={styles.input}
-          onChangeText={setSearch}
-          placeholder={"Ex: Username"}
-        />  
+        {/* View for the Where Text input Form */}
+        <View style={{padding:20}}>
+          <TextInput
+            style={styles.input}
+            onChangeText={setSearch}
+            placeholder={"Ex: Username"}
+          />  
+        </View>
+
+      
+        <Button 
+            title='Submit'
+            onPress={() => handlePress()}>      
+        </Button>
+
+        <View style={{padding: 50}}>
+         
+        </View>
+        <Text style={{textAlign: 'center', fontSize: 20}}>
+            AD IN SPACE BELOW 
+
+          </Text>
+        <View style={styles.adBox}>
+          
+        </View>
       </View>
-
-     
-      <Button 
-          title='Submit'
-          onPress={() => handlePress()}>      
-      </Button>
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -87,7 +103,8 @@ const styles = StyleSheet.create({
  
     justifycontent: 'center',
     alignItems: 'center',
-    padding: 20
+    padding: 20,
+    flexDirection: 'column'
   },
   textbox: {
     paddingHorizontal: 10,
@@ -97,10 +114,15 @@ const styles = StyleSheet.create({
     fontSize:25,
     alignItems: 'center',
     textAlign: 'center',
-    padding: 10
+    padding: 10,
   },
   buttonFont: {
     color: '#FF9900',
+  },
+  adBox: {
+    flex:1,
+    backgroundColor: '#d3d3d3',
+    padding: 100,
   }
 
 });
