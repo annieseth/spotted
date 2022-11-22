@@ -43,6 +43,24 @@ const FriendRequestScreen = ({ navigation }) => {
 
   const handlePress = async () => {
 
+
+    /* 
+    TODO
+    This entire logic is for a local list. 
+    The for loop will need to be removed 
+    
+    To make it with 
+    AWS we will need to do the following 
+    1. make a GRAPHQL query(search)
+    2. checks as follows 
+       a. if user does not exists
+          i. alert user
+       b. if user exists and already friends
+          1. alert user that friend exists
+       c. if user exists and not friends
+          send the friend request
+          alert saying that Friend Request send
+    */
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === search && users[i].friend) {
         Alert.alert("Already Friends")
@@ -73,6 +91,7 @@ const FriendRequestScreen = ({ navigation }) => {
       
         <Button 
             title='Submit'
+            color = '#FF9900'
             onPress={() => handlePress()}>      
         </Button>
 
