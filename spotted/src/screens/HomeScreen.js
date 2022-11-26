@@ -1,4 +1,4 @@
-import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
+import { Button, View, Text, Switch, TextInput, StyleSheet, Alert } from 'react-native';
 import { Component, useState } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,7 +8,8 @@ import FriendItem from '../components/FriendItem';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 //import{graphqlMutation} from 'aws-appsync-react'
-import { updateUser, getUser } from '../graphql/mutations';
+import { updateUser } from '../graphql/mutations';
+import {getUser} from '../graphql/queries';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -28,35 +29,78 @@ const HomeScreen = ({ navigation }) => {
         avail : false
       },
       {
-        id: 0,
+        id: 2,
         name: 'Jack Hungry',
         activeSince: '2:53PM',
         avail : false
       },
       {
-        id: 0,
+        id: 3,
         name: 'Kindle Salt',
         activeSince: '1:34PM',
         avail : false
       },
     ]
   )
+
   const [isEnabled, setIsEnabled] = useState(false);
+
+  const fixHome = async function() {
+    Auth.currentAuthenticatedUser().then(async(user) => {
+      if (user.attributes.sub == "f651cb4b-b212-41c7-b33b-49d0f97be119") {
+        setFriends(friends.filter(friend => friend.id !== 0))
+
+        Alert.alert(
+          "Spotted!",
+          "@test1 wants to meet with you at Scheller in 15 min",
+          [
+            {
+              text: "Accept",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            { text: "Decline", onPress: () => console.log("OK Pressed") }
+          ]
+        );
+    
+
+      }})
+
+
+      
+  }
   const toggleSwitch = async function() {
     setIsEnabled(previousState => !previousState);
     Auth.currentAuthenticatedUser().then(async(user) => {
       
     
 
-    const response = await API.graphql({ query: updateUser, variables: {
+    const updateUserResponse = await API.graphql({ query: updateUser, variables: {
       input : {
         id: user.attributes.sub,
         availability : !isEnabled
       }
     }, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
+    Promise.resolve();
+
+
+
+
+    const changeColor = await API.graphql({ query: getUser, variables: {
+      id: "f651cb4b-b212-41c7-b33b-49d0f97be119"
+      
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+    Promise.resolve();
+    console.log(changeColor.data.getUser.availability)
+
+    //setFriends(friends.at(0).avail => changeColor.data.getUser.availability)
+    if (user.attributes.sub !== "f651cb4b-b212-41c7-b33b-49d0f97be119") {
+    friends.at(0).avail = changeColor.data.getUser.availability
+    }
+
+
   
-    console.log(response)
   });
     Promise.resolve();
   }
@@ -68,7 +112,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
         <Text>Availability</Text>
         <Switch 
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        trackColor={{ false: "#FF0000", true: "#03AC13" }}
         thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
         ios_backgroundColor="#3e3e3e"
         onValueChange={toggleSwitch}
@@ -94,7 +138,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.row}>
           <Button 
             title="Home" style={styles.navButton}
-            onPress={() => navigation.navigate("Home")}></Button>
+            onPress={fixHome}></Button>
           <Button 
             title="Invites" style={styles.navButton}
             onPress={() => navigation.navigate("Invites")}></Button>
