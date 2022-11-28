@@ -64,8 +64,8 @@ const HomeScreen = ({ navigation }) => {
     
 
 
-    console.log("Something Happened")
-    console.log(response)
+  //   console.log("Something Happened")
+  //   console.log(response)
   });
     Promise.resolve();
   }
