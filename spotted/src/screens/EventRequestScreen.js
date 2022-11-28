@@ -41,12 +41,12 @@ const EventRequestScreen = ({ navigation }) => {
 
     /* This block is used for phones */
 
-    // Alert.alert(
-    //   "Request submitted!",
-    //   [
-    //     { text: "OK", onPress: () => console.log("OK Pressed") }
-    //   ]
-    // )
+//     Alert.alert(
+//       "Request submitted!",
+//       [
+//         { text: "OK", onPress: () => console.log("OK Pressed") }
+//       ]
+//     )
     
 
     
@@ -55,17 +55,14 @@ const EventRequestScreen = ({ navigation }) => {
     // TODO does this need to be removed?
     */
     // wait 5 seconds
-    // await sleep(2 * 1000); 
-    // Alert.alert(
-    //   "Daniel has invited you to meet up!",
-    //   [
-    //     { text: "View", onPress: () =>navigation.navigate("Invites") },
-    //     { text: "OK", onPress: () => console.log("OK Pressed") }
-    //   ]
-    // )
-
-
-
+//     await sleep(2 * 1000); 
+//     Alert.alert(
+//       "Daniel has invited you to meet up!",
+//       [
+//         { text: "View", onPress: () =>navigation.navigate("Invites") },
+//         { text: "OK", onPress: () => console.log("OK Pressed") }
+//       ]
+//     )
     /* This block is used for web development */
     // alert("Request submitted!")
     navigation.navigate("Home")
