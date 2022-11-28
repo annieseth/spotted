@@ -1,0 +1,15 @@
+type User
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: private }]) {
+  username: String!
+  name: String
+  availability: Boolean
+}
+
+type Event
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: private }]) {
+  inviteeUsername: String!
+  location: String
+  meetTime: String
+}
