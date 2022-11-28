@@ -15,11 +15,19 @@ import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 
 import Amplify from 'aws-amplify';
+
+// // FOR RUSHI ONLY 
+// import awsmobile from './aws-exports';
+
+
+// FOR EVERYONE ELSE
 import awsconfig from './aws-exports';
 
 
-
 Amplify.configure({
+  // // FOR RUSHI ONLY 
+  // ...awsmobile,
+  // FOR EVERYONE ELSE
   ...awsconfig,
   Analytics: {
     disabled: true,
