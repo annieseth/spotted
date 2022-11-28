@@ -107,6 +107,9 @@ const HomeScreen = ({ navigation }) => {
             title="Invites" style={styles.navButton}
             onPress={() => navigation.navigate("Invites")}></Button>
           <Button 
+            title="Friend Request" style={styles.navButton}
+            onPress={() => navigation.navigate("Friends")}></Button>
+          <Button 
             title="Sign Out" style={styles.navButton}
             onPress={() => {Auth.signOut();}}></Button>
         </View>
