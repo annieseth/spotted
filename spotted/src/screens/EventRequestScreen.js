@@ -2,14 +2,15 @@ import * as React from 'react';
 import { useRef } from 'react';
 import { Component } from 'react';
 import {useState} from 'react';
-import { Button, View, Text, Switch, TextInput, StyleSheet, Alert } from 'react-native';
+import { Button, View, Text, Switch, TextInput, StyleSheet, Image } from 'react-native';
 
 import PhoneInput from "react-native-phone-number-input";
 import {Picker} from '@react-native-picker/picker';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { createEvent } from '../graphql/mutations';
 import { shadow } from 'react-native-paper';
-  
+import Starbucks from '../images/ads/StarbucksAD.jpg'
+
 const EventRequestScreen = ({ navigation }) => {
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
@@ -166,13 +167,16 @@ const EventRequestScreen = ({ navigation }) => {
 
       <View style={{padding: 20}}/>
          
-  
-      <Text style={{textAlign: 'center', fontSize: 20}}>
+      {/* AD Space */}
+      {/* <Text style={{textAlign: 'center', fontSize: 20}}>
         AD IN SPACE BELOW 
 
-      </Text>
-        <View style={styles.adBox}>
-          
+      </Text> */}
+        <View >
+        <Image 
+          style = {styles.adBox}
+          source = {require=(Starbucks)}
+          />
         </View>
 
     </View>
@@ -207,9 +211,9 @@ const styles = StyleSheet.create({
     color: '#FF9900',
   },
   adBox: {
-    flex:1,
-    backgroundColor: '#d3d3d3',
-    padding: 40,
+    width:375,
+    height:100,
+    marginHorizontal:5
   }
 });
 

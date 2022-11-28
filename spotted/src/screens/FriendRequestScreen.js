@@ -1,10 +1,14 @@
 import * as React from 'react';
 import {useState} from 'react';
 import { Button, 
-         View, Text, Keyboard, TextInput, StyleSheet, Alert, TouchableWithoutFeedback } from 'react-native';
+         View, Text, Keyboard, TextInput, StyleSheet, Alert, TouchableWithoutFeedback,
+        Image
+        } from 'react-native';
+
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { createEvent } from '../graphql/mutations';
-  
+import BlueDonke from '../images/ads/BlueDonkeyAd.png'
+
 const FriendRequestScreen = ({ navigation }) => {
   const [ search, setSearch]    = useState('');
   
@@ -97,13 +101,17 @@ const FriendRequestScreen = ({ navigation }) => {
 
         <View style={{padding: 50}}>
          
+         {/* Ad Space */}
         </View>
-        <Text style={{textAlign: 'center', fontSize: 20}}>
+        {/* <Text style={{textAlign: 'center', fontSize: 20}}>
             AD IN SPACE BELOW 
 
-          </Text>
-        <View style={styles.adBox}>
-          
+          </Text> */}
+        <View >
+          <Image 
+          style = {styles.adBox}
+          source = {require=(BlueDonke)}
+          />
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -139,9 +147,10 @@ const styles = StyleSheet.create({
     color: '#FF9900',
   },
   adBox: {
-    flex:1,
-    backgroundColor: '#d3d3d3',
-    padding: 100,
+    // flex:1,
+    marginHorizontal:5,
+    width: 375,
+    height: 200,
   }
 
 });
