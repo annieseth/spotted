@@ -5,9 +5,10 @@ import { Button,
         Image
         } from 'react-native';
 
-import {Auth, API, graphqlOperation} from 'aws-amplify';
-import { createEvent } from '../graphql/mutations';
-import BlueDonke from '../images/ads/BlueDonkeyAd.png'
+// import {Auth, API, graphqlOperation} from 'aws-amplify';
+// import { createEvent } from '../graphql/mutations';
+import BlueDonke from '../images/ads/BlueDonkeyAd.jpg'
+import Car from '../images/ads/car.jpg'
 
 const FriendRequestScreen = ({ navigation }) => {
   const [ search, setSearch]    = useState('');
