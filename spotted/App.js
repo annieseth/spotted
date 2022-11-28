@@ -8,6 +8,8 @@ import HomeScreen from './src/screens/HomeScreen'
 import EventRequestScreen from './src/screens/EventRequestScreen';
 import InvitesScreen from './src/screens/InvitesScreen';
 import FriendRequestScreen from './src/screens/FriendRequestScreen';
+import DrawerNavigator from './src/components/DrawNavigator';
+
 
 import { withAuthenticator } from 'aws-amplify-react-native'
 import {Auth, API, graphqlOperation} from 'aws-amplify';
@@ -53,13 +55,14 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      {/* <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         
         <Stack.Screen name="Event Request" component={EventRequestScreen} />
         <Stack.Screen name="Invites" component={InvitesScreen} />
         <Stack.Screen name="Friends" component={FriendRequestScreen} />
-      </Stack.Navigator>
+      </Stack.Navigator> */}
+      <DrawerNavigator/>
     </NavigationContainer>
   )
 }
