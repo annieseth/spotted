@@ -10,6 +10,7 @@ import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { createEvent } from '../graphql/mutations';
 import { shadow } from 'react-native-paper';
 import AndroidImage from '../components/AndroidImage'
+import AppleImages from '../components/AppleImage'
 
 const EventRequestScreen = ({ navigation }) => {
   const [time, setTime] = useState("");
