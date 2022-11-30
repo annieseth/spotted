@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   },
   adBox: {
     width:375,
-    height:100,
+    height:125,
     marginHorizontal:5
   }
 });
