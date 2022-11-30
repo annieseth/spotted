@@ -112,15 +112,12 @@ const FriendRequestScreen = ({ navigation }) => {
 
           </Text> */}
         <View >
-          {/* <Image 
-          style = {styles.adBox}
-          source = {require=(BlueDonke)}
-          /> */}
+          
           <AndroidImage
             styleNeeded={styles.adBox}
           />
 
-          
+
         </View>
       </View>
     </TouchableWithoutFeedback>
