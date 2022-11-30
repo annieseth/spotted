@@ -7,11 +7,9 @@ import { Button,
 
 // import {Auth, API, graphqlOperation} from 'aws-amplify';
 // import { createEvent } from '../graphql/mutations';
-import BlueDonke from '../images/ads/BlueDonkeyAd.jpg'
-import Starbucks from '../images/ads/StarbucksAD.jpg'
 
 import AndroidImage from '../components/AndroidImage'
-import Car from '../images/ads/car.jpg'
+import AppleImage from '../components/AppleImage'
 
 const FriendRequestScreen = ({ navigation }) => {
   const [ search, setSearch]    = useState('');

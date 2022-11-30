@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Image } from "react-native";
 
 import BlueDonke from '../images/ads/BlueDonkeyAd.jpg'
-import dining from '../images/ads/android/GTDining.jpg'
-import housing from '../images/ads/android/Uhouse.jpg'
+import Starbucks from '../images/ads/ios/StarbucksAD.jpg'
+import BookStore from '../images/ads/ios/bookstore.jpg'
 
-const images = [BlueDonke,dining, housing];
+const images = [BlueDonke, BookStore, Starbucks];
 
 
-export default function AndroidSwapper({styleNeeded}) {
+export default function AppleSwapper({styleNeeded}) {
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
