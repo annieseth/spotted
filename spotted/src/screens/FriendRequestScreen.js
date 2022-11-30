@@ -8,6 +8,9 @@ import { Button,
 // import {Auth, API, graphqlOperation} from 'aws-amplify';
 // import { createEvent } from '../graphql/mutations';
 import BlueDonke from '../images/ads/BlueDonkeyAd.jpg'
+import Starbucks from '../images/ads/StarbucksAD.jpg'
+
+import AndroidImage from '../components/AndroidImage'
 import Car from '../images/ads/car.jpg'
 
 const FriendRequestScreen = ({ navigation }) => {
@@ -109,10 +112,15 @@ const FriendRequestScreen = ({ navigation }) => {
 
           </Text> */}
         <View >
-          <Image 
+          {/* <Image 
           style = {styles.adBox}
           source = {require=(BlueDonke)}
+          /> */}
+          <AndroidImage
+            styleNeeded={styles.adBox}
           />
+
+          
         </View>
       </View>
     </TouchableWithoutFeedback>
