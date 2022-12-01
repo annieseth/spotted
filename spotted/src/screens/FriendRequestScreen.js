@@ -126,10 +126,10 @@ const FriendRequestScreen = ({ navigation }) => {
           </Text> */}
         <View >
           
-          <AndroidImage
+          {/* <AndroidImage
             styleNeeded={styles.adBox}
-          />
-          {/* {deviceRender} */}
+          /> */}
+          {deviceRender}
 
         </View>
       </View>
