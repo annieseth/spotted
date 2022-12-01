@@ -3,7 +3,8 @@ import { Component, useState } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
-import FriendItem from '../components/FriendItem';
+import ActiveButtons from '../components/ActiveButtons';
+import InactiveText from '../components/InactiveText';
 //import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
@@ -18,58 +19,124 @@ const HomeScreen = ({ navigation }) => {
       {
         id: 0,
         name: 'John Smith',
-        activeSince: '1:53pM'
+        activeSince: '1:53pM',
+        active: 'False'
       },
       {
         id: 1,
         name: 'Granny Jones',
-        activeSince: '2:22PM'
+        activeSince: '2:22PM',
+        active: 'True'
       },
       {
         id: 0,
         name: 'Jack Hungry',
-        activeSince: '2:53PM'
+        activeSince: '2:53PM',
+        active: 'False'
       },
       {
         id: 0,
         name: 'Kindle Salt',
-        activeSince: '1:34PM'
+        activeSince: '1:34PM',
+        active: 'True'
       },
     ]
   )
+
+  const [inactivefriends] = useState(
+    [
+      {
+        id: 0,
+        name: 'John Smith',
+        activeSince: '1:53pM',
+        active: 'False'
+      },
+      {
+        id: 0,
+        name: 'Jack Hungry',
+        activeSince: '2:53PM',
+        active: 'False'
+      }
+    ]
+  )
+
+  const [activefriends] = useState(
+    [
+      
+      {
+        id: 1,
+        name: 'Granny Jones',
+        activeSince: '2:22PM',
+        active: 'True'
+      },
+      
+      {
+        id: 0,
+        name: 'Kindle Salt',
+        activeSince: '1:34PM',
+        active: 'True'
+      }
+    ]
+  )
+
   const [isEnabled, setIsEnabled] = useState(false);
+ 
   const toggleSwitch = async function() {
     setIsEnabled(previousState => !previousState);
-    Auth.currentAuthenticatedUser().then(async(user) => {
+  //   Auth.currentAuthenticatedUser().then(async(user) => {
       
     
 
-    const response = await API.graphql({ query: updateUser, variables: {
-      input : {
-        id: user.attributes.sub,
-        availability : !isEnabled
-      }
-    }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+  //   const response = await API.graphql({ query: updateUser, variables: {
+  //     input : {
+  //       id: user.attributes.sub,
+  //       availability : !isEnabled
+  //     }
+  //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
     
 
-    /*response = await API.graphql(graphqlOperation(updateUsers, {
-      input : {
-        username: "test1",
-        availability : "false",
+  //   /*response = await API.graphql(graphqlOperation(updateUsers, {
+  //     input : {
+  //       username: "test1",
+  //       availability : "false",
         
-      }
-    }))*/
+  //     }
+  //   }))*/
 
     
 
 
   //   console.log("Something Happened")
   //   console.log(response)
-  });
+  // });
     Promise.resolve();
   }
   
+  // Conditonal Rendering based on if the switch is toggled or not 
+  let friendtext,friendRender;
+  if(isEnabled) {
+
+    if (activefriends.length == 0){
+      friendtext = <Text style={styles.text} >There are no Active Friends</Text>
+
+    } else {
+
+      friendtext = <Text style={styles.text} >Active Friends</Text>
+
+      friendRender =
+        activefriends.map((item, index) => (
+          <ActiveButtons
+            key={index}
+            nav={navigation}
+            name={item.name}
+            activeSince={item.activeSince}
+            index={item.id}
+            active={item.active}
+          />
+        ))
+     }
+  }
 
   return (
     <View style={styles.container}>
@@ -86,18 +153,22 @@ const HomeScreen = ({ navigation }) => {
       </View>
 
       
-      <Text>Friends</Text>
+      {friendtext}
+      {friendRender}
+
+    {/* <Text style={styles.text}>Inactive Friends</Text>
       {
-        friends.map((item, index) => (
-          <FriendItem
+        inactivefriends.map((item, index) => (
+          <InactiveText
             key={index}
             nav={navigation}
             name={item.name}
             activeSince={item.activeSince}
             index={item.id}
+            active={item.active}
           />
         ))
-      }
+      } */}
 
       {/* Button Views */}
       <View style={styles.bottom}>
@@ -133,6 +204,9 @@ const HomeScreen = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    fontSize: 22
+  },  
   input: {
     height: 40,
     margin: 12,
@@ -158,5 +232,4 @@ const styles = StyleSheet.create({
   },
   
 });
-
 export default HomeScreen;

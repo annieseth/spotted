@@ -4,13 +4,11 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 
-export default function FriendItem({ nav, name, index, activeSince }) {
+export default function InactiveButtons({ nav, name, index, activeSince, active}) {
   return (
     <View style={styles.row}>      
-      <Button
-        title={name}
-        onPress={() => nav.navigate("Event Request")}
-      />
+      <Text> {name + " " + active} </Text>
+      
     </View>
   )
 }
