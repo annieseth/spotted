@@ -8,8 +8,12 @@ import { Button,
 // import {Auth, API, graphqlOperation} from 'aws-amplify';
 // import { createEvent } from '../graphql/mutations';
 
+
+
 import AndroidImage from '../components/AndroidImage'
 import AppleImage from '../components/AppleImage'
+
+import * as Device from 'expo-device'
 
 const FriendRequestScreen = ({ navigation }) => {
   const [ search, setSearch]    = useState('');
@@ -69,7 +73,7 @@ const FriendRequestScreen = ({ navigation }) => {
     */
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === search && users[i].friend) {
-        Alert.alert("Already Friends")
+        Alert.alert("Already Friends") 
       }
       else if (users[i].username === search && !users[i].friend) {
         users[i].friend = true;
@@ -78,6 +82,17 @@ const FriendRequestScreen = ({ navigation }) => {
     } 
 
   };
+
+  // identifying the System a user is on
+  const systemName = Device.osName;
+  let deviceRender;
+  if (systemName === 'Android') {      
+    deviceRender = < AndroidImage styleNeeded={styles.adBox} />;  
+    
+  } else {
+    deviceRender = < AppleImage styleNeeded={styles.adBox} />;    
+  }
+
 
   return (
 
@@ -114,7 +129,7 @@ const FriendRequestScreen = ({ navigation }) => {
           <AndroidImage
             styleNeeded={styles.adBox}
           />
-
+          {/* {deviceRender} */}
 
         </View>
       </View>
