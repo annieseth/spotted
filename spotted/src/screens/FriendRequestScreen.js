@@ -5,8 +5,8 @@ import { Button,
         Image, Platform
         } from 'react-native';
 
-// import {Auth, API, graphqlOperation} from 'aws-amplify';
-// import { createEvent } from '../graphql/mutations';
+ import {Auth, API, graphqlOperation} from 'aws-amplify';
+ import { createFriendRequest } from '../graphql/mutations';
 
 
 
@@ -51,6 +51,16 @@ const FriendRequestScreen = ({ navigation }) => {
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
   const handlePress = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+
+      console.log(user.username)
+      console.log(search.toLowerCase())
+  
+      Promise.resolve();
+      await API.graphql({ query: createFriendRequest, variables: {input: {
+        fromUser: user.username,
+        toUser: search.toLowerCase(),
+      }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
 
     /* 
@@ -79,6 +89,8 @@ const FriendRequestScreen = ({ navigation }) => {
         Alert.alert("Friend Exists")
       }
     } 
+
+    navigation.navigate("Home")
 
   };
 

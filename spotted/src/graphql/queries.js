@@ -67,3 +67,34 @@ export const listEvents = /* GraphQL */ `
     }
   }
 `;
+export const getFriendRequest = /* GraphQL */ `
+  query GetFriendRequest($id: ID!) {
+    getFriendRequest(id: $id) {
+      id
+      fromUser
+      toUser
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listFriendRequests = /* GraphQL */ `
+  query ListFriendRequests(
+    $filter: ModelFriendRequestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFriendRequests(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        fromUser
+        toUser
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;

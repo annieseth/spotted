@@ -13,3 +13,10 @@ type Event
   location: String
   meetTime: String
 }
+
+type FriendRequest
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: private }]) {
+  fromUser: String!
+  toUser: String!
+}
