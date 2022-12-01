@@ -16,7 +16,9 @@ type Event
 
 type FriendRequest
   @model(subscriptions: null)
+  @key(name: "getReqByToUser", fields: ["toUser"], queryField: "getReqByToUser")
   @auth(rules: [{ allow: owner }, { allow: private }]) {
-  fromUser: String!
+  fromUser: String
   toUser: String!
+  toUserResponse: Boolean
 }

@@ -73,6 +73,7 @@ export const getFriendRequest = /* GraphQL */ `
       id
       fromUser
       toUser
+      toUserResponse
       createdAt
       updatedAt
       owner
@@ -90,6 +91,35 @@ export const listFriendRequests = /* GraphQL */ `
         id
         fromUser
         toUser
+        toUserResponse
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getReqByToUser = /* GraphQL */ `
+  query GetReqByToUser(
+    $toUser: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelFriendRequestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getReqByToUser(
+      toUser: $toUser
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        fromUser
+        toUser
+        toUserResponse
         createdAt
         updatedAt
         owner
