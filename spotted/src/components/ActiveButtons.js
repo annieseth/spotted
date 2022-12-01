@@ -11,6 +11,7 @@ export default function ActiveButtons({ nav, name, index, activeSince, active}) 
       
       <Button
         title= "Invite"
+        color = '#FF9900'
         onPress={() => nav.navigate("Event Request")}
       />
     </View>

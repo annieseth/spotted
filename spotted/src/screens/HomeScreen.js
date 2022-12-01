@@ -80,6 +80,7 @@ const HomeScreen = ({ navigation }) => {
   )
 
   const [isEnabled, setIsEnabled] = useState(false);
+ 
   const toggleSwitch = async function() {
     setIsEnabled(previousState => !previousState);
   //   Auth.currentAuthenticatedUser().then(async(user) => {
@@ -112,6 +113,30 @@ const HomeScreen = ({ navigation }) => {
     Promise.resolve();
   }
   
+  // Conditonal Rendering based on if the switch is toggled or not 
+  let friendtext,friendRender;
+  if(isEnabled) {
+
+    if (activefriends.length == 0){
+      friendtext = <Text style={styles.text} >There are no Active Friends</Text>
+
+    } else {
+
+      friendtext = <Text style={styles.text} >Active Friends</Text>
+
+      friendRender =
+        activefriends.map((item, index) => (
+          <ActiveButtons
+            key={index}
+            nav={navigation}
+            name={item.name}
+            activeSince={item.activeSince}
+            index={item.id}
+            active={item.active}
+          />
+        ))
+     }
+  }
 
   return (
     <View style={styles.container}>
@@ -128,21 +153,10 @@ const HomeScreen = ({ navigation }) => {
       </View>
 
       
-      <Text style={styles.text} >Active Friends</Text>
-      {
-        activefriends.map((item, index) => (
-          <ActiveButtons
-            key={index}
-            nav={navigation}
-            name={item.name}
-            activeSince={item.activeSince}
-            index={item.id}
-            active={item.active}
-          />
-        ))
-      }
+      {friendtext}
+      {friendRender}
 
-    <Text style={styles.text}>Inactive Friends</Text>
+    {/* <Text style={styles.text}>Inactive Friends</Text>
       {
         inactivefriends.map((item, index) => (
           <InactiveText
@@ -154,7 +168,7 @@ const HomeScreen = ({ navigation }) => {
             active={item.active}
           />
         ))
-      }
+      } */}
 
       {/* Button Views */}
       <View style={styles.bottom}>
@@ -169,9 +183,6 @@ const HomeScreen = ({ navigation }) => {
             title="Invites" style={styles.navButton}
             color = '#FF9900'
             onPress={() => navigation.navigate("Invites")}></Button>
-          <Button 
-            title="Sign Out" style={styles.navButton}
-            onPress={() => {Auth.signOut();}}></Button>
          
         </View>
 
