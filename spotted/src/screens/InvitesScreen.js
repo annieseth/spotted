@@ -6,6 +6,7 @@ import Invitation from '../components/Invitation';
 import {useState, useEffect} from 'react';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { getReqByToUser } from '../graphql/queries'; 
+import FriendReq from '../components/FriendReq';
 
 
 const InvitesScreen = ({ navigation }) => {
@@ -86,6 +87,20 @@ const InvitesScreen = ({ navigation }) => {
           />
         ))
       }
+      {/* populating friend request on screen */}
+      {
+        friendReq.map((item, index) => (
+          <FriendReq
+            key={index}
+            nav={navigation}
+            name={"FRIEND REQUEST FROM " + item.fromUser}
+            index={item.id}
+            handleRemove={handleRemove}
+          />
+        ))
+      }
+
+      
       
       <View style={styles.bottom}>
         <View style={styles.row}>
