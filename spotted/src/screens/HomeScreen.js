@@ -1,5 +1,5 @@
 import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
-import { Component, useState } from 'react';
+import { Component, useState, useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
@@ -78,9 +78,11 @@ const HomeScreen = ({ navigation }) => {
       }
     ]
   )
-
+  
+  // Toggle Switch Enabled Variable
   const [isEnabled, setIsEnabled] = useState(false);
  
+  // Toggle Switch event handler
   const toggleSwitch = async function() {
     setIsEnabled(previousState => !previousState);
   //   Auth.currentAuthenticatedUser().then(async(user) => {
@@ -137,6 +139,13 @@ const HomeScreen = ({ navigation }) => {
         ))
      }
   }
+
+  // Weather API
+  const [date,setDate] = useState('')
+  
+  useEffect(() => {
+
+  }, [])
 
   return (
     <View style={styles.container}>
