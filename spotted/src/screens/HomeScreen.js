@@ -6,11 +6,13 @@ import { CommonActions } from '@react-navigation/native';
 import ActiveButtons from '../components/ActiveButtons';
 import InactiveText from '../components/InactiveText';
 //import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
-
+import DateTime from '../components/DateTime';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 //import{graphqlMutation} from 'aws-appsync-react'
 import { updateUser, getUser } from '../graphql/mutations';
+import * as Location from 'expo-location';
 
+const API_KEY = '77d2cc17b9c648543c1fae370fee3226';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -140,12 +142,33 @@ const HomeScreen = ({ navigation }) => {
      }
   }
 
-  // Weather API
-  const [date,setDate] = useState('')
-  
-  useEffect(() => {
+  // Weather API 
+  const [weatherData, setWeatherData] = useState({});
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        fetchDataFromApi("33.7756", "84.3963")
+        return;
+      }
+      
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location)
+      fetchDataFromApi(location.coords.latitude, location.coords.longitude);
+    })();
   }, [])
+
+  const fetchDataFromApi = (latitude, longitude) => {
+    if(latitude && longitude) {
+      fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
+
+      console.log(weatherData)
+      // setWeatherData(weatherData)
+      })
+    }
+    
+  }
 
   return (
     <View style={styles.container}>
@@ -161,7 +184,7 @@ const HomeScreen = ({ navigation }) => {
         />        
       </View>
 
-      
+      <DateTime current={weatherData.current} lat={weatherData.lat} lon={weatherData.lon}/>
       {friendtext}
       {friendRender}
 
