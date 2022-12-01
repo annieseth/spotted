@@ -7,7 +7,6 @@ import FriendItem from '../components/FriendItem';
 //import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-//import{graphqlMutation} from 'aws-appsync-react'
 import { updateUser } from '../graphql/mutations';
 import {getUser} from '../graphql/queries';
 
