@@ -5,7 +5,7 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
-const WeatherItem = ({title, value, unit}) => {
+const WeatherItem = ({title, value, unit,}) => {
     return(
         <View style={styles.weatherItem}>
             <Text style={styles.weatherItemTitle}>{title}</Text>
@@ -14,7 +14,7 @@ const WeatherItem = ({title, value, unit}) => {
     )
 }
 
-const DateTime = ({current, lat, lon}) => {
+const DateTime = ({current, lat, lon,}) => {
     const [date, setDate] = useState('')
 
     useEffect (() => {
@@ -31,17 +31,21 @@ const DateTime = ({current, lat, lon}) => {
         <View style={styles.container}>  
            <View>
                
-               <View>
+               {/* <View>
                    <Text style={styles.subheading}>{date}</Text>
+               </View> */}
+               <View>
+                   <Text style={styles.subheading}>Current Weather</Text>
                </View>
                <View style={styles.weatherItemContainer}>
-                    <WeatherItem title="Humidity" value={current? current.humidity : ""} unit="%"/>
-                    <WeatherItem title="Temperature" value={current? current.temperature : ""} unit="F"/>
+                    
+                    <WeatherItem title="Temperature        " value={current? current.temp : ""} unit=" F"/>
+                    <WeatherItem title="Feels Like        " value={current? current.feels_like : ""} unit=" F"/>
                 </View>
            </View>
-           <View style={styles.rightAlign}>
+           {/* <View style={styles.rightAlign}>
                <Text style={styles.latlong}>{lat}N {lon}E</Text>
-           </View>
+           </View> */}
         </View>
     )
 }
@@ -50,38 +54,36 @@ const styles = StyleSheet.create({
     container: {
         flexDirection:"row",
         justifyContent:'space-between',
-        padding: 5
+        alignContent: 'center',
+        padding: 10
     },
-    // heading: {
-    //     fontSize: 45,
-    //     fontWeight: '100'
-    // },
     subheading: {
-        fontSize: 25,
-        fontWeight: '300'
+        fontSize: 22,
+        // fontWeight: '300'
     },
-    rightAlign: {
-        textAlign:'right',
-        marginTop: 20
-    },
-    latlong:{
-        fontSize:16,
-        fontWeight: '700'
-    },
+    // rightAlign: {
+    //     textAlign:'right',
+    //     marginTop: 20
+    // },
+    // latlong:{
+    //     fontSize:16,
+    //     fontWeight: '700'
+    // },
     weatherItemContainer: {
-        backgroundColor: "#18181b99",
+        backgroundColor: "#b0acac",
         borderRadius: 10,
         padding: 10,
-        marginTop: 10
+        // marginTop: 5,
+        alignItems: 'center',
     }, 
     weatherItem: {
+        
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     weatherItemTitle: {
-        color:'#eee',
-        fontSize: 14,
-        fontWeight: '100'
+        // color:'#eee',
+        // fontSize: 14,
     }
 })
 

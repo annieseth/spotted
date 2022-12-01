@@ -161,10 +161,10 @@ const HomeScreen = ({ navigation }) => {
 
   const fetchDataFromApi = (latitude, longitude) => {
     if(latitude && longitude) {
-      fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
+      fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=imperial&appid=${API_KEY}`).then(res => res.json()).then(weatherData => {
 
-      console.log(weatherData)
-      // setWeatherData(weatherData)
+      // console.log(weatherData)
+      setWeatherData(weatherData)
       })
     }
     
@@ -174,7 +174,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       {/* View for Status Bar */}
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-        <Text>Availability</Text>
+        <Text style={styles.text}>Availability</Text>
         <Switch 
         trackColor={{ false: "#767577", true: "#81b0ff" }}
         thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -184,7 +184,7 @@ const HomeScreen = ({ navigation }) => {
         />        
       </View>
 
-      <DateTime current={weatherData.current} lat={weatherData.lat} lon={weatherData.lon}/>
+      <DateTime current={weatherData.current} lat={weatherData.lat} lon={weatherData.lon} rain/>
       {friendtext}
       {friendRender}
 
