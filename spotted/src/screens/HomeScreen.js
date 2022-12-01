@@ -1,16 +1,18 @@
 import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
-import { Component, useState } from 'react';
+import { Component, useState, useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 import ActiveButtons from '../components/ActiveButtons';
 import InactiveText from '../components/InactiveText';
 //import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
-
+import DateTime from '../components/DateTime';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 //import{graphqlMutation} from 'aws-appsync-react'
 import { updateUser, getUser } from '../graphql/mutations';
+import * as Location from 'expo-location';
 
+const API_KEY = '77d2cc17b9c648543c1fae370fee3226';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -78,9 +80,11 @@ const HomeScreen = ({ navigation }) => {
       }
     ]
   )
-
+  
+  // Toggle Switch Enabled Variable
   const [isEnabled, setIsEnabled] = useState(false);
  
+  // Toggle Switch event handler
   const toggleSwitch = async function() {
     setIsEnabled(previousState => !previousState);
   //   Auth.currentAuthenticatedUser().then(async(user) => {
@@ -138,11 +142,39 @@ const HomeScreen = ({ navigation }) => {
      }
   }
 
+  // Weather API 
+  const [weatherData, setWeatherData] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        fetchDataFromApi("33.7756", "84.3963")
+        return;
+      }
+      
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location)
+      fetchDataFromApi(location.coords.latitude, location.coords.longitude);
+    })();
+  }, [])
+
+  const fetchDataFromApi = (latitude, longitude) => {
+    if(latitude && longitude) {
+      fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=imperial&appid=${API_KEY}`).then(res => res.json()).then(weatherData => {
+
+      // console.log(weatherData)
+      setWeatherData(weatherData)
+      })
+    }
+    
+  }
+
   return (
     <View style={styles.container}>
       {/* View for Status Bar */}
       <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-        <Text>Availability</Text>
+        <Text style={styles.text}>Availability</Text>
         <Switch 
         trackColor={{ false: "#767577", true: "#81b0ff" }}
         thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
@@ -152,7 +184,7 @@ const HomeScreen = ({ navigation }) => {
         />        
       </View>
 
-      
+      <DateTime current={weatherData.current} lat={weatherData.lat} lon={weatherData.lon} rain/>
       {friendtext}
       {friendRender}
 
