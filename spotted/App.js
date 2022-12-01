@@ -7,23 +7,32 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import HomeScreen from './src/screens/HomeScreen'
 import EventRequestScreen from './src/screens/EventRequestScreen';
 import InvitesScreen from './src/screens/InvitesScreen';
+import FriendRequestScreen from './src/screens/FriendRequestScreen';
 
 // import { withAuthenticator } from 'aws-amplify-react-native'
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 
 
-// import Amplify from 'aws-amplify';
-// import awsconfig from './aws-exports';
+import Amplify from 'aws-amplify';
+
+// // FOR RUSHI ONLY 
+// import awsmobile from './aws-exports';
 
 
+// FOR EVERYONE ELSE
+import awsconfig from './aws-exports';
 
-// Amplify.configure({
-//   ...awsconfig,
-//   Analytics: {
-//     disabled: true,
-//   },
-// });
+
+Amplify.configure({
+  // // FOR RUSHI ONLY 
+  // ...awsmobile,
+  // FOR EVERYONE ELSE
+  ...awsconfig,
+  Analytics: {
+    disabled: true,
+  },
+});
 
 const styles = StyleSheet.create({
   input: {
@@ -49,6 +58,7 @@ function App() {
         
         <Stack.Screen name="Event Request" component={EventRequestScreen} />
         <Stack.Screen name="Invites" component={InvitesScreen} />
+        <Stack.Screen name="Friends" component={FriendRequestScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

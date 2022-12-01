@@ -78,6 +78,7 @@ const HomeScreen = ({ navigation }) => {
       }
     ]
   )
+
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = async function() {
     setIsEnabled(previousState => !previousState);
@@ -155,17 +156,35 @@ const HomeScreen = ({ navigation }) => {
         ))
       }
 
+      {/* Button Views */}
       <View style={styles.bottom}>
+
+        {/* Row 1 */}
         <View style={styles.row}>
           <Button 
             title="Home" style={styles.navButton}
+            color = '#FF9900'
             onPress={() => navigation.navigate("Home")}></Button>
           <Button 
             title="Invites" style={styles.navButton}
+            color = '#FF9900'
             onPress={() => navigation.navigate("Invites")}></Button>
-          {/* <Button 
+          <Button 
             title="Sign Out" style={styles.navButton}
-            onPress={() => {Auth.signOut();}}></Button> */}
+            onPress={() => {Auth.signOut();}}></Button>
+         
+        </View>
+
+        {/* Row 2 */}
+        <View style={styles.row}>
+          <Button 
+            title="Friend Request" style={styles.navButton}
+            color = '#FF9900'
+            onPress={() => navigation.navigate("Friends")}></Button>
+          <Button 
+            title="Sign Out" style={styles.navButton}
+            color = '#FF9900'
+            onPress={() => {Auth.signOut();}}></Button>
         </View>
       </View>
       
@@ -190,13 +209,15 @@ const styles = StyleSheet.create({
   bottom: {
       flex: 1,
       justifyContent: 'flex-end',
-      marginBottom: 36
+      alignItems: 'center',
+      marginBottom: 36,
   },
   row: {
     maxWidth: 200,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    padding:5 
   },
   
 });
