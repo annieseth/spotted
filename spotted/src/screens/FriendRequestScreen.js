@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import { Button, 
          View, Text, Keyboard, TextInput, StyleSheet, Alert, TouchableWithoutFeedback,
-        Image
+        Image, Platform
         } from 'react-native';
 
 // import {Auth, API, graphqlOperation} from 'aws-amplify';
@@ -13,7 +13,6 @@ import { Button,
 import AndroidImage from '../components/AndroidImage'
 import AppleImage from '../components/AppleImage'
 
-import * as Device from 'expo-device'
 
 const FriendRequestScreen = ({ navigation }) => {
   const [ search, setSearch]    = useState('');
@@ -84,9 +83,9 @@ const FriendRequestScreen = ({ navigation }) => {
   };
 
   // identifying the System a user is on
-  const systemName = Device.osName;
+  const systemName = Platform.OS;
   let deviceRender;
-  if (systemName === 'Android') {      
+  if (systemName === 'android') {      
     deviceRender = < AndroidImage styleNeeded={styles.adBox} />;  
     
   } else {

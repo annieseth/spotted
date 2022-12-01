@@ -8,7 +8,7 @@ import recCenter from '../images/ads/CRC.jpg'
 import dining from '../images/ads/android/GTDining.jpg'
 import housing from '../images/ads/android/Uhouse.jpg'
 
-const images = [BlueDonke,dining, recCenter, housing];
+const images = [BlueDonke,dining,recCenter,housing];
 
 
 export default function AndroidSwapper({styleNeeded}) {
@@ -21,7 +21,7 @@ export default function AndroidSwapper({styleNeeded}) {
                 setCurrentIndex(0);
             } 
             else {
-                 setCurrentIndex(currentIndex + 1);
+                setCurrentIndex(currentIndex + 1);
             }
         }, 5000)
         
