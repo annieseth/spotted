@@ -8,7 +8,7 @@ import recCenter from '../images/ads/CRC.jpg'
 import Starbucks from '../images/ads/ios/StarbucksAD.jpg'
 import BookStore from '../images/ads/ios/bookstore.jpg'
 
-const images = [BlueDonke, BookStore, recCenter, Starbucks];
+const images = [Starbucks, BookStore, recCenter, BlueDonke];
 
 
 export default function AppleSwapper({styleNeeded}) {

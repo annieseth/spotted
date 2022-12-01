@@ -67,14 +67,14 @@ const HomeScreen = ({ navigation }) => {
         id: 1,
         name: 'Granny Jones',
         activeSince: '2:22PM',
-        active: 'True'
+        active: true
       },
       
       {
         id: 0,
         name: 'Kindle Salt',
         activeSince: '1:34PM',
-        active: 'True'
+        active: true
       }
     ]
   )
