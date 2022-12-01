@@ -2,13 +2,17 @@ import * as React from 'react';
 import {useState} from 'react';
 import { Button, 
          View, Text, Keyboard, TextInput, StyleSheet, Alert, TouchableWithoutFeedback,
-        Image
+        Image, Platform
         } from 'react-native';
 
 // import {Auth, API, graphqlOperation} from 'aws-amplify';
 // import { createEvent } from '../graphql/mutations';
-import BlueDonke from '../images/ads/BlueDonkeyAd.jpg'
-import Car from '../images/ads/car.jpg'
+
+
+
+import AndroidImage from '../components/AndroidImage'
+import AppleImage from '../components/AppleImage'
+
 
 const FriendRequestScreen = ({ navigation }) => {
   const [ search, setSearch]    = useState('');
@@ -68,7 +72,7 @@ const FriendRequestScreen = ({ navigation }) => {
     */
     for (let i = 0; i < users.length; i++) {
       if (users[i].username === search && users[i].friend) {
-        Alert.alert("Already Friends")
+        Alert.alert("Already Friends") 
       }
       else if (users[i].username === search && !users[i].friend) {
         users[i].friend = true;
@@ -77,6 +81,17 @@ const FriendRequestScreen = ({ navigation }) => {
     } 
 
   };
+
+  // identifying the System a user is on
+  const systemName = Platform.OS;
+  let deviceRender;
+  if (systemName === 'android') {      
+    deviceRender = < AndroidImage styleNeeded={styles.adBox} />;  
+    
+  } else {
+    deviceRender = < AppleImage styleNeeded={styles.adBox} />;    
+  }
+
 
   return (
 
@@ -109,10 +124,12 @@ const FriendRequestScreen = ({ navigation }) => {
 
           </Text> */}
         <View >
-          <Image 
-          style = {styles.adBox}
-          source = {require=(BlueDonke)}
-          />
+          
+          {/* <AndroidImage
+            styleNeeded={styles.adBox}
+          /> */}
+          {deviceRender}
+
         </View>
       </View>
     </TouchableWithoutFeedback>

@@ -9,7 +9,8 @@ import {Picker} from '@react-native-picker/picker';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { createEvent } from '../graphql/mutations';
 import { shadow } from 'react-native-paper';
-import Starbucks from '../images/ads/StarbucksAD.jpg'
+import AndroidImage from '../components/AndroidImage'
+import AppleImages from '../components/AppleImage'
 
 const EventRequestScreen = ({ navigation }) => {
   const [time, setTime] = useState("");
@@ -173,9 +174,9 @@ const EventRequestScreen = ({ navigation }) => {
 
       </Text> */}
         <View >
-        <Image 
-          style = {styles.adBox}
-          source = {require=(Starbucks)}
+          
+          <AndroidImage
+            styleNeeded={styles.adBox}
           />
         </View>
 
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
   },
   adBox: {
     width:375,
-    height:100,
+    height:125,
     marginHorizontal:5
   }
 });
