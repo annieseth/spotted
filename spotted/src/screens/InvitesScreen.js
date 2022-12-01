@@ -43,9 +43,11 @@ const InvitesScreen = ({ navigation }) => {
     try {
       const allReqs = await API.graphql({query: getReqByToUser, variables: {toUser: user.username}, authMode: "AMAZON_COGNITO_USER_POOLS"});
       console.log(allReqs.data.getReqByToUser.items);
+
       if (allReqs.data.getReqByToUser) {
         setFriendReq(allReqs.data.getReqByToUser.items);
       }
+      
       Promise.resolve();
 
     } catch (e) {
