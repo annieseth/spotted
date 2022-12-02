@@ -4,36 +4,25 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 
-export default function Invitation({ nav, name, handleRemove, index }) {
-  
-  const acceptInvitation = () => {
-    alert("Invitation accepted!")
-    nav.navigate("Home");
-  }
-
-  const removeInvitation = i => {
-    handleRemove(i);
-    console.log("Hello, item id is")
-    console.log(i)
-  }
+export default function NavigationBar({ nav }) {
   
   return (
     <View style={styles.row}>
-      <Text style={styles.text}>{name}</Text>
-      <View style={styles.buttons}>
         <Button 
-          title="X"
-          style={styles.closeButton}
-          color="red"
-          onPress={() => removeInvitation(index)}
+            title="Home"
+            color="white"
+            onPress={() => nav.navigate("Home")}
         />
         <Button
-          title="Accept"
-          color="#FF9900"
-          style={styles.acceptButton}
-          onPress={acceptInvitation}
+            title="Invites"
+            color="white"
+            onPress={() => nav.navigate("Invites")}
         />
-      </View> 
+        <Button
+            title="Friend Request"
+            color="white"
+            onPress={() => nav.navigate("Friends")}
+        />
     </View>
   )
 }
@@ -52,19 +41,20 @@ const styles = StyleSheet.create({
   bottom: {
       flex: 1,
       justifyContent: 'flex-end',
-      marginBottom: 36
+      marginBottom: 20
+      
   },
   row: {
-      width: '80%',
+      width: '100%',
       height: 80,
       display: 'flex',
       padding: 20,
-      margin: 12,
+      margin: 20,
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'space-evenly',
       alignItems: 'center',
-      backgroundColor: '#D3D3D3',
-      borderRadius: 8
+      backgroundColor: '#FF9900',
+      borderRadius: 10
   },
 
   text: {

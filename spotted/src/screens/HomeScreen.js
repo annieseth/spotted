@@ -11,6 +11,7 @@ import {Auth, API, graphqlOperation} from 'aws-amplify';
 //import{graphqlMutation} from 'aws-appsync-react'
 import { updateUser, getUser } from '../graphql/mutations';
 import * as Location from 'expo-location';
+import NavigationBar from '../components/NavigationBar';
 
 const API_KEY = '77d2cc17b9c648543c1fae370fee3226';
 
@@ -173,20 +174,30 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* View for Status Bar */}
-      <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+      <View style={styles.status}>
         <Text style={styles.text}>Availability</Text>
         <Switch 
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
         />        
       </View>
+      <View style={styles.weather}>
+        <DateTime current={weatherData.current} lat={weatherData.lat} lon={weatherData.lon} rain/>
+      </View>
 
-      <DateTime current={weatherData.current} lat={weatherData.lat} lon={weatherData.lon} rain/>
       {friendtext}
       {friendRender}
+      <View style={styles.signOut}>
+        <Button 
+          title="Sign Out" 
+          color = '#FF9900'
+          onPress={() => {Auth.signOut();}} 
+        />
+      </View>
+      
 
     {/* <Text style={styles.text}>Inactive Friends</Text>
       {
@@ -204,31 +215,9 @@ const HomeScreen = ({ navigation }) => {
 
       {/* Button Views */}
       <View style={styles.bottom}>
-
-        {/* Row 1 */}
-        <View style={styles.row}>
-          <Button 
-            title="Home" style={styles.navButton}
-            color = '#FF9900'
-            onPress={() => navigation.navigate("Home")}></Button>
-          <Button 
-            title="Invites" style={styles.navButton}
-            color = '#FF9900'
-            onPress={() => navigation.navigate("Invites")}></Button>
-         
-        </View>
-
-        {/* Row 2 */}
-        <View style={styles.row}>
-          <Button 
-            title="Friend Request" style={styles.navButton}
-            color = '#FF9900'
-            onPress={() => navigation.navigate("Friends")}></Button>
-          <Button 
-            title="Sign Out" style={styles.navButton}
-            color = '#FF9900'
-            onPress={() => {Auth.signOut();}}></Button>
-        </View>
+        <NavigationBar 
+          nav={navigation}
+        />
       </View>
       
     </View>
@@ -253,7 +242,6 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'flex-end',
       alignItems: 'center',
-      marginBottom: 36,
   },
   row: {
     maxWidth: 200,
@@ -262,6 +250,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding:5 
   },
+  signOut: {
+    position: 'absolute',
+    bottom: 120
+  },
+
+  status: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    width: '70%',
+    padding: 30
+  }, 
+
+  weather: {
+    paddingBottom: 30
+  }
   
 });
 export default HomeScreen;
