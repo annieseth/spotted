@@ -7,11 +7,9 @@ import { Button,
 
 // import {Auth, API, graphqlOperation} from 'aws-amplify';
 // import { createEvent } from '../graphql/mutations';
-
-
-
 import AndroidImage from '../components/AndroidImage'
 import AppleImage from '../components/AppleImage'
+import NavigationBar from '../components/NavigationBar';
 
 
 const FriendRequestScreen = ({ navigation }) => {
@@ -95,44 +93,47 @@ const FriendRequestScreen = ({ navigation }) => {
 
   return (
 
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View styles={styles.container} >  
+    
+    <View style={styles.container}>  
       <Text style={styles.mainTitle}>Search for Friend Below</Text>
 
-        {/* View for the Where Text input Form */}
-        <View style={{padding:20}}>
-          <TextInput
-            style={styles.input}
-            onChangeText={setSearch}
-            placeholder={"Ex: Username"}
-          />  
-        </View>
-
-      
-        <Button 
-            title='Submit'
-            color = '#FF9900'
-            onPress={() => handlePress()}>      
-        </Button>
-
-        <View style={{padding: 50}}>
-         
-         {/* Ad Space */}
-        </View>
-        {/* <Text style={{textAlign: 'center', fontSize: 20}}>
-            AD IN SPACE BELOW 
-
-          </Text> */}
-        <View >
-          
-          {/* <AndroidImage
-            styleNeeded={styles.adBox}
-          /> */}
-          {deviceRender}
-
-        </View>
+      {/* View for the Where Text input Form */}
+      <View style={{width:'70%'}}>
+        <TextInput
+          style={styles.input}
+          onChangeText={setSearch}
+          placeholder={"Ex: Username"}
+        />  
       </View>
-    </TouchableWithoutFeedback>
+
+    
+      <Button 
+          title='Submit'
+          color = '#FF9900'
+          onPress={() => handlePress()}>      
+      </Button>
+      {/* <Text style={{textAlign: 'center', fontSize: 20}}>
+          AD IN SPACE BELOW 
+
+        </Text> */}
+      <View>
+        
+        {/* <AndroidImage
+          styleNeeded={styles.adBox}
+        /> */}
+        {deviceRender}
+
+      </View>
+      <View style={styles.bottom}>
+        <NavigationBar 
+          nav={navigation}
+        />
+        
+      </View>
+      
+    </View>
+      
+    
   )
 }
 
@@ -145,11 +146,9 @@ const styles = StyleSheet.create({
     borderRadius: 25
   },
   container:{
- 
-    justifycontent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    flexDirection: 'column'
+    flex: 1,
+    alignItems: 'center'
+
   },
   textbox: {
     paddingHorizontal: 10,
@@ -169,6 +168,11 @@ const styles = StyleSheet.create({
     marginHorizontal:5,
     width: 375,
     height: 200,
+  },
+
+  bottom: {
+    flex: 1,
+    justifyContent: 'flex-end',
   }
 
 });

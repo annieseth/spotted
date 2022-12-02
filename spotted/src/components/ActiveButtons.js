@@ -7,7 +7,7 @@ import { CommonActions } from '@react-navigation/native';
 export default function ActiveButtons({ nav, name, index, activeSince, active}) {
   return (
     <View style={styles.row}>     
-      <Text> {name } </Text> 
+      <Text style={styles.text}> {name } </Text> 
       
       <Button
         title= "Invite"
@@ -25,20 +25,25 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: 10,
   },
-  container: {
-      flex: 1,
-      alignItems: 'center'
-  },
   bottom: {
       flex: 1,
       justifyContent: 'flex-end',
       marginBottom: 36
   },
+  text: {
+    fontSize: 16
+  },
   row: {
-      maxWidth: '90%',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between'
+    width: '80%',
+    height: 70,
+    display: 'flex',
+    padding: 10,
+    margin: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#D3D3D3',
+    borderRadius: 8
   },
 
 });

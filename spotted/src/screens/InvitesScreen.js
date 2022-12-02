@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 import Invitation from '../components/Invitation';
 import {useState} from 'react';
+import NavigationBar from '../components/NavigationBar';
 
 const InvitesScreen = ({ navigation }) => {
 
@@ -54,14 +55,9 @@ const InvitesScreen = ({ navigation }) => {
       }
       
       <View style={styles.bottom}>
-        <View style={styles.row}>
-          <Button 
-            title="Home" style={styles.navButton}
-            onPress={() => navigation.navigate("Home")}></Button>
-          <Button 
-            title="Invites" style={styles.navButton}
-            onPress={() => navigation.navigate("Invites")}></Button>
-        </View>
+        <NavigationBar 
+          nav={navigation}
+        />
       </View>
       
     </View>
@@ -82,7 +78,6 @@ const styles = StyleSheet.create({
   bottom: {
       flex: 1,
       justifyContent: 'flex-end',
-      marginBottom: 36
   },
   row: {
     maxWidth: 200,
