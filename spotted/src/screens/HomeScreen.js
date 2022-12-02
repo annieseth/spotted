@@ -87,34 +87,26 @@ const HomeScreen = ({ navigation }) => {
  
   // Toggle Switch event handler
   const toggleSwitch = async function() {
-    setIsEnabled(previousState => !previousState);
-  //   Auth.currentAuthenticatedUser().then(async(user) => {
+    
+    setIsEnabled(!previousState);
+    Auth.currentAuthenticatedUser().then(async(user) => {
       
     
 
-  //   const response = await API.graphql({ query: updateUser, variables: {
-  //     input : {
-  //       id: user.attributes.sub,
-  //       availability : !isEnabled
-  //     }
-  //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+    const response = await API.graphql({ query: updateUser, variables: {
+      input : {
+        id: user.attributes.sub,
+        availability : !isEnabled
+      }
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
-    
-
-  //   /*response = await API.graphql(graphqlOperation(updateUsers, {
-  //     input : {
-  //       username: "test1",
-  //       availability : "false",
-        
-  //     }
-  //   }))*/
 
     
 
 
-  //   console.log("Something Happened")
-  //   console.log(response)
-  // });
+    console.log("Something Happened")
+    console.log(response)
+  });
     Promise.resolve();
   }
   
@@ -190,13 +182,16 @@ const HomeScreen = ({ navigation }) => {
 
       {friendtext}
       {friendRender}
-      <View style={styles.signOut}>
+      {/* <View style={styles.signOut}> */}
         <Button 
           title="Sign Out" 
           color = '#FF9900'
-          onPress={() => {Auth.signOut();}} 
+          onPress={() => {
+            console.log("hello");
+            // console.log(Auth)
+            Auth.signOut();}} 
         />
-      </View>
+      {/* </View> */}
       
 
     {/* <Text style={styles.text}>Inactive Friends</Text>

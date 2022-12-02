@@ -27,14 +27,15 @@ const EventRequestScreen = ({ navigation }) => {
 
   const handlePress = async () => {
 
-    // const user = await Auth.currentAuthenticatedUser();
+    const user = await Auth.currentAuthenticatedUser();
 
-    // Promise.resolve();
-    // await API.graphql({ query: createEvent, variables: {input: {
-    //   inviteeUsername: "Dummy Name",
-    //   location: location,
-    //   meetTime: time,
-    // }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
+    Promise.resolve();
+    await API.graphql({ query: createEvent, variables: {input: {
+      toUser: "annie_seth",
+      fromUser: "DanielWang",
+      location: location,
+      meetTime: time,
+    }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
     console.log("Locations IS " + location);
     console.log("time IS " + time);

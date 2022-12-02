@@ -9,18 +9,13 @@ import EventRequestScreen from './src/screens/EventRequestScreen';
 import InvitesScreen from './src/screens/InvitesScreen';
 import FriendRequestScreen from './src/screens/FriendRequestScreen';
 
-// import { withAuthenticator } from 'aws-amplify-react-native'
+import { withAuthenticator } from 'aws-amplify-react-native'
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 
 
 import Amplify from 'aws-amplify';
 
-// // FOR RUSHI ONLY 
-// import awsmobile from './aws-exports';
-
-
-// FOR EVERYONE ELSE
 import awsconfig from './aws-exports';
 
 
@@ -65,5 +60,5 @@ function App() {
 }
 
 
-// export default withAuthenticator(App);
-export default App;
+export default withAuthenticator(App);
+// expot default App;
