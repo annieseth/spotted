@@ -56,7 +56,8 @@ export const createEvent = /* GraphQL */ `
   ) {
     createEvent(input: $input, condition: $condition) {
       id
-      inviteeUsername
+      toUser
+      fromUser
       location
       meetTime
       createdAt
@@ -72,7 +73,8 @@ export const updateEvent = /* GraphQL */ `
   ) {
     updateEvent(input: $input, condition: $condition) {
       id
-      inviteeUsername
+      toUser
+      fromUser
       location
       meetTime
       createdAt
@@ -88,9 +90,58 @@ export const deleteEvent = /* GraphQL */ `
   ) {
     deleteEvent(input: $input, condition: $condition) {
       id
-      inviteeUsername
+      toUser
+      fromUser
       location
       meetTime
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createFriendRequest = /* GraphQL */ `
+  mutation CreateFriendRequest(
+    $input: CreateFriendRequestInput!
+    $condition: ModelFriendRequestConditionInput
+  ) {
+    createFriendRequest(input: $input, condition: $condition) {
+      id
+      fromUser
+      toUser
+      toUserResponse
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateFriendRequest = /* GraphQL */ `
+  mutation UpdateFriendRequest(
+    $input: UpdateFriendRequestInput!
+    $condition: ModelFriendRequestConditionInput
+  ) {
+    updateFriendRequest(input: $input, condition: $condition) {
+      id
+      fromUser
+      toUser
+      toUserResponse
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteFriendRequest = /* GraphQL */ `
+  mutation DeleteFriendRequest(
+    $input: DeleteFriendRequestInput!
+    $condition: ModelFriendRequestConditionInput
+  ) {
+    deleteFriendRequest(input: $input, condition: $condition) {
+      id
+      fromUser
+      toUser
+      toUserResponse
       createdAt
       updatedAt
       owner
