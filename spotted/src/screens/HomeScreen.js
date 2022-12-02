@@ -87,7 +87,8 @@ const HomeScreen = ({ navigation }) => {
  
   // Toggle Switch event handler
   const toggleSwitch = async function() {
-    setIsEnabled(previousState => !previousState);
+    
+    setIsEnabled(!previousState);
   //   Auth.currentAuthenticatedUser().then(async(user) => {
       
     
