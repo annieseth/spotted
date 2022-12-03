@@ -146,6 +146,108 @@ export const getByUsername = /* GraphQL */ `
     }
   }
 `;
+export const getIfF1 = /* GraphQL */ `
+  query GetIfF1(
+    $friend1: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getIfF1(
+      friend1: $friend1
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getIfF2 = /* GraphQL */ `
+  query GetIfF2(
+    $friend2: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getIfF2(
+      friend2: $friend2
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getIfF3 = /* GraphQL */ `
+  query GetIfF3(
+    $friend3: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getIfF3(
+      friend3: $friend3
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const getReqByToUser = /* GraphQL */ `
   query GetReqByToUser(
     $toUser: String
