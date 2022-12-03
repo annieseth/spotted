@@ -20,8 +20,10 @@ type User
 
 type Event
   @model(subscriptions: null)
+  @key(name: "getEventByToUser", fields: ["toUser"], queryField: "getEventByToUser")
   @auth(rules: [{ allow: owner }, { allow: private }]) {
-  inviteeUsername: String!
+  toUser: String!
+  fromUser: String
   location: String
   meetTime: String
 }

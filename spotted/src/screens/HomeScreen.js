@@ -98,7 +98,6 @@ const HomeScreen = ({ navigation }) => {
       friend3: user.username
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
-
       if (ifFriend1 != null && ifFriend1.name == user.username) {
         //update friendavail1
         const updateFriend = await API.graphql({ query: updateUser, variables: {

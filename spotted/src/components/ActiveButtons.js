@@ -6,7 +6,7 @@ import { CommonActions } from '@react-navigation/native';
 
 export default function ActiveButtons({ nav, name, uniqueID, activeSince, active}) {
   
-  if (name == null  || active == "False") {
+  if (name == null  || !active) {
     return
   }
   return (
