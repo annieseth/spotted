@@ -6,6 +6,8 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       username
+      lat
+      long
       friend1
       friend1avil
       friend2
@@ -30,6 +32,8 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2
@@ -134,6 +138,8 @@ export const getByUsername = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2
@@ -168,6 +174,8 @@ export const getIfF1 = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2
@@ -202,6 +210,8 @@ export const getIfF2 = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2
@@ -236,6 +246,8 @@ export const getIfF3 = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2

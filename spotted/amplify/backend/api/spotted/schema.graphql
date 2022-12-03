@@ -6,6 +6,8 @@ type User
   @key(name: "getIfF3", fields: ["friend3"], queryField: "getIfF3")
   @auth(rules: [{ allow: owner }, { allow: private }]) {
   username: String!
+  lat: String
+  long:String
   friend1: String
   friend1avil: String
   friend2: String
