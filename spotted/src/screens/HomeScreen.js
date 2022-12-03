@@ -100,7 +100,7 @@ const HomeScreen = ({ navigation }) => {
       {username: getUserResponse.data.getUser.friend3,
         active: getUserResponse.data.getUser.friend3avil 
       }])
-    console.log(friends)
+    
 
 
     // for (var fren in friends) {
