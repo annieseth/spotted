@@ -154,19 +154,18 @@ const HomeScreen = ({ navigation }) => {
     Promise.resolve();
     
   }
-  
-  const getAvailableFriends = async function() {
-    temp = []
-    for (var fren in friends) {
-      const getUserNameResponse = await API.graphql({ query: getByUsername, variables: {
-        id: fren
-      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-      console.log(getByUsername)
-    }
-    
-    
-    Promise.resolve();
-  }
+
+  //when the screen is rendered, this is called
+  useEffect(() => {
+    toggleSwitch();
+  }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await toggleSwitch();
+    setRefreshing(false);
+  };
+
 
   // Conditonal Rendering based on if the switch is toggled or not 
   let friendtext,friendRender;
