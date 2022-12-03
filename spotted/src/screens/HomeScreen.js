@@ -8,9 +8,10 @@ import InactiveText from '../components/InactiveText';
 //import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 import DateTime from '../components/DateTime';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-//import{graphqlMutation} from 'aws-appsync-react'
-import { updateUser} from '../graphql/mutations';
-import { getUser, getByUsername } from '../graphql/queries';
+
+import { updateUser } from '../graphql/mutations';
+import { getUser, getByUsername, getIfF1, getIfF2, getIfF3} from '../graphql/queries';
+
 import * as Location from 'expo-location';
 import NavigationBar from '../components/NavigationBar';
 
@@ -21,23 +22,6 @@ const HomeScreen = ({ navigation }) => {
 
   const [friends, setFriends] = useState(
     [ ]
-  )
-  
-  const [inactivefriends] = useState(
-    [
-      {
-        id: 0,
-        name: 'John Smith',
-        activeSince: '1:53pM',
-        active: 'False'
-      },
-      {
-        id: 0,
-        name: 'Jack Hungry',
-        activeSince: '2:53PM',
-        active: 'False'
-      }
-    ]
   )
 
   const [activefriends] = useState(
@@ -100,7 +84,59 @@ const HomeScreen = ({ navigation }) => {
       {username: getUserResponse.data.getUser.friend3,
         active: getUserResponse.data.getUser.friend3avil 
       }])
-    
+
+      //3 api query calls
+      const ifFriend1 = await API.graphql({ query: getIfF1, variables: {
+      friend1: user.username
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+      const ifFriend2 = await API.graphql({ query: getIfF2, variables: {
+      friend2: user.username
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+      const ifFriend3 = await API.graphql({ query: getIfF3, variables: {
+      friend3: user.username
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+
+      if (ifFriend1 != null && ifFriend1.name == user.username) {
+        //update friendavail1
+        const updateFriend = await API.graphql({ query: updateUser, variables: {
+          input : {
+            id: ifFriend1.data.getIfF1.items[0].id,
+            friendavil1 : isEnabled
+          }
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+        Promise.resolve();
+
+      } else if (ifFriend2 != null && ifFriend2.name == user.username) {
+      //MUTATION update friendavail2 using friend2.id
+
+        const updateFriend = await API.graphql({ query: updateUser, variables: {
+          input : {
+            id: ifFriend2.data.getIfF2.items[0].id,
+            friendavil2 : isEnabled
+          }
+        }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+        Promise.resolve();
+      } else if (ifFriend3 != null && ifFriend3.name == user.username) {
+      //update friendavail3
+
+        const updateFriend = await API.graphql({ query: updateUser, variables: {
+          input : {
+            id: ifFriend3.data.getIfF3.items[0].id,
+            friendavil3 : isEnabled
+          }
+        }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+        Promise.resolve();
+      }
+
+      Promise.resolve();
+      Promise.resolve();
+      Promise.resolve();
 
 
     // for (var fren in friends) {
@@ -117,25 +153,24 @@ const HomeScreen = ({ navigation }) => {
     Promise.resolve();
     
   }
-  
-  const getAvailableFriends = async function() {
-    temp = []
-    for (var fren in friends) {
-      const getUserNameResponse = await API.graphql({ query: getByUsername, variables: {
-        id: fren
-      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-      console.log(getByUsername)
-    }
-    
-    
-    Promise.resolve();
-  }
+
+  //when the screen is rendered, this is called
+  useEffect(() => {
+    toggleSwitch();
+  }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await toggleSwitch();
+    setRefreshing(false);
+  };
+
 
   // Conditonal Rendering based on if the switch is toggled or not 
   let friendtext,friendRender;
   if(isEnabled) {
 
-    if (activefriends.length == 0){
+    if (friends.length == 0){
       friendtext = <Text style={styles.text} >There are no Active Friends</Text>
 
     } else {
