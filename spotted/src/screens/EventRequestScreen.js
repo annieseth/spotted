@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useRef } from 'react';
 import { Component } from 'react';
 import {useState} from 'react';
-import { Button, View, Text, Switch, TextInput, StyleSheet, Image } from 'react-native';
+import { Button, View, Text, Switch, TextInput, StyleSheet, Image,Platform } from 'react-native';
 
 import PhoneInput from "react-native-phone-number-input";
 import {Picker} from '@react-native-picker/picker';
@@ -10,7 +10,7 @@ import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { createEvent } from '../graphql/mutations';
 import { shadow } from 'react-native-paper';
 import AndroidImage from '../components/AndroidImage'
-import AppleImages from '../components/AppleImage'
+import AppleImage from '../components/AppleImage'
 
 const EventRequestScreen = ({ navigation }) => {
   const [time, setTime] = useState("");
@@ -71,6 +71,15 @@ const EventRequestScreen = ({ navigation }) => {
     navigation.navigate("Home")
 
   };
+  const systemName = Platform.OS;
+  let deviceRender;
+  if (systemName === 'android') {      
+    deviceRender = <AndroidImage styleNeeded={styles.adBox}/>;  
+    
+  } else {
+    deviceRender = <AppleImage styleNeeded={styles.adBox}/>;    
+  }
+
 
   return (
     <View >  
@@ -176,9 +185,7 @@ const EventRequestScreen = ({ navigation }) => {
       </Text> */}
         <View >
           
-          <AndroidImage
-            styleNeeded={styles.adBox}
-          />
+          {deviceRender}
         </View>
 
     </View>
