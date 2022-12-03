@@ -4,7 +4,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 
-export default function ActiveButtons({ nav, name, index, activeSince, active}) {
+export default function ActiveButtons({ nav, name, uniqueID, activeSince, active}) {
   return (
     <View style={styles.row}>     
       <Text style={styles.text}> {name } </Text> 

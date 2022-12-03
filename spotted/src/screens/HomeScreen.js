@@ -75,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
     Auth.currentAuthenticatedUser().then(async(user) => {
       
     
-
+    //  Updating the users status to be on/Off in the dynamoDB
     const UpdateUserResponse = await API.graphql({ query: updateUser, variables: {
       input : {
         id: user.attributes.sub,
@@ -83,28 +83,44 @@ const HomeScreen = ({ navigation }) => {
       }
     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
-
-    
+    // RETRIEVING THE USERS information based their ID 
     const getUserResponse = await API.graphql({ query: getUser, variables: {
       id: user.attributes.sub
     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
+    // Setting their three freinds user_names into a List
+    
+    setFriends([getUserResponse.data.getUser.friend1, getUserResponse.data.getUser.friend2, getUserResponse.data.getUser.friend3])
+
+
+
+    // for (var fren in friends) {
+    //   const getUserNameResponse = await API.graphql({ query: getByUsername, variables: {
+    //     id: fren
+    //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+    //   console.log(getUserNameResponse)
+    // }
     
 
-
-    console.log("Updating the Availability of the User")
-    console.log(UpdateUserResponse)
-
-    console.log("Get USer Details")
-    console.log(getUserResponse)
   });
    
    
     Promise.resolve();
-    Promise.resolve();
+    
   }
   
-
+  const getAvailableFriends = async function() {
+    temp = []
+    for (var fren in friends) {
+      const getUserNameResponse = await API.graphql({ query: getByUsername, variables: {
+        id: fren
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+      console.log(getByUsername)
+    }
+    
+    
+    Promise.resolve();
+  }
 
   // Conditonal Rendering based on if the switch is toggled or not 
   let friendtext,friendRender;
