@@ -50,11 +50,7 @@ const HomeScreen = ({ navigation }) => {
   const toggleSwitch = async function() {
     
 
-    if (Platform.OS == 'android') {
-      setIsEnabled(previousState => !previousState);
-    } else {
-      setIsEnabled(!previousState);
-    }
+    setIsEnabled(previousState => !previousState);
     
     Auth.currentAuthenticatedUser().then(async(user) => {
       

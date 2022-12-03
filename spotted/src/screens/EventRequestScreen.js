@@ -13,10 +13,10 @@ import AndroidImage from '../components/AndroidImage'
 import AppleImages from '../components/AppleImage'
 
 const EventRequestScreen = ({ navigation }) => {
-  const [time, setTime] = useState("");
-  const [location, setLocation] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [notes, setNotes] = useState("");
+  const [time, setTime] = useState("15 minutes");
+  const [location, setLocation] = useState("here");
+  const [phoneNumber, setPhoneNumber] = useState("4708848884");
+  const [notes, setNotes] = useState("Hello");
 
 
 
@@ -29,13 +29,22 @@ const EventRequestScreen = ({ navigation }) => {
 
     const user = await Auth.currentAuthenticatedUser();
 
-    Promise.resolve();
+    console.log("user is")
+    console.log(user.username)
+
     await API.graphql({ query: createEvent, variables: {input: {
-      toUser: "annie_seth",
+      toUser: "test1",
       fromUser: "DanielWang",
       location: location,
       meetTime: time,
     }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
+    // await API.graphql(graphqlOperation(createEvent, { 
+    //   toUser: "test1",
+    //   fromUser: "DanielWang",
+    //   location: location,
+    //   meetTime: time
+    // }));
 
     console.log("Locations IS " + location);
     console.log("time IS " + time);
@@ -81,15 +90,6 @@ const EventRequestScreen = ({ navigation }) => {
         <Text style = {styles.textbox}>
           When: 
         </Text>
-        {/* scroll wheel */}
-        {/* <Picker
-          selectedValue={time}
-          onValueChange={(itemValue, itemIndex) =>
-            setTime(itemValue)
-          }>
-          <Picker.Item label="15 minutes" value="15 minutes" />
-          <Picker.Item label="30 minutes" value="30 minutes" />
-        </Picker>  */}
         <TextInput
           style={styles.input}
           onChangeText={setTime}
@@ -102,17 +102,6 @@ const EventRequestScreen = ({ navigation }) => {
         <Text style = {styles.textbox}>
           Where: 
         </Text>
-        {/* <Picker
-          selectedValue={location}
-          onValueChange={(itemValue, itemIndex) =>
-            setLocation(itemValue)
-          }>
-          <Picker.Item label="Scheller" value="Scheller" />
-          <Picker.Item label="CULC" value="CULC" />
-          <Picker.Item label="Exhibition Hall" value="Exhibition Hall" />
-          <Picker.Item label="Tech Square" value="Tech Square" />
-          <Picker.Item label="Tech Green" value="Tech Green" />
-        </Picker>  */}
         <TextInput
           style={styles.input}
           onChangeText={setLocation}

@@ -3,40 +3,51 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 import Invitation from '../components/Invitation';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import NavigationBar from '../components/NavigationBar';
+import {Auth, API, graphqlOperation} from 'aws-amplify';
+import { getEventByToUser } from '../graphql/queries';
+import { deleteEvent } from '../graphql/mutations';
+
+
 
 const InvitesScreen = ({ navigation }) => {
 
-  const [invites, setInvites] = useState(
-    [{
-      id:0,
-      name: "Annie Seth"
-    },
-    {
-      id:1,
-      name:"Daniel Wang"
-    },
-    {
-      id:2,
-      name:"Bob Jack"
-    },
-    {
-      id:3,
-      name:"Mcdonalds H"
-    },
-    {
-      id:4,
-      name:"John Smith"
-    },
-    ]
-  )
+  const [invites, setInvites] = useState([])
+
+  useEffect(() => {
+    const fetchInvites = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+      // console.log(typeof user.username)
+      // console.log(user)
+      // const { response } = await API.graphql({ query: getEventByToUser, variables: {
+      //   input : {
+      //     toUser: user.username
+      //   }
+      // }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
+      const data = await API.graphql(graphqlOperation(getEventByToUser, { toUser: user.username }));
+      // console.log(data.data.getEventByToUser.items)
+      setInvites(data.data.getEventByToUser.items)
+      // console.log(invites[0].fromUser)
+    }
+    fetchInvites()
+      .catch(console.error);
+  }, [])
 
   const handleRemove = (id) => {
     console.log(id)
+    removeFromDB(id)
     const newInvites = invites.filter((item) => item.id !== id);
-
     setInvites(newInvites);
+  }
+
+  const removeFromDB = async (eventId) => {
+    const user = await Auth.currentAuthenticatedUser();
+    await API.graphql({ query: deleteEvent, variables: {input: {
+      id: eventId,
+    }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
   }
 
   return (
@@ -47,8 +58,8 @@ const InvitesScreen = ({ navigation }) => {
           <Invitation
             key={index}
             nav={navigation}
-            name={item.name}
-            uniqueID={item.id}
+            name={item.fromUser}
+            id={item.id}
             handleRemove={handleRemove}
           />
         ))

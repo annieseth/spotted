@@ -6,6 +6,8 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       username
+      lat
+      long
       friend1
       friend1avil
       friend2
@@ -30,6 +32,8 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2
@@ -50,7 +54,8 @@ export const getEvent = /* GraphQL */ `
   query GetEvent($id: ID!) {
     getEvent(id: $id) {
       id
-      inviteeUsername
+      toUser
+      fromUser
       location
       meetTime
       createdAt
@@ -68,7 +73,8 @@ export const listEvents = /* GraphQL */ `
     listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        inviteeUsername
+        toUser
+        fromUser
         location
         meetTime
         createdAt
@@ -84,7 +90,9 @@ export const getFriendRequest = /* GraphQL */ `
     getFriendRequest(id: $id) {
       id
       fromUser
+      fromUserId
       toUser
+      toUserId
       toUserResponse
       createdAt
       updatedAt
@@ -102,7 +110,9 @@ export const listFriendRequests = /* GraphQL */ `
       items {
         id
         fromUser
+        fromUserId
         toUser
+        toUserId
         toUserResponse
         createdAt
         updatedAt
@@ -130,6 +140,8 @@ export const getByUsername = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2
@@ -164,6 +176,8 @@ export const getIfF1 = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2
@@ -198,6 +212,8 @@ export const getIfF2 = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2
@@ -232,6 +248,8 @@ export const getIfF3 = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
         friend1
         friend1avil
         friend2
@@ -240,6 +258,35 @@ export const getIfF3 = /* GraphQL */ `
         friend3avil
         name
         availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getEventByToUser = /* GraphQL */ `
+  query GetEventByToUser(
+    $toUser: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getEventByToUser(
+      toUser: $toUser
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        toUser
+        fromUser
+        location
+        meetTime
         createdAt
         updatedAt
         owner
@@ -266,7 +313,9 @@ export const getReqByToUser = /* GraphQL */ `
       items {
         id
         fromUser
+        fromUserId
         toUser
+        toUserId
         toUserResponse
         createdAt
         updatedAt

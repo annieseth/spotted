@@ -6,20 +6,24 @@ type User
   @key(name: "getIfF3", fields: ["friend3"], queryField: "getIfF3")
   @auth(rules: [{ allow: owner }, { allow: private }]) {
   username: String!
+  lat: String
+  long:String
   friend1: String
-  friend1avil: String
+  friend1avil: Boolean
   friend2: String
-  friend2avil: String
+  friend2avil: Boolean
   friend3: String
-  friend3avil: String
+  friend3avil: Boolean
   name: String
   availability: Boolean
 }
 
 type Event
   @model(subscriptions: null)
+  @key(name: "getEventByToUser", fields: ["toUser"], queryField: "getEventByToUser")
   @auth(rules: [{ allow: owner }, { allow: private }]) {
-  inviteeUsername: String!
+  toUser: String!
+  fromUser: String
   location: String
   meetTime: String
 }
@@ -29,6 +33,8 @@ type FriendRequest
   @key(name: "getReqByToUser", fields: ["toUser"], queryField: "getReqByToUser")
   @auth(rules: [{ allow: owner }, { allow: private }]) {
   fromUser: String
+  fromUserId: String
   toUser: String!
+  toUserId: String
   toUserResponse: Boolean
 }
