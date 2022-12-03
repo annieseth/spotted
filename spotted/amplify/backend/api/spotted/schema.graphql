@@ -1,6 +1,9 @@
 type User
   @model(subscriptions: null)
   @key(name: "getByUsername", fields: ["username"], queryField: "getByUsername")
+  @key(name: "getIfF1", fields: ["friend1"], queryField: "getIfF1")
+  @key(name: "getIfF2", fields: ["friend2"], queryField: "getIfF2")
+  @key(name: "getIfF3", fields: ["friend3"], queryField: "getIfF3")
   @auth(rules: [{ allow: owner }, { allow: private }]) {
   username: String!
   friend1: String
