@@ -58,6 +58,7 @@ export const getEvent = /* GraphQL */ `
       fromUser
       location
       meetTime
+      accepted
       createdAt
       updatedAt
       owner
@@ -77,6 +78,7 @@ export const listEvents = /* GraphQL */ `
         fromUser
         location
         meetTime
+        accepted
         createdAt
         updatedAt
         owner
@@ -287,6 +289,37 @@ export const getEventByToUser = /* GraphQL */ `
         fromUser
         location
         meetTime
+        accepted
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getEventByFromUser = /* GraphQL */ `
+  query GetEventByFromUser(
+    $fromUser: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getEventByFromUser(
+      fromUser: $fromUser
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        toUser
+        fromUser
+        location
+        meetTime
+        accepted
         createdAt
         updatedAt
         owner

@@ -21,11 +21,13 @@ type User
 type Event
   @model(subscriptions: null)
   @key(name: "getEventByToUser", fields: ["toUser"], queryField: "getEventByToUser")
+  @key(name: "getEventByFromUser", fields: ["fromUser"], queryField: "getEventByFromUser")
   @auth(rules: [{ allow: owner }, { allow: private }]) {
   toUser: String!
-  fromUser: String
+  fromUser: String!
   location: String
   meetTime: String
+  accepted: Boolean
 }
 
 type FriendRequest
