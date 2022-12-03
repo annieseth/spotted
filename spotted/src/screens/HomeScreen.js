@@ -1,4 +1,4 @@
-import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
+import { Button, View, Text, Switch, StyleSheet, Platform } from 'react-native';
 import { Component, useState, useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -88,7 +88,13 @@ const HomeScreen = ({ navigation }) => {
   // Toggle Switch event handler
   const toggleSwitch = async function() {
     
-    setIsEnabled(!previousState);
+
+    if (Platform.OS == 'android') {
+      setIsEnabled(previousState => !previousState);
+    } else {
+      setIsEnabled(!previousState);
+    }
+    
     Auth.currentAuthenticatedUser().then(async(user) => {
       
     
@@ -147,7 +153,6 @@ const HomeScreen = ({ navigation }) => {
       }
       
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location)
       fetchDataFromApi(location.coords.latitude, location.coords.longitude);
     })();
   }, [])
