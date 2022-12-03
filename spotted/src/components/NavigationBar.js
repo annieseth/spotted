@@ -1,26 +1,34 @@
 import React from 'react'
 import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 
 export default function NavigationBar({ nav }) {
+
+  let buttonColor;
+  if (Platform.OS == 'android') {
+    buttonColor = '#FF9900'
+  } else {
+    buttonColor = 'white'
+  }
   
   return (
     <View style={styles.row}>
         <Button 
             title="Home"
-            color="white"
+            color = {buttonColor}
             onPress={() => nav.navigate("Home")}
         />
         <Button
             title="Invites"
-            color="white"
+            color={buttonColor}
             onPress={() => nav.navigate("Invites")}
         />
         <Button
             title="Friend Request"
-            color="white"
+            color={buttonColor}
             onPress={() => nav.navigate("Friends")}
         />
     </View>

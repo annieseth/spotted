@@ -114,7 +114,7 @@ const HomeScreen = ({ navigation }) => {
        
       } 
 
-      if (ifFriend2 != null && ifFriend2.data.getIfF2.items[0].friend2== user.username) {
+      if (ifFriend2 != null && ifFriend2.data.getIfF2.items[0].friend2 == user.username) {
       //MUTATION update friendavail2 using friend2.id
         console.log("friend2")
         const updateFriend = await API.graphql({ query: updateUser, variables: {
