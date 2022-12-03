@@ -69,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
     if (Platform.OS == 'android') {
       setIsEnabled(previousState => !previousState);
     } else {
-      setIsEnabled(!previousState);
+      setIsEnabled(previousState => !previousState);
     }
     
     Auth.currentAuthenticatedUser().then(async(user) => {
