@@ -9,6 +9,12 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       username
+      friend1
+      friend1avil
+      friend2
+      friend2avil
+      friend3
+      friend3avil
       lat
       long
       friend1
@@ -33,8 +39,6 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       username
-      lat
-      long
       friend1
       friend1avil
       friend2
@@ -57,8 +61,6 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       username
-      lat
-      long
       friend1
       friend1avil
       friend2
@@ -80,8 +82,7 @@ export const createEvent = /* GraphQL */ `
   ) {
     createEvent(input: $input, condition: $condition) {
       id
-      toUser
-      fromUser
+      inviteeUsername
       location
       meetTime
       createdAt
@@ -97,8 +98,7 @@ export const updateEvent = /* GraphQL */ `
   ) {
     updateEvent(input: $input, condition: $condition) {
       id
-      toUser
-      fromUser
+      inviteeUsername
       location
       meetTime
       createdAt

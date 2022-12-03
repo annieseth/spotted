@@ -1,4 +1,4 @@
-import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
+import { Button, View, Text, Switch, StyleSheet, Platform } from 'react-native';
 import { Component, useState, useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,59 +8,20 @@ import InactiveText from '../components/InactiveText';
 //import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 import DateTime from '../components/DateTime';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-//import{graphqlMutation} from 'aws-appsync-react'
-import { updateUser, getUser } from '../graphql/mutations';
+
+import { updateUser } from '../graphql/mutations';
+import { getUser, getByUsername, getIfF1, getIfF2, getIfF3} from '../graphql/queries';
+
 import * as Location from 'expo-location';
 import NavigationBar from '../components/NavigationBar';
 
 const API_KEY = '77d2cc17b9c648543c1fae370fee3226';
 
+
 const HomeScreen = ({ navigation }) => {
 
   const [friends, setFriends] = useState(
-    [
-      {
-        id: 0,
-        name: 'John Smith',
-        activeSince: '1:53pM',
-        active: 'False'
-      },
-      {
-        id: 1,
-        name: 'Granny Jones',
-        activeSince: '2:22PM',
-        active: 'True'
-      },
-      {
-        id: 0,
-        name: 'Jack Hungry',
-        activeSince: '2:53PM',
-        active: 'False'
-      },
-      {
-        id: 0,
-        name: 'Kindle Salt',
-        activeSince: '1:34PM',
-        active: 'True'
-      },
-    ]
-  )
-
-  const [inactivefriends] = useState(
-    [
-      {
-        id: 0,
-        name: 'John Smith',
-        activeSince: '1:53pM',
-        active: 'False'
-      },
-      {
-        id: 0,
-        name: 'Jack Hungry',
-        activeSince: '2:53PM',
-        active: 'False'
-      }
-    ]
+    [ ]
   )
 
   const [activefriends] = useState(
@@ -87,35 +48,125 @@ const HomeScreen = ({ navigation }) => {
  
   // Toggle Switch event handler
   const toggleSwitch = async function() {
-    // let newState = ! previousState
+    
+
     setIsEnabled(previousState => !previousState);
-  //   Auth.currentAuthenticatedUser().then(async(user) => {
+    
+    Auth.currentAuthenticatedUser().then(async(user) => {
       
     
+    //  Updating the users status to be on/Off in the dynamoDB
+    const UpdateUserResponse = await API.graphql({ query: updateUser, variables: {
+      input : {
+        id: user.attributes.sub,
+        availability : !isEnabled
+      }
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
-  //   const response = await API.graphql({ query: updateUser, variables: {
-  //     input : {
-  //       id: user.attributes.sub,
-  //       availability : !isEnabled
-  //     }
-  //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+    // RETRIEVING THE USERS information based their ID 
+    const getUserResponse = await API.graphql({ query: getUser, variables: {
+      id: user.attributes.sub
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+    // Setting their three freinds user_names,uniqueID,availability  into a List
+    
+    setFriends([
+      {username: getUserResponse.data.getUser.friend1 ,
+       active: getUserResponse.data.getUser.friend1avil ,
+      }, 
+      {username: getUserResponse.data.getUser.friend2,
+        active: getUserResponse.data.getUser.friend2avil }
+      , 
+      {username: getUserResponse.data.getUser.friend3,
+        active: getUserResponse.data.getUser.friend3avil 
+      }])
+
+      //3 api query calls
+      const ifFriend1 = await API.graphql({ query: getIfF1, variables: {
+      friend1: user.username
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+      const ifFriend2 = await API.graphql({ query: getIfF2, variables: {
+      friend2: user.username
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+      const ifFriend3 = await API.graphql({ query: getIfF3, variables: {
+      friend3: user.username
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
 
+      if (ifFriend1 != null && ifFriend1.name == user.username) {
+        //update friendavail1
+        const updateFriend = await API.graphql({ query: updateUser, variables: {
+          input : {
+            id: ifFriend1.data.getIfF1.items[0].id,
+            friendavil1 : isEnabled
+          }
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
+        Promise.resolve();
+
+      } else if (ifFriend2 != null && ifFriend2.name == user.username) {
+      //MUTATION update friendavail2 using friend2.id
+
+        const updateFriend = await API.graphql({ query: updateUser, variables: {
+          input : {
+            id: ifFriend2.data.getIfF2.items[0].id,
+            friendavil2 : isEnabled
+          }
+        }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+        Promise.resolve();
+      } else if (ifFriend3 != null && ifFriend3.name == user.username) {
+      //update friendavail3
+
+        const updateFriend = await API.graphql({ query: updateUser, variables: {
+          input : {
+            id: ifFriend3.data.getIfF3.items[0].id,
+            friendavil3 : isEnabled
+          }
+        }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+        Promise.resolve();
+      }
+
+      Promise.resolve();
+      Promise.resolve();
+      Promise.resolve();
+
+
+    // for (var fren in friends) {
+    //   const getUserNameResponse = await API.graphql({ query: getByUsername, variables: {
+    //     id: fren
+    //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+    //   console.log(getUserNameResponse)
+    // }
     
 
-
-  //   console.log("Something Happened")
-  //   console.log(response)
-  // });
-    // Promise.resolve();
+  });
+   
+   
+    Promise.resolve();
+    
   }
-  
+
+  //when the screen is rendered, this is called
+  useEffect(() => {
+    toggleSwitch();
+  }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await toggleSwitch();
+    setRefreshing(false);
+  };
+
+
   // Conditonal Rendering based on if the switch is toggled or not 
   let friendtext,friendRender;
   if(isEnabled) {
 
-    if (activefriends.length == 0){
+    if (friends.length == 0){
       friendtext = <Text style={styles.text} >There are no Active Friends</Text>
 
     } else {
@@ -123,13 +174,11 @@ const HomeScreen = ({ navigation }) => {
       friendtext = <Text style={styles.text} >Active Friends</Text>
 
       friendRender =
-        activefriends.map((item, index) => (
+        friends.map((item, index) => (
           <ActiveButtons
             key={index}
             nav={navigation}
-            name={item.name}
-            activeSince={item.activeSince}
-            index={item.id}
+            name={item.username}
             active={item.active}
           />
         ))
@@ -148,7 +197,6 @@ const HomeScreen = ({ navigation }) => {
       }
       
       let location = await Location.getCurrentPositionAsync({});
-      console.log(location)
       fetchDataFromApi(location.coords.latitude, location.coords.longitude);
     })();
   }, [])
