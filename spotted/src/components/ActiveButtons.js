@@ -5,8 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 
 export default function ActiveButtons({ nav, name, uniqueID, activeSince, active}) {
-
-  if (name == null) {
+  
+  if (name == null  || active == "False") {
     return
   }
   return (
