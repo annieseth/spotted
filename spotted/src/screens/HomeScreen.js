@@ -87,46 +87,53 @@ const HomeScreen = ({ navigation }) => {
 
       //3 api query calls
       const ifFriend1 = await API.graphql({ query: getIfF1, variables: {
-      friend1: user.username
+        friend1: user.username
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
       const ifFriend2 = await API.graphql({ query: getIfF2, variables: {
-      friend2: user.username
+        friend2: user.username
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
       const ifFriend3 = await API.graphql({ query: getIfF3, variables: {
-      friend3: user.username
+        friend3: user.username
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
-      if (ifFriend1 != null && ifFriend1.name == user.username) {
+
+      
+      if (ifFriend1 != null && ifFriend1.data.getIfF1.items[0].friend1 == user.username) {
         //update friendavail1
+        console.log("friend1")
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
             id: ifFriend1.data.getIfF1.items[0].id,
-            friendavil1 : isEnabled
+            friend1avil : !isEnabled
           }
-      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-
+        }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+        
         Promise.resolve();
+       
+      } 
 
-      } else if (ifFriend2 != null && ifFriend2.name == user.username) {
+      if (ifFriend2 != null && ifFriend2.data.getIfF2.items[0].friend2== user.username) {
       //MUTATION update friendavail2 using friend2.id
-
+        console.log("friend2")
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
             id: ifFriend2.data.getIfF2.items[0].id,
-            friendavil2 : isEnabled
+            friend2avil : !isEnabled
           }
         }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
         Promise.resolve();
-      } else if (ifFriend3 != null && ifFriend3.name == user.username) {
-      //update friendavail3
+      } 
 
+      if (ifFriend3 != null && ifFriend3.data.getIfF3.items[0].friend3 == user.username) {
+      //update friendavail3
+      console.log("friend3")
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
             id: ifFriend3.data.getIfF3.items[0].id,
-            friendavil3 : isEnabled
+            friend3avil : !isEnabled
           }
         }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
@@ -203,7 +210,7 @@ const HomeScreen = ({ navigation }) => {
       fetchDataFromApi(location.coords.latitude, location.coords.longitude);
     })();
   }, [])
-
+  
   const fetchDataFromApi = (latitude, longitude) => {
     if(latitude && longitude) {
       fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=imperial&appid=${API_KEY}`).then(res => res.json()).then(weatherData => {
