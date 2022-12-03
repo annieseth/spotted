@@ -4,7 +4,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 
-export default function Invitation({ nav, name, handleRemove, index }) {
+export default function Invitation({ nav, name, handleRemove, id }) {
   
   const acceptInvitation = () => {
     alert("Invitation accepted!")
@@ -13,8 +13,6 @@ export default function Invitation({ nav, name, handleRemove, index }) {
 
   const removeInvitation = i => {
     handleRemove(i);
-    console.log("Hello, item id is")
-    console.log(i)
   }
   
   return (
@@ -25,7 +23,7 @@ export default function Invitation({ nav, name, handleRemove, index }) {
           title="X"
           style={styles.closeButton}
           color="red"
-          onPress={() => removeInvitation(index)}
+          onPress={() => removeInvitation(id)}
         />
         <Button
           title="Accept"

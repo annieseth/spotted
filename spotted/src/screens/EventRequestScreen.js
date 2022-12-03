@@ -13,10 +13,10 @@ import AndroidImage from '../components/AndroidImage'
 import AppleImages from '../components/AppleImage'
 
 const EventRequestScreen = ({ navigation }) => {
-  const [time, setTime] = useState("");
-  const [location, setLocation] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [notes, setNotes] = useState("");
+  const [time, setTime] = useState("15 minutes");
+  const [location, setLocation] = useState("here");
+  const [phoneNumber, setPhoneNumber] = useState("4708848884");
+  const [notes, setNotes] = useState("Hello");
 
 
 
@@ -29,13 +29,22 @@ const EventRequestScreen = ({ navigation }) => {
 
     const user = await Auth.currentAuthenticatedUser();
 
-    Promise.resolve();
+    console.log("user is")
+    console.log(user.username)
+
     await API.graphql({ query: createEvent, variables: {input: {
       toUser: "test1",
       fromUser: "DanielWang",
       location: location,
       meetTime: time,
     }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
+    // await API.graphql(graphqlOperation(createEvent, { 
+    //   toUser: "test1",
+    //   fromUser: "DanielWang",
+    //   location: location,
+    //   meetTime: time
+    // }));
 
     console.log("Locations IS " + location);
     console.log("time IS " + time);

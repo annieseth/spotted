@@ -9,6 +9,14 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       username
+      lat
+      long
+      friend1
+      friend1avil
+      friend2
+      friend2avil
+      friend3
+      friend3avil
       name
       availability
       createdAt
@@ -25,6 +33,14 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       username
+      lat
+      long
+      friend1
+      friend1avil
+      friend2
+      friend2avil
+      friend3
+      friend3avil
       name
       availability
       createdAt
@@ -41,6 +57,14 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       username
+      lat
+      long
+      friend1
+      friend1avil
+      friend2
+      friend2avil
+      friend3
+      friend3avil
       name
       availability
       createdAt
@@ -108,7 +132,9 @@ export const createFriendRequest = /* GraphQL */ `
     createFriendRequest(input: $input, condition: $condition) {
       id
       fromUser
+      fromUserId
       toUser
+      toUserId
       toUserResponse
       createdAt
       updatedAt
@@ -124,7 +150,9 @@ export const updateFriendRequest = /* GraphQL */ `
     updateFriendRequest(input: $input, condition: $condition) {
       id
       fromUser
+      fromUserId
       toUser
+      toUserId
       toUserResponse
       createdAt
       updatedAt
@@ -140,7 +168,9 @@ export const deleteFriendRequest = /* GraphQL */ `
     deleteFriendRequest(input: $input, condition: $condition) {
       id
       fromUser
+      fromUserId
       toUser
+      toUserId
       toUserResponse
       createdAt
       updatedAt

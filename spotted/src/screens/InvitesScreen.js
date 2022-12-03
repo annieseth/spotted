@@ -27,20 +27,27 @@ const InvitesScreen = ({ navigation }) => {
       // }, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
       const data = await API.graphql(graphqlOperation(getEventByToUser, { toUser: user.username }));
-      console.log(data.data.getEventByToUser.items)
+      // console.log(data.data.getEventByToUser.items)
       setInvites(data.data.getEventByToUser.items)
-      console.log(invites[0].fromUser)
+      // console.log(invites[0].fromUser)
     }
     fetchInvites()
       .catch(console.error);
   }, [])
 
-  const handleRemove = async (id) => {
+  const handleRemove = (id) => {
     console.log(id)
-    const user = await Auth.currentAuthenticatedUser();
-    await API.graphql(graphqlOperation(deleteEvent, { id: id }));
+    removeFromDB(id)
     const newInvites = invites.filter((item) => item.id !== id);
     setInvites(newInvites);
+  }
+
+  const removeFromDB = async (eventId) => {
+    const user = await Auth.currentAuthenticatedUser();
+    await API.graphql({ query: deleteEvent, variables: {input: {
+      id: eventId,
+    }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
   }
 
   return (
@@ -52,7 +59,7 @@ const InvitesScreen = ({ navigation }) => {
             key={index}
             nav={navigation}
             name={item.fromUser}
-            index={item.id}
+            id={item.id}
             handleRemove={handleRemove}
           />
         ))

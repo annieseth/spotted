@@ -6,6 +6,14 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       username
+      lat
+      long
+      friend1
+      friend1avil
+      friend2
+      friend2avil
+      friend3
+      friend3avil
       name
       availability
       createdAt
@@ -24,6 +32,14 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         username
+        lat
+        long
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
         name
         availability
         createdAt
@@ -74,7 +90,9 @@ export const getFriendRequest = /* GraphQL */ `
     getFriendRequest(id: $id) {
       id
       fromUser
+      fromUserId
       toUser
+      toUserId
       toUserResponse
       createdAt
       updatedAt
@@ -92,8 +110,154 @@ export const listFriendRequests = /* GraphQL */ `
       items {
         id
         fromUser
+        fromUserId
         toUser
+        toUserId
         toUserResponse
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getByUsername = /* GraphQL */ `
+  query GetByUsername(
+    $username: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getByUsername(
+      username: $username
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        lat
+        long
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getIfF1 = /* GraphQL */ `
+  query GetIfF1(
+    $friend1: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getIfF1(
+      friend1: $friend1
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        lat
+        long
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getIfF2 = /* GraphQL */ `
+  query GetIfF2(
+    $friend2: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getIfF2(
+      friend2: $friend2
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        lat
+        long
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getIfF3 = /* GraphQL */ `
+  query GetIfF3(
+    $friend3: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getIfF3(
+      friend3: $friend3
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        lat
+        long
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
         createdAt
         updatedAt
         owner
@@ -149,7 +313,9 @@ export const getReqByToUser = /* GraphQL */ `
       items {
         id
         fromUser
+        fromUserId
         toUser
+        toUserId
         toUserResponse
         createdAt
         updatedAt
