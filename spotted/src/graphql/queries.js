@@ -6,6 +6,12 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       username
+      friend1
+      friend1avil
+      friend2
+      friend2avil
+      friend3
+      friend3avil
       name
       availability
       createdAt
@@ -24,6 +30,12 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         username
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
         name
         availability
         createdAt
@@ -38,8 +50,7 @@ export const getEvent = /* GraphQL */ `
   query GetEvent($id: ID!) {
     getEvent(id: $id) {
       id
-      toUser
-      fromUser
+      inviteeUsername
       location
       meetTime
       createdAt
@@ -57,8 +68,7 @@ export const listEvents = /* GraphQL */ `
     listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        toUser
-        fromUser
+        inviteeUsername
         location
         meetTime
         createdAt
@@ -102,16 +112,16 @@ export const listFriendRequests = /* GraphQL */ `
     }
   }
 `;
-export const getEventByToUser = /* GraphQL */ `
-  query GetEventByToUser(
-    $toUser: String
+export const getByUsername = /* GraphQL */ `
+  query GetByUsername(
+    $username: String
     $sortDirection: ModelSortDirection
-    $filter: ModelEventFilterInput
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    getEventByToUser(
-      toUser: $toUser
+    getByUsername(
+      username: $username
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -119,10 +129,117 @@ export const getEventByToUser = /* GraphQL */ `
     ) {
       items {
         id
-        toUser
-        fromUser
-        location
-        meetTime
+        username
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getIfF1 = /* GraphQL */ `
+  query GetIfF1(
+    $friend1: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getIfF1(
+      friend1: $friend1
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getIfF2 = /* GraphQL */ `
+  query GetIfF2(
+    $friend2: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getIfF2(
+      friend2: $friend2
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getIfF3 = /* GraphQL */ `
+  query GetIfF3(
+    $friend3: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getIfF3(
+      friend3: $friend3
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        username
+        friend1
+        friend1avil
+        friend2
+        friend2avil
+        friend3
+        friend3avil
+        name
+        availability
         createdAt
         updatedAt
         owner
