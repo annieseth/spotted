@@ -1,4 +1,4 @@
-import { Button, View, Text, Switch, StyleSheet, Platform } from 'react-native';
+import { Button, View, Text, Switch, StyleSheet, Platform,Alert } from 'react-native';
 import { Component, useState, useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -102,7 +102,6 @@ const HomeScreen = ({ navigation }) => {
       
       if (ifFriend1 != null && ifFriend1.data.getIfF1.items[0].friend1 == user.username) {
         //update friendavail1
-        console.log("friend1")
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
             id: ifFriend1.data.getIfF1.items[0].id,
@@ -116,7 +115,6 @@ const HomeScreen = ({ navigation }) => {
 
       if (ifFriend2 != null && ifFriend2.data.getIfF2.items[0].friend2 == user.username) {
       //MUTATION update friendavail2 using friend2.id
-        console.log("friend2")
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
             id: ifFriend2.data.getIfF2.items[0].id,
@@ -129,7 +127,6 @@ const HomeScreen = ({ navigation }) => {
 
       if (ifFriend3 != null && ifFriend3.data.getIfF3.items[0].friend3 == user.username) {
       //update friendavail3
-      console.log("friend3")
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
             id: ifFriend3.data.getIfF3.items[0].id,
@@ -202,11 +199,44 @@ const HomeScreen = ({ navigation }) => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        fetchDataFromApi("33.7756", "84.3963")
+        Auth.currentAuthenticatedUser().then(async(user) => {
+          // RETRIEVING THE USERS information based their ID 
+          const getUserResponse = await API.graphql({ query: getUser, variables: {
+            id: user.attributes.sub
+          }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+          
+          if (getUserResponse.data.getUser.lat == null || getUserResponse.data.getUser.long == null) {
+            // default Atlanta
+            alert("Location Not Available. Using deafult of Atlanta")
+            fetchDataFromApi("33.7756", "84.3963")
+            
+          }
+          // choose your old data
+          else {
+            alert("Location Not Available. Using prior location")
+            fetchDataFromApi(getUserResponse.data.getUser.lat, getUserResponse.data.getUser.long)
+          }
+        })
+        Promise.resolve()
+        
         return;
       }
       
       let location = await Location.getCurrentPositionAsync({});
+
+      Auth.currentAuthenticatedUser().then(async(user) => {
+        // RETRIEVING THE USERS information based their ID 
+        const updateFriend = await API.graphql({ query: updateUser, variables: {
+          input : {
+            id: user.attributes.sub,
+            lat: location.coords.latitude,
+            long: location.coords.longitude,
+          }
+        }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+        Promise.resolve();
+      })
+      Promise.resolve()
       fetchDataFromApi(location.coords.latitude, location.coords.longitude);
     })();
   }, [])
