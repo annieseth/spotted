@@ -99,7 +99,6 @@ const HomeScreen = ({ navigation }) => {
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
 
-      console.log(ifFriend1.data.getIfF1.items[0].id)
       if (ifFriend1 != null && ifFriend1.name == user.username) {
         //update friendavail1
         const updateFriend = await API.graphql({ query: updateUser, variables: {
@@ -171,7 +170,7 @@ const HomeScreen = ({ navigation }) => {
   let friendtext,friendRender;
   if(isEnabled) {
 
-    if (activefriends.length == 0){
+    if (friends.length == 0){
       friendtext = <Text style={styles.text} >There are no Active Friends</Text>
 
     } else {
