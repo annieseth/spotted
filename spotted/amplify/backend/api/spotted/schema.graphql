@@ -1,0 +1,31 @@
+type User
+  @model(subscriptions: null)
+  @key(name: "getByUsername", fields: ["username"], queryField: "getByUsername")
+  @auth(rules: [{ allow: owner }, { allow: private }]) {
+  username: String!
+  friend1: String
+  friend1avil: String
+  friend2: String
+  friend2avil: String
+  friend3: String
+  friend3avil: String
+  name: String
+  availability: Boolean
+}
+
+type Event
+  @model(subscriptions: null)
+  @auth(rules: [{ allow: owner }, { allow: private }]) {
+  inviteeUsername: String!
+  location: String
+  meetTime: String
+}
+
+type FriendRequest
+  @model(subscriptions: null)
+  @key(name: "getReqByToUser", fields: ["toUser"], queryField: "getReqByToUser")
+  @auth(rules: [{ allow: owner }, { allow: private }]) {
+  fromUser: String
+  toUser: String!
+  toUserResponse: Boolean
+}
