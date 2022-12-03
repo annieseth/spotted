@@ -88,10 +88,19 @@ const HomeScreen = ({ navigation }) => {
       id: user.attributes.sub
     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
-    // Setting their three freinds user_names into a List
+    // Setting their three freinds user_names,uniqueID,availability  into a List
     
-    setFriends([getUserResponse.data.getUser.friend1, getUserResponse.data.getUser.friend2, getUserResponse.data.getUser.friend3])
-
+    setFriends([
+      {username: getUserResponse.data.getUser.friend1 ,
+       active: getUserResponse.data.getUser.friend1avil ,
+      }, 
+      {username: getUserResponse.data.getUser.friend2,
+        active: getUserResponse.data.getUser.friend2avil }
+      , 
+      {username: getUserResponse.data.getUser.friend3,
+        active: getUserResponse.data.getUser.friend3avil 
+      }])
+    console.log(friends)
 
 
     // for (var fren in friends) {
@@ -134,13 +143,11 @@ const HomeScreen = ({ navigation }) => {
       friendtext = <Text style={styles.text} >Active Friends</Text>
 
       friendRender =
-        activefriends.map((item, index) => (
+        friends.map((item, index) => (
           <ActiveButtons
             key={index}
             nav={navigation}
-            name={item.name}
-            activeSince={item.activeSince}
-            index={item.id}
+            name={item.username}
             active={item.active}
           />
         ))
