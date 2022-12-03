@@ -9,43 +9,20 @@ import InactiveText from '../components/InactiveText';
 import DateTime from '../components/DateTime';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 //import{graphqlMutation} from 'aws-appsync-react'
-import { updateUser, getUser } from '../graphql/mutations';
+import { updateUser} from '../graphql/mutations';
+import { getUser } from '../graphql/queries';
 import * as Location from 'expo-location';
 import NavigationBar from '../components/NavigationBar';
 
 const API_KEY = '77d2cc17b9c648543c1fae370fee3226';
 
+
 const HomeScreen = ({ navigation }) => {
 
   const [friends, setFriends] = useState(
-    [
-      {
-        id: 0,
-        name: 'John Smith',
-        activeSince: '1:53pM',
-        active: 'False'
-      },
-      {
-        id: 1,
-        name: 'Granny Jones',
-        activeSince: '2:22PM',
-        active: 'True'
-      },
-      {
-        id: 0,
-        name: 'Jack Hungry',
-        activeSince: '2:53PM',
-        active: 'False'
-      },
-      {
-        id: 0,
-        name: 'Kindle Salt',
-        activeSince: '1:34PM',
-        active: 'True'
-      },
-    ]
+    [ ]
   )
-
+  
   const [inactivefriends] = useState(
     [
       {
@@ -99,23 +76,37 @@ const HomeScreen = ({ navigation }) => {
       
     
 
-    const response = await API.graphql({ query: updateUser, variables: {
+    // const UpdateUserResponse = await API.graphql({ query: updateUser, variables: {
+    //   input : {
+    //     id: user.attributes.sub,
+    //     availability : !isEnabled
+    //   }
+    // }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+
+
+    const getUserResponse = await API.graphql({ query: getUser, variables: {
       input : {
         id: user.attributes.sub,
-        availability : !isEnabled
       }
-    }, authMode: "AMAZON_COGNITO_USER_POOLS" });
-
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
     
 
 
-    console.log("Something Happened")
-    console.log(response)
+    // console.log("Updating the Availability of the User")
+    // console.log(UpdateUserResponse)
+
+    console.log("Get USer Details")
+    // console.log(getUserResponse)
   });
+   
+   
     Promise.resolve();
   }
   
+
+
   // Conditonal Rendering based on if the switch is toggled or not 
   let friendtext,friendRender;
   if(isEnabled) {
