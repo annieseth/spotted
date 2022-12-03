@@ -9,11 +9,11 @@ type User
   lat: String
   long:String
   friend1: String
-  friend1avil: String
+  friend1avil: Boolean
   friend2: String
-  friend2avil: String
+  friend2avil: Boolean
   friend3: String
-  friend3avil: String
+  friend3avil: Boolean
   name: String
   availability: Boolean
 }
