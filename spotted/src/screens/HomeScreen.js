@@ -99,12 +99,12 @@ const HomeScreen = ({ navigation }) => {
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
 
-      console.log(ifFriend1.data.getIfF1.items.id)
+      console.log(ifFriend1.data.getIfF1.items[0].id)
       if (ifFriend1 != null && ifFriend1.name == user.username) {
         //update friendavail1
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
-            id: ifFriend1.id,
+            id: ifFriend1.data.getIfF1.items[0].id,
             friendavil1 : isEnabled
           }
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
@@ -116,7 +116,7 @@ const HomeScreen = ({ navigation }) => {
 
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
-            id: ifFriend2.id,
+            id: ifFriend2.data.getIfF2.items[0].id,
             friendavil2 : isEnabled
           }
         }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
@@ -127,7 +127,7 @@ const HomeScreen = ({ navigation }) => {
 
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
-            id: ifFriend3.id,
+            id: ifFriend3.data.getIfF3.items[0].id,
             friendavil3 : isEnabled
           }
         }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
