@@ -10,7 +10,7 @@ import DateTime from '../components/DateTime';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 //import{graphqlMutation} from 'aws-appsync-react'
 import { updateUser} from '../graphql/mutations';
-import { getUser } from '../graphql/queries';
+import { getUser, getByUsername } from '../graphql/queries';
 import * as Location from 'expo-location';
 import NavigationBar from '../components/NavigationBar';
 
@@ -76,32 +76,31 @@ const HomeScreen = ({ navigation }) => {
       
     
 
-    // const UpdateUserResponse = await API.graphql({ query: updateUser, variables: {
-    //   input : {
-    //     id: user.attributes.sub,
-    //     availability : !isEnabled
-    //   }
-    // }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-
-
-
-    const getUserResponse = await API.graphql({ query: getUser, variables: {
+    const UpdateUserResponse = await API.graphql({ query: updateUser, variables: {
       input : {
         id: user.attributes.sub,
+        availability : !isEnabled
       }
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+
+    
+    const getUserResponse = await API.graphql({ query: getUser, variables: {
+      id: user.attributes.sub
     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
     
 
 
-    // console.log("Updating the Availability of the User")
-    // console.log(UpdateUserResponse)
+    console.log("Updating the Availability of the User")
+    console.log(UpdateUserResponse)
 
     console.log("Get USer Details")
-    // console.log(getUserResponse)
+    console.log(getUserResponse)
   });
    
    
+    Promise.resolve();
     Promise.resolve();
   }
   
