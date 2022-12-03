@@ -87,27 +87,28 @@ const HomeScreen = ({ navigation }) => {
  
   // Toggle Switch event handler
   const toggleSwitch = async function() {
-    
-    setIsEnabled(!previousState);
-    Auth.currentAuthenticatedUser().then(async(user) => {
+    // let newState = ! previousState
+    setIsEnabled(previousState => !previousState);
+  //   Auth.currentAuthenticatedUser().then(async(user) => {
       
     
 
-    const response = await API.graphql({ query: updateUser, variables: {
-      input : {
-        id: user.attributes.sub,
-        availability : !isEnabled
-      }
-    }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+  //   const response = await API.graphql({ query: updateUser, variables: {
+  //     input : {
+  //       id: user.attributes.sub,
+  //       availability : !isEnabled
+  //     }
+  //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
 
 
     
 
 
-    console.log("Something Happened")
-    console.log(response)
-  });
-    Promise.resolve();
+  //   console.log("Something Happened")
+  //   console.log(response)
+  // });
+    // Promise.resolve();
   }
   
   // Conditonal Rendering based on if the switch is toggled or not 

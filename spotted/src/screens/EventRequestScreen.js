@@ -31,7 +31,7 @@ const EventRequestScreen = ({ navigation }) => {
 
     Promise.resolve();
     await API.graphql({ query: createEvent, variables: {input: {
-      toUser: "annie_seth",
+      toUser: "test1",
       fromUser: "DanielWang",
       location: location,
       meetTime: time,
@@ -81,15 +81,6 @@ const EventRequestScreen = ({ navigation }) => {
         <Text style = {styles.textbox}>
           When: 
         </Text>
-        {/* scroll wheel */}
-        {/* <Picker
-          selectedValue={time}
-          onValueChange={(itemValue, itemIndex) =>
-            setTime(itemValue)
-          }>
-          <Picker.Item label="15 minutes" value="15 minutes" />
-          <Picker.Item label="30 minutes" value="30 minutes" />
-        </Picker>  */}
         <TextInput
           style={styles.input}
           onChangeText={setTime}
@@ -102,17 +93,6 @@ const EventRequestScreen = ({ navigation }) => {
         <Text style = {styles.textbox}>
           Where: 
         </Text>
-        {/* <Picker
-          selectedValue={location}
-          onValueChange={(itemValue, itemIndex) =>
-            setLocation(itemValue)
-          }>
-          <Picker.Item label="Scheller" value="Scheller" />
-          <Picker.Item label="CULC" value="CULC" />
-          <Picker.Item label="Exhibition Hall" value="Exhibition Hall" />
-          <Picker.Item label="Tech Square" value="Tech Square" />
-          <Picker.Item label="Tech Green" value="Tech Green" />
-        </Picker>  */}
         <TextInput
           style={styles.input}
           onChangeText={setLocation}
