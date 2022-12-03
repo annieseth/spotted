@@ -84,7 +84,9 @@ export const getFriendRequest = /* GraphQL */ `
     getFriendRequest(id: $id) {
       id
       fromUser
+      fromUserId
       toUser
+      toUserId
       toUserResponse
       createdAt
       updatedAt
@@ -102,7 +104,9 @@ export const listFriendRequests = /* GraphQL */ `
       items {
         id
         fromUser
+        fromUserId
         toUser
+        toUserId
         toUserResponse
         createdAt
         updatedAt
@@ -266,7 +270,9 @@ export const getReqByToUser = /* GraphQL */ `
       items {
         id
         fromUser
+        fromUserId
         toUser
+        toUserId
         toUserResponse
         createdAt
         updatedAt

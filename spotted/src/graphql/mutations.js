@@ -123,7 +123,9 @@ export const createFriendRequest = /* GraphQL */ `
     createFriendRequest(input: $input, condition: $condition) {
       id
       fromUser
+      fromUserId
       toUser
+      toUserId
       toUserResponse
       createdAt
       updatedAt
@@ -139,7 +141,9 @@ export const updateFriendRequest = /* GraphQL */ `
     updateFriendRequest(input: $input, condition: $condition) {
       id
       fromUser
+      fromUserId
       toUser
+      toUserId
       toUserResponse
       createdAt
       updatedAt
@@ -155,7 +159,9 @@ export const deleteFriendRequest = /* GraphQL */ `
     deleteFriendRequest(input: $input, condition: $condition) {
       id
       fromUser
+      fromUserId
       toUser
+      toUserId
       toUserResponse
       createdAt
       updatedAt

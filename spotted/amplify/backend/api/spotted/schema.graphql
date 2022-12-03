@@ -29,6 +29,8 @@ type FriendRequest
   @key(name: "getReqByToUser", fields: ["toUser"], queryField: "getReqByToUser")
   @auth(rules: [{ allow: owner }, { allow: private }]) {
   fromUser: String
+  fromUserId: String
   toUser: String!
+  toUserId: String
   toUserResponse: Boolean
 }
