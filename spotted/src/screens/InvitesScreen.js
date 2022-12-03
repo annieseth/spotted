@@ -48,7 +48,7 @@ const InvitesScreen = ({ navigation }) => {
             key={index}
             nav={navigation}
             name={item.name}
-            index={item.id}
+            uniqueID={item.id}
             handleRemove={handleRemove}
           />
         ))

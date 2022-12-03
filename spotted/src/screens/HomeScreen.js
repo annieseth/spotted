@@ -9,43 +9,20 @@ import InactiveText from '../components/InactiveText';
 import DateTime from '../components/DateTime';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 //import{graphqlMutation} from 'aws-appsync-react'
-import { updateUser, getUser } from '../graphql/mutations';
+import { updateUser} from '../graphql/mutations';
+import { getUser, getByUsername } from '../graphql/queries';
 import * as Location from 'expo-location';
 import NavigationBar from '../components/NavigationBar';
 
 const API_KEY = '77d2cc17b9c648543c1fae370fee3226';
 
+
 const HomeScreen = ({ navigation }) => {
 
   const [friends, setFriends] = useState(
-    [
-      {
-        id: 0,
-        name: 'John Smith',
-        activeSince: '1:53pM',
-        active: 'False'
-      },
-      {
-        id: 1,
-        name: 'Granny Jones',
-        activeSince: '2:22PM',
-        active: 'True'
-      },
-      {
-        id: 0,
-        name: 'Jack Hungry',
-        activeSince: '2:53PM',
-        active: 'False'
-      },
-      {
-        id: 0,
-        name: 'Kindle Salt',
-        activeSince: '1:34PM',
-        active: 'True'
-      },
-    ]
+    [ ]
   )
-
+  
   const [inactivefriends] = useState(
     [
       {
@@ -98,24 +75,62 @@ const HomeScreen = ({ navigation }) => {
     Auth.currentAuthenticatedUser().then(async(user) => {
       
     
-
-    const response = await API.graphql({ query: updateUser, variables: {
+    //  Updating the users status to be on/Off in the dynamoDB
+    const UpdateUserResponse = await API.graphql({ query: updateUser, variables: {
       input : {
         id: user.attributes.sub,
         availability : !isEnabled
       }
-    }, authMode: "AMAZON_COGNITO_USER_POOLS" });
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
+    // RETRIEVING THE USERS information based their ID 
+    const getUserResponse = await API.graphql({ query: getUser, variables: {
+      id: user.attributes.sub
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
+    // Setting their three freinds user_names,uniqueID,availability  into a List
+    
+    setFriends([
+      {username: getUserResponse.data.getUser.friend1 ,
+       active: getUserResponse.data.getUser.friend1avil ,
+      }, 
+      {username: getUserResponse.data.getUser.friend2,
+        active: getUserResponse.data.getUser.friend2avil }
+      , 
+      {username: getUserResponse.data.getUser.friend3,
+        active: getUserResponse.data.getUser.friend3avil 
+      }])
     
 
 
-    console.log("Something Happened")
-    console.log(response)
+    // for (var fren in friends) {
+    //   const getUserNameResponse = await API.graphql({ query: getByUsername, variables: {
+    //     id: fren
+    //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+    //   console.log(getUserNameResponse)
+    // }
+    
+
   });
+   
+   
     Promise.resolve();
+    
   }
   
+  const getAvailableFriends = async function() {
+    temp = []
+    for (var fren in friends) {
+      const getUserNameResponse = await API.graphql({ query: getByUsername, variables: {
+        id: fren
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+      console.log(getByUsername)
+    }
+    
+    
+    Promise.resolve();
+  }
+
   // Conditonal Rendering based on if the switch is toggled or not 
   let friendtext,friendRender;
   if(isEnabled) {
@@ -128,13 +143,11 @@ const HomeScreen = ({ navigation }) => {
       friendtext = <Text style={styles.text} >Active Friends</Text>
 
       friendRender =
-        activefriends.map((item, index) => (
+        friends.map((item, index) => (
           <ActiveButtons
             key={index}
             nav={navigation}
-            name={item.name}
-            activeSince={item.activeSince}
-            index={item.id}
+            name={item.username}
             active={item.active}
           />
         ))
