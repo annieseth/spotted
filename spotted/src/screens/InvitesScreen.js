@@ -8,8 +8,6 @@ import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { getReqByToUser } from '../graphql/queries'; 
 import FriendReq from '../components/FriendReq';
 import NavigationBar from '../components/NavigationBar';
-import {Auth, API, graphqlOperation} from 'aws-amplify';
-import { getEventByToUser } from '../graphql/queries';
 import { deleteEvent } from '../graphql/mutations';
 
 
