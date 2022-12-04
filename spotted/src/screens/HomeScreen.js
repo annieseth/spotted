@@ -26,20 +26,6 @@ const HomeScreen = ({ navigation }) => {
 
   const [activefriends] = useState(
     [
-      
-      {
-        id: 1,
-        name: 'Granny Jones',
-        activeSince: '2:22PM',
-        active: true
-      },
-      
-      {
-        id: 0,
-        name: 'Kindle Salt',
-        activeSince: '1:34PM',
-        active: true
-      }
     ]
   )
   
