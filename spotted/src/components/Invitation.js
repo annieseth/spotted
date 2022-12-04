@@ -7,6 +7,7 @@ import { CommonActions } from '@react-navigation/native';
 export default function Invitation({ nav, name, handleRemove, index }) {
   
   const acceptInvitation = () => {
+    
     alert("Invitation accepted!")
     nav.navigate("Home");
   }
@@ -16,7 +17,8 @@ export default function Invitation({ nav, name, handleRemove, index }) {
     console.log("Hello, item id is")
     console.log(i)
   }
-  
+
+
   return (
     <View style={styles.row}>
       <Text style={styles.text}>{name}</Text>

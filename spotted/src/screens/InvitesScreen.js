@@ -96,6 +96,8 @@ const InvitesScreen = ({ navigation }) => {
             key={index}
             nav={navigation}
             name={"FRIEND REQUEST FROM " + item.fromUser}
+            fromUserId = {item.fromUserId}
+            toUserId = {item.toUserId}
             index={item.id}
             handleRemove={handleRemove}
           />

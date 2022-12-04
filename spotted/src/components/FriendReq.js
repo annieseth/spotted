@@ -4,13 +4,17 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-import { updateFriendRequest } from '../graphql/mutations';
+import { updateFriendRequest, updateUser } from '../graphql/mutations';
+import { getUser } from '../graphql/queries';
 
-export default function FriendReq({ nav, name, handleRemove, index }) {
+
+
+export default function FriendReq({ nav, name, handleRemove, index, toUserId, fromUserId }) {
   
   
 //to accept friend request and send to dynadb
   const acceptReq = () => {
+    backendAddFriend()
     console.log("Request accepted")
 
 
@@ -18,85 +22,7 @@ export default function FriendReq({ nav, name, handleRemove, index }) {
 
     const updateResponse = API.graphql({query: updateFriendRequest, variables: {input : {id: index, toUserResponse: true}}, authMode: "AMAZON_COGNITO_USER_POOLS"});
     Promise.resolve();
-
-
-    // Auth.currentAuthenticatedUser().then(async(user) => {
-      
-    //   // RETRIEVING THE USERS information based their ID 
-    //   const getUserResponse = await API.graphql({ query: getUser, variables: {
-    //     id: user.attributes.sub
-    //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-    //   // Setting their three freinds user_names,uniqueID,availability  into a List
-   
-  
-    //     //3 api query calls getting current users friends 1,2,3
-    //     const ifFriend1 = await API.graphql({ query: getIfF1, variables: {
-    //       friend1: user.username
-    //     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-    //     const ifFriend2 = await API.graphql({ query: getIfF2, variables: {
-    //       friend2: user.username
-    //     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-    //     const ifFriend3 = await API.graphql({ query: getIfF3, variables: {
-    //       friend3: user.username
-    //     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-  
-        
-    //     if (ifFriend1 == null && ifFriend1.data.getIfF1.items[0].friend1 == user.username) {
-    //       //update friendavail1
-    //       const updateFriend = await API.graphql({ query: updateUser, variables: {
-    //         input : {
-    //           id: ifFriend1.data.getIfF1.items[0].id,
-    //           friend1avil : !isEnabled
-    //         }
-    //       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-          
-    //       Promise.resolve();
-         
-    //     } 
-  
-    //     if (ifFriend2 != null && ifFriend2.data.getIfF2.items[0].friend2 == user.username) {
-    //     //MUTATION update friendavail2 using friend2.id
-    //       const updateFriend = await API.graphql({ query: updateUser, variables: {
-    //         input : {
-    //           id: ifFriend2.data.getIfF2.items[0].id,
-    //           friend2avil : !isEnabled
-    //         }
-    //       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-    //       Promise.resolve();
-    //     } 
-  
-    //     if (ifFriend3 != null && ifFriend3.data.getIfF3.items[0].friend3 == user.username) {
-    //     //update friendavail3
-    //       const updateFriend = await API.graphql({ query: updateUser, variables: {
-    //         input : {
-    //           id: ifFriend3.data.getIfF3.items[0].id,
-    //           friend3avil : !isEnabled
-    //         }
-    //       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-    //       Promise.resolve();
-    //     }
-  
-    //     Promise.resolve();
-    //     Promise.resolve();
-    //     Promise.resolve();
-  
-  
-    //   // for (var fren in friends) {
-    //   //   const getUserNameResponse = await API.graphql({ query: getByUsername, variables: {
-    //   //     id: fren
-    //   //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-    //   //   console.log(getUserNameResponse)
-    //   // }
-      
-  
-    // });
-     
+    
 
     alert("Request accepted!")
     nav.navigate("Home");
@@ -119,6 +45,120 @@ export default function FriendReq({ nav, name, handleRemove, index }) {
     handleRemove(i);
     console.log("Hello, item id is")
     console.log(i)
+  }
+
+  //acceptingId is the current user == toUserId
+  //sendingId is for the user who started the request == fromUserId
+  //const backendAddFriend = async(acceptingId, sendingId) => {
+  const backendAddFriend = async() => {
+    var acceptingId = toUserId
+    var sendingId = fromUserId
+    // RETRIEVING accepting user information based on their ID 
+    const getAcceptingUserResponse = await API.graphql({ query: getUser, variables: {
+      id: acceptingId
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+    //getting usernames of current friends
+    var acceptingf1 = getAcceptingUserResponse.data.getUser.friend1
+    var acceptingf2 = getAcceptingUserResponse.data.getUser.friend2
+    var acceptingf3 = getAcceptingUserResponse.data.getUser.friend3
+
+    // RETRIEVING sending user information based their ID 
+     const getSendingUserResponse = await API.graphql({ query: getUser, variables: {
+      id: sendingId
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+    //getting usernames of sender's current friends
+    var sendingf1 = getSendingUserResponse.data.getUser.friend1
+    var sendingf2 = getSendingUserResponse.data.getUser.friend2
+    var sendingf3 = getSendingUserResponse.data.getUser.friend3
+
+
+    //following if branch checks for an open spot in db and places friend there
+    if (acceptingf1 == null) {
+      //update friend1 position if open spot
+      const updateFriend = await API.graphql({ query: updateUser, variables: {
+        input : {
+          id: acceptingId,
+          friend1: getSendingUserResponse.data.getUser.username,
+          friend1avil : getSendingUserResponse.data.getUser.availability
+        }
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+      
+      Promise.resolve(); 
+    } else if (acceptingf2 == null) {
+      //update friend2 position if open spot
+      const updateFriend = await API.graphql({ query: updateUser, variables: {
+        input : {
+          id: acceptingId,
+          friend2: getSendingUserResponse.data.getUser.username,
+          friend2avil : getSendingUserResponse.data.getUser.availability
+        }
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+      
+      Promise.resolve(); 
+    } else if (acceptingf3 == null) {
+      //update friend1 position if open spot
+      const updateFriend = await API.graphql({ query: updateUser, variables: {
+        input : {
+          id: acceptingId,
+          friend3: getSendingUserResponse.data.getUser.username,
+          friend3avil : getSendingUserResponse.data.getUser.availability
+        }
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+      
+      Promise.resolve(); 
+    } else {
+      alert("Sorry Cant Add Anymore Friends")
+      //TO DO: MUST BREAK OUT OF FUNCTION !!!!
+    }
+
+
+   
+
+    if (sendingf1 == null) {
+      //update friend1 position if open spot
+      const updateFriend = await API.graphql({ query: updateUser, variables: {
+        input : {
+          id: sendingId,
+          friend1: getAcceptingUserResponse.data.getUser.username,
+          friend1avil : getAcceptingUserResponse.data.getUser.availability
+        }
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+      
+      Promise.resolve(); 
+    } else if (sendingf2 == null) {
+      //update friend2 position if open spot
+      const updateFriend = await API.graphql({ query: updateUser, variables: {
+        input : {
+          id: sendingId,
+          friend2: getAcceptingUserResponse.data.getUser.username,
+          friend2avil : getAcceptingUserResponse.data.getUser.availability
+        }
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+      
+      Promise.resolve(); 
+    } else if (sendingf3 == null) {
+      //update friend1 position if open spot
+      const updateFriend = await API.graphql({ query: updateUser, variables: {
+        input : {
+          id: sendingId,
+          friend3: getAcceptingUserResponse.data.getUser.username,
+          friend3avil : getAcceptingUserResponse.data.getUser.availability
+        }
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+      
+      Promise.resolve(); 
+    } else {
+      //this case should not occur but this is a fail safe
+      alert("Sorry! " + getSendingUserResponse.data.getUser.username + " has maxed out his friends list!")
+    }
+
+
+
+    Promise.resolve();
+    Promise.resolve();
+
   }
   
   return (
