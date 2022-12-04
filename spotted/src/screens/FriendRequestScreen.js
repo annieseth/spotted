@@ -5,12 +5,11 @@ import { Button,
         Image, Platform
         } from 'react-native';
 
-// import {Auth, API, graphqlOperation} from 'aws-amplify';
-// import { createEvent } from '../graphql/mutations';
+import {Auth, API, graphqlOperation} from 'aws-amplify';
+import { createEvent, createFriendRequest } from '../graphql/mutations';
 import AndroidImage from '../components/AndroidImage'
 import AppleImage from '../components/AppleImage'
 import NavigationBar from '../components/NavigationBar';
-import { Auth,API } from 'aws-amplify';
 import { getUser } from '../graphql/queries';
 
 
@@ -50,10 +49,7 @@ const FriendRequestScreen = ({ navigation }) => {
   // used to pause runtime
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  const handlePress = async () => {
-    console.log("pressed")
-
-    /* 
+      /* 
     TODO
     This entire logic is for a local list. 
     The for loop will need to be removed 
@@ -70,7 +66,19 @@ const FriendRequestScreen = ({ navigation }) => {
           send the friend request
           alert saying that Friend Request send
     */
+  const handlePress = async () => {
+    console.log("pressed")
      Auth.currentAuthenticatedUser().then(async(user) => {
+
+      //sending friend req to db
+      const createResponse = await API.graphql({ query: createFriendRequest, variables: {input: {
+        fromUser: user.username,
+        toUser: search.toLowerCase(),
+      }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
+      console.log(createResponse)
+  
+      Promise.resolve();
       
       // RETRIEVING THE USERS information based their ID 
       const getUserResponse = await API.graphql({ query: getUser, variables: {
@@ -81,75 +89,7 @@ const FriendRequestScreen = ({ navigation }) => {
         alert("Sorry Cant Add Anymore Friends")
       }
       
-      // setFriends([
-      //   {username: getUserResponse.data.getUser.friend1 ,
-      //    active: getUserResponse.data.getUser.friend1avil ,
-      //   }, 
-      //   {username: getUserResponse.data.getUser.friend2,
-      //     active: getUserResponse.data.getUser.friend2avil }
-      //   , 
-      //   {username: getUserResponse.data.getUser.friend3,
-      //     active: getUserResponse.data.getUser.friend3avil 
-      //   }])
-  
-  
-      // // Setting their three freinds user_names,uniqueID,availability  into a List
-    
-  
-      //   //3 api query calls getting current users friends 1,2,3
-      //   const ifFriend1 = await API.graphql({ query: getIfF1, variables: {
-      //     friend1: user.username
-      //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-      //   const ifFriend2 = await API.graphql({ query: getIfF2, variables: {
-      //     friend2: user.username
-      //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-      //   const ifFriend3 = await API.graphql({ query: getIfF3, variables: {
-      //     friend3: user.username
-      //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-  
-        
-      //   if (ifFriend1 == null && ifFriend1.data.getIfF1.items[0].friend1 == user.username) {
-      //     //update friendavail1
-      //     const updateFriend = await API.graphql({ query: updateUser, variables: {
-      //       input : {
-      //         id: ifFriend1.data.getIfF1.items[0].id,
-      //         friend1avil : !isEnabled
-      //       }
-      //     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-          
-      //     Promise.resolve();
-         
-      //   } 
-  
-      //   if (ifFriend2 != null && ifFriend2.data.getIfF2.items[0].friend2 == user.username) {
-      //   //MUTATION update friendavail2 using friend2.id
-      //     const updateFriend = await API.graphql({ query: updateUser, variables: {
-      //       input : {
-      //         id: ifFriend2.data.getIfF2.items[0].id,
-      //         friend2avil : !isEnabled
-      //       }
-      //     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-      //     Promise.resolve();
-      //   } 
-  
-      //   if (ifFriend3 != null && ifFriend3.data.getIfF3.items[0].friend3 == user.username) {
-      //   //update friendavail3
-      //     const updateFriend = await API.graphql({ query: updateUser, variables: {
-      //       input : {
-      //         id: ifFriend3.data.getIfF3.items[0].id,
-      //         friend3avil : !isEnabled
-      //       }
-      //     }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-  
-      //     Promise.resolve();
-      //   }
-  
-      //   Promise.resolve();
-      //   Promise.resolve();
+      
         Promise.resolve();
   
   
