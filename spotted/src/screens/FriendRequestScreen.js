@@ -10,6 +10,8 @@ import { Button,
 import AndroidImage from '../components/AndroidImage'
 import AppleImage from '../components/AppleImage'
 import NavigationBar from '../components/NavigationBar';
+import { Auth, API } from 'aws-amplify';
+import { getByUsername } from '../graphql/queries';
 
 
 const FriendRequestScreen = ({ navigation }) => {
@@ -18,30 +20,6 @@ const FriendRequestScreen = ({ navigation }) => {
   // TODO this users list should be populated with friends who aren't friended
   const [users, setUsers] = useState(
     [
-      {
-        name: 'John Smith',
-        activeSince: '1:53pM',
-        username: 'User1',
-        friend: true,
-      },
-      {
-        name: 'Granny Jones',
-        activeSince: '2:22PM',
-        username: 'User2',
-        friend: false,
-      },
-      {
-        name: 'Jack Hungry',
-        activeSince: '2:53PM',
-        username: 'User3',
-        friend: false,
-      },
-      {
-        name: 'Kindle Salt',
-        activeSince: '1:34PM',
-        username: 'User4',
-        friend: true,
-      },
     ]
   )
 
@@ -49,7 +27,7 @@ const FriendRequestScreen = ({ navigation }) => {
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
   const handlePress = async () => {
-
+    Auth.ge
 
     /* 
     TODO
@@ -68,15 +46,28 @@ const FriendRequestScreen = ({ navigation }) => {
           send the friend request
           alert saying that Friend Request send
     */
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].username === search && users[i].friend) {
-        Alert.alert("Already Friends") 
+    Auth.currentAuthenticatedUser().then(async(user) => {
+
+
+      // RETRIEVING THE USERS information based their ID 
+      const friendFinder = await API.graphql({ query: getByUsername, variables: {
+        username: search
+      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+      // console.log(Object.keys(friendFinder.data.getByUsername.items).length)
+      if (friendFinder.data.getByUsername.items.length === 0) {
+        alert("Not a Valid Username")
       }
-      else if (users[i].username === search && !users[i].friend) {
-        users[i].friend = true;
-        Alert.alert("Friend Exists")
+
+      if (friendFinder.data.getByUsername.items.length === 1) {
+        alert("Sent")
       }
-    } 
+      Promise.resolve();
+      
+  
+    });
+
+    Promise.resolve();
 
   };
 

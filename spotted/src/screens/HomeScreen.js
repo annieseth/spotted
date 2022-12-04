@@ -133,14 +133,6 @@ const HomeScreen = ({ navigation }) => {
       Promise.resolve();
       Promise.resolve();
       Promise.resolve();
-
-
-    // for (var fren in friends) {
-    //   const getUserNameResponse = await API.graphql({ query: getByUsername, variables: {
-    //     id: fren
-    //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-    //   console.log(getUserNameResponse)
-    // }
     
 
   });
