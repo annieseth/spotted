@@ -54,9 +54,11 @@ export const getEvent = /* GraphQL */ `
   query GetEvent($id: ID!) {
     getEvent(id: $id) {
       id
-      inviteeUsername
+      toUser
+      fromUser
       location
       meetTime
+      accepted
       createdAt
       updatedAt
       owner
@@ -72,9 +74,11 @@ export const listEvents = /* GraphQL */ `
     listEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        inviteeUsername
+        toUser
+        fromUser
         location
         meetTime
+        accepted
         createdAt
         updatedAt
         owner
@@ -256,6 +260,66 @@ export const getIfF3 = /* GraphQL */ `
         friend3avil
         name
         availability
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getEventByToUser = /* GraphQL */ `
+  query GetEventByToUser(
+    $toUser: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getEventByToUser(
+      toUser: $toUser
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        toUser
+        fromUser
+        location
+        meetTime
+        accepted
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getEventByFromUser = /* GraphQL */ `
+  query GetEventByFromUser(
+    $fromUser: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getEventByFromUser(
+      fromUser: $fromUser
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        toUser
+        fromUser
+        location
+        meetTime
+        accepted
         createdAt
         updatedAt
         owner

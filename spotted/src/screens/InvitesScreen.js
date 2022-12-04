@@ -7,33 +7,27 @@ import {useState, useEffect} from 'react';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { getReqByToUser } from '../graphql/queries'; 
 import FriendReq from '../components/FriendReq';
+import NavigationBar from '../components/NavigationBar';
+import {Auth, API, graphqlOperation} from 'aws-amplify';
+import { getEventByToUser } from '../graphql/queries';
+import { deleteEvent } from '../graphql/mutations';
+
 
 
 const InvitesScreen = ({ navigation }) => {
 
-  const [invites, setInvites] = useState(
-    [{
-      id:0,
-      name: "Annie Seth"
-    },
-    {
-      id:1,
-      name:"Daniel Wang"
-    },
-    {
-      id:2,
-      name:"Bob Jack"
-    },
-    {
-      id:3,
-      name:"Mcdonalds H"
-    },
-    {
-      id:4,
-      name:"John Smith"
-    },
-    ]
-  )
+  const [invites, setInvites] = useState([])
+
+  useEffect(() => {
+    const fetchInvites = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+      const data = await API.graphql(graphqlOperation(getEventByToUser, { toUser: user.username }));
+      const invites = data.data.getEventByToUser.items.filter((item) => item.accepted !== true)
+      setInvites(invites)
+    }
+    fetchInvites()
+      .catch(console.error);
+  }, [])
 
   //TODO: format the friendReqs onto screen!!!!!!!!
   const [friendReq, setFriendReq] = useState([])
@@ -70,14 +64,27 @@ const InvitesScreen = ({ navigation }) => {
 
   const handleRemove = (id) => {
     console.log(id)
+    removeFromDB(id)
     const newInvites = invites.filter((item) => item.id !== id);
-
     setInvites(newInvites);
+  }
+
+  const handleAccept = (id) => {
+    const newInvites = invites.filter((item) => item.id !== id);
+    setInvites(newInvites);
+  }
+
+  const removeFromDB = async (eventId) => {
+    const user = await Auth.currentAuthenticatedUser();
+    await API.graphql({ query: deleteEvent, variables: {input: {
+      id: eventId,
+    }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
+
   }
 
   return (
     <View style={styles.container}>
-
+      <Text style={styles.heading}>Event Invites</Text>
       {
         invites.map((item, index) => (
           <Invitation
@@ -100,6 +107,9 @@ const InvitesScreen = ({ navigation }) => {
             toUserId = {item.toUserId}
             index={item.id}
             handleRemove={handleRemove}
+            handleAccept={handleAccept}
+            location={item.location}
+            time={item.meetTime}
           />
         ))
       }
@@ -127,6 +137,10 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  heading: {
+    fontSize: 22,
+    margin: 15
   },
   container: {
     flex: 1,

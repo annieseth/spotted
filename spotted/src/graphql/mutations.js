@@ -80,9 +80,11 @@ export const createEvent = /* GraphQL */ `
   ) {
     createEvent(input: $input, condition: $condition) {
       id
-      inviteeUsername
+      toUser
+      fromUser
       location
       meetTime
+      accepted
       createdAt
       updatedAt
       owner
@@ -96,9 +98,11 @@ export const updateEvent = /* GraphQL */ `
   ) {
     updateEvent(input: $input, condition: $condition) {
       id
-      inviteeUsername
+      toUser
+      fromUser
       location
       meetTime
+      accepted
       createdAt
       updatedAt
       owner
@@ -112,9 +116,11 @@ export const deleteEvent = /* GraphQL */ `
   ) {
     deleteEvent(input: $input, condition: $condition) {
       id
-      inviteeUsername
+      toUser
+      fromUser
       location
       meetTime
+      accepted
       createdAt
       updatedAt
       owner
