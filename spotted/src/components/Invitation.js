@@ -22,7 +22,8 @@ export default function Invitation({ nav, name, handleRemove, id, handleAccept, 
   const removeInvitation = i => {
     handleRemove(i);
   }
-  
+
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>

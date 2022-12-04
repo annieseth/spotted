@@ -1,4 +1,4 @@
-import { Button, View, Text, Switch, StyleSheet, Platform } from 'react-native';
+import { Button, View, Text, Switch, StyleSheet, Platform,Alert } from 'react-native';
 import { Component, useState, useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -25,22 +25,7 @@ const HomeScreen = ({ navigation }) => {
   )
 
   const [activefriends] = useState(
-    [
-      
-      {
-        id: 1,
-        name: 'Granny Jones',
-        activeSince: '2:22PM',
-        active: true
-      },
-      
-      {
-        id: 0,
-        name: 'Kindle Salt',
-        activeSince: '1:34PM',
-        active: true
-      }
-    ]
+    [    ]
   )
   
   // Toggle Switch Enabled Variable
@@ -50,7 +35,11 @@ const HomeScreen = ({ navigation }) => {
   const toggleSwitch = async function() {
     
 
-    setIsEnabled(previousState => !previousState);
+    if (Platform.OS == 'android') {
+      setIsEnabled(previousState => !previousState);
+    } else {
+      setIsEnabled(previousState => !previousState);
+    }
     
     Auth.currentAuthenticatedUser().then(async(user) => {
       
@@ -83,47 +72,50 @@ const HomeScreen = ({ navigation }) => {
 
       //3 api query calls
       const ifFriend1 = await API.graphql({ query: getIfF1, variables: {
-      friend1: user.username
+        friend1: user.username
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
       const ifFriend2 = await API.graphql({ query: getIfF2, variables: {
-      friend2: user.username
+        friend2: user.username
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
       const ifFriend3 = await API.graphql({ query: getIfF3, variables: {
-      friend3: user.username
+        friend3: user.username
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
 
-      if (ifFriend1 != null && ifFriend1.name == user.username) {
+      
+      if (ifFriend1 != null && ifFriend1.data.getIfF1.items[0].friend1 == user.username) {
         //update friendavail1
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
             id: ifFriend1.data.getIfF1.items[0].id,
-            friendavil1 : isEnabled
+            friend1avil : !isEnabled
           }
-      }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
-
+        }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+        
         Promise.resolve();
+       
+      } 
 
-      } else if (ifFriend2 != null && ifFriend2.name == user.username) {
+      if (ifFriend2 != null && ifFriend2.data.getIfF2.items[0].friend2 == user.username) {
       //MUTATION update friendavail2 using friend2.id
-
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
             id: ifFriend2.data.getIfF2.items[0].id,
-            friendavil2 : isEnabled
+            friend2avil : !isEnabled
           }
         }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
         Promise.resolve();
-      } else if (ifFriend3 != null && ifFriend3.name == user.username) {
-      //update friendavail3
+      } 
 
+      if (ifFriend3 != null && ifFriend3.data.getIfF3.items[0].friend3 == user.username) {
+      //update friendavail3
         const updateFriend = await API.graphql({ query: updateUser, variables: {
           input : {
             id: ifFriend3.data.getIfF3.items[0].id,
-            friendavil3 : isEnabled
+            friend3avil : !isEnabled
           }
         }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
@@ -178,7 +170,7 @@ const HomeScreen = ({ navigation }) => {
           <ActiveButtons
             key={index}
             nav={navigation}
-            name={item.username}
+            toUser={item.username}
             active={item.active}
           />
         ))
@@ -192,15 +184,48 @@ const HomeScreen = ({ navigation }) => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        fetchDataFromApi("33.7756", "84.3963")
+        Auth.currentAuthenticatedUser().then(async(user) => {
+          // RETRIEVING THE USERS information based their ID 
+          const getUserResponse = await API.graphql({ query: getUser, variables: {
+            id: user.attributes.sub
+          }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+          
+          if (getUserResponse.data.getUser.lat == null || getUserResponse.data.getUser.long == null) {
+            // default Atlanta
+            alert("Location Not Available. Using deafult of Atlanta")
+            fetchDataFromApi("33.7756", "84.3963")
+            
+          }
+          // choose your old data
+          else {
+            alert("Location Not Available. Using prior location")
+            fetchDataFromApi(getUserResponse.data.getUser.lat, getUserResponse.data.getUser.long)
+          }
+        })
+        Promise.resolve()
+        
         return;
       }
       
       let location = await Location.getCurrentPositionAsync({});
+
+      Auth.currentAuthenticatedUser().then(async(user) => {
+        // RETRIEVING THE USERS information based their ID 
+        const updateFriend = await API.graphql({ query: updateUser, variables: {
+          input : {
+            id: user.attributes.sub,
+            lat: location.coords.latitude,
+            long: location.coords.longitude,
+          }
+        }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+        Promise.resolve();
+      })
+      Promise.resolve()
       fetchDataFromApi(location.coords.latitude, location.coords.longitude);
     })();
   }, [])
-
+  
   const fetchDataFromApi = (latitude, longitude) => {
     if(latitude && longitude) {
       fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=imperial&appid=${API_KEY}`).then(res => res.json()).then(weatherData => {

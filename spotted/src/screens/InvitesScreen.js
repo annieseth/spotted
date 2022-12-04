@@ -4,9 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 import Invitation from '../components/Invitation';
 import {useState, useEffect} from 'react';
-import NavigationBar from '../components/NavigationBar';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-import { getEventByToUser } from '../graphql/queries';
+import { getReqByToUser, getEventByToUser } from '../graphql/queries'; 
+import FriendReq from '../components/FriendReq';
+import NavigationBar from '../components/NavigationBar';
 import { deleteEvent } from '../graphql/mutations';
 
 
@@ -25,6 +26,39 @@ const InvitesScreen = ({ navigation }) => {
     fetchInvites()
       .catch(console.error);
   }, [])
+
+  //TODO: format the friendReqs onto screen!!!!!!!!
+  const [friendReq, setFriendReq] = useState([])
+
+  const fetchReq = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    try {
+      const allReqs = await API.graphql({query: getReqByToUser, variables: {toUser: user.username}, authMode: "AMAZON_COGNITO_USER_POOLS"});
+      console.log(allReqs.data.getReqByToUser.items);
+
+      if (allReqs.data.getReqByToUser) {
+        setFriendReq(allReqs.data.getReqByToUser.items);
+      }
+      
+      Promise.resolve();
+
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
+  //when the screen is rendered, this is called
+  useEffect(() => {
+    fetchReq();
+  }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchReq();
+    setRefreshing(false);
+  };
+
+
 
   const handleRemove = (id) => {
     console.log(id)
@@ -54,8 +88,24 @@ const InvitesScreen = ({ navigation }) => {
           <Invitation
             key={index}
             nav={navigation}
-            name={item.fromUser}
-            id={item.id}
+            name={item.name}
+            index={item.id}
+            handleAccept = {handleAccept}
+            handleRemove={handleRemove}
+          />
+        ))
+      }
+      {/* populating friend request on screen */}
+      <Text style={styles.heading}>Friends Invites</Text>
+      {
+        friendReq.map((item, index) => (
+          <FriendReq
+            key={index}
+            nav={navigation}
+            name={"FRIEND REQUEST FROM " + item.fromUser}
+            fromUserId = {item.fromUserId}
+            toUserId = {item.toUserId}
+            index={item.id}
             handleRemove={handleRemove}
             handleAccept={handleAccept}
             location={item.location}
@@ -63,11 +113,18 @@ const InvitesScreen = ({ navigation }) => {
           />
         ))
       }
+
+      
       
       <View style={styles.bottom}>
-        <NavigationBar 
-          nav={navigation}
-        />
+        <View style={styles.row}>
+          <Button 
+            title="Home" style={styles.navButton}
+            onPress={() => navigation.navigate("Home")}></Button>
+          <Button 
+            title="Invites" style={styles.navButton}
+            onPress={() => navigation.navigate("Invites")}></Button>
+        </View>
       </View>
       
     </View>
@@ -92,6 +149,7 @@ const styles = StyleSheet.create({
   bottom: {
       flex: 1,
       justifyContent: 'flex-end',
+      marginBottom: 36
   },
   row: {
     maxWidth: 200,
