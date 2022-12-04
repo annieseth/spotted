@@ -19,7 +19,12 @@ export default function NavigationBar({ nav }) {
             onPress={() => nav.navigate("Invites")}
         />
         <Button
-            title="Friend Request"
+            title="Events"
+            color="white"
+            onPress={() => nav.navigate("Events")}
+        />
+        <Button
+            title="Friends"
             color="white"
             onPress={() => nav.navigate("Friends")}
         />
@@ -58,7 +63,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: 16
+    fontSize: 12
   },
 
   closeButton: {

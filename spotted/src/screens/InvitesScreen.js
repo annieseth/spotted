@@ -18,18 +18,9 @@ const InvitesScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchInvites = async () => {
       const user = await Auth.currentAuthenticatedUser();
-      // console.log(typeof user.username)
-      // console.log(user)
-      // const { response } = await API.graphql({ query: getEventByToUser, variables: {
-      //   input : {
-      //     toUser: user.username
-      //   }
-      // }, authMode: "AMAZON_COGNITO_USER_POOLS" });
-
       const data = await API.graphql(graphqlOperation(getEventByToUser, { toUser: user.username }));
-      // console.log(data.data.getEventByToUser.items)
-      setInvites(data.data.getEventByToUser.items)
-      // console.log(invites[0].fromUser)
+      const invites = data.data.getEventByToUser.items.filter((item) => item.accepted !== true)
+      setInvites(invites)
     }
     fetchInvites()
       .catch(console.error);
@@ -38,6 +29,11 @@ const InvitesScreen = ({ navigation }) => {
   const handleRemove = (id) => {
     console.log(id)
     removeFromDB(id)
+    const newInvites = invites.filter((item) => item.id !== id);
+    setInvites(newInvites);
+  }
+
+  const handleAccept = (id) => {
     const newInvites = invites.filter((item) => item.id !== id);
     setInvites(newInvites);
   }
@@ -52,7 +48,7 @@ const InvitesScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-
+      <Text style={styles.heading}>Event Invites</Text>
       {
         invites.map((item, index) => (
           <Invitation
@@ -61,6 +57,9 @@ const InvitesScreen = ({ navigation }) => {
             name={item.fromUser}
             id={item.id}
             handleRemove={handleRemove}
+            handleAccept={handleAccept}
+            location={item.location}
+            time={item.meetTime}
           />
         ))
       }
@@ -81,6 +80,10 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  heading: {
+    fontSize: 22,
+    margin: 15
   },
   container: {
     flex: 1,
