@@ -17,6 +17,7 @@ import {Auth, API, graphqlOperation} from 'aws-amplify';
 import Amplify from 'aws-amplify';
 
 import awsconfig from './aws-exports';
+import UpcomingEventsScreen from './src/screens/UpcomingEventsScreen';
 
 
 Amplify.configure({
@@ -53,6 +54,7 @@ function App() {
         
         <Stack.Screen name="Event Request" component={EventRequestScreen} />
         <Stack.Screen name="Invites" component={InvitesScreen} />
+        <Stack.Screen name="Events" component={UpcomingEventsScreen} />
         <Stack.Screen name="Friends" component={FriendRequestScreen} />
       </Stack.Navigator>
     </NavigationContainer>

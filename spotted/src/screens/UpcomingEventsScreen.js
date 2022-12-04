@@ -2,67 +2,50 @@ import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
-import Invitation from '../components/Invitation';
 import {useState, useEffect} from 'react';
 import NavigationBar from '../components/NavigationBar';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-import { getEventByToUser } from '../graphql/queries';
-import { deleteEvent } from '../graphql/mutations';
+import { getEventByFromUser, getEventByToUser } from '../graphql/queries';
+import Event from '../components/Event';
 
 
 
-const InvitesScreen = ({ navigation }) => {
+const UpcomingEventsScreen = ({ navigation }) => {
 
-  const [invites, setInvites] = useState([])
-
+  const [events, setEvents] = useState([])
+  const [username, setUsername] = useState("");
   useEffect(() => {
     const fetchInvites = async () => {
       const user = await Auth.currentAuthenticatedUser();
-      const data = await API.graphql(graphqlOperation(getEventByToUser, { toUser: user.username }));
-      const invites = data.data.getEventByToUser.items.filter((item) => item.accepted !== true)
-      setInvites(invites)
+      setUsername(user.username)
+      const toData = await API.graphql(graphqlOperation(getEventByToUser, { toUser: user.username }));
+      const fromData = await API.graphql(graphqlOperation(getEventByFromUser, { fromUser: user.username }));
+      const toInvites = toData.data.getEventByToUser.items.filter((item) => item.accepted == true)
+      const fromInvites = fromData.data.getEventByFromUser.items.filter((item) => item.accepted == true)
+      console.log(fromInvites)
+      setEvents(toInvites.concat(fromInvites))
     }
     fetchInvites()
       .catch(console.error);
   }, [])
 
-  const handleRemove = (id) => {
-    console.log(id)
-    removeFromDB(id)
-    const newInvites = invites.filter((item) => item.id !== id);
-    setInvites(newInvites);
-  }
-
-  const handleAccept = (id) => {
-    const newInvites = invites.filter((item) => item.id !== id);
-    setInvites(newInvites);
-  }
-
-  const removeFromDB = async (eventId) => {
-    const user = await Auth.currentAuthenticatedUser();
-    await API.graphql({ query: deleteEvent, variables: {input: {
-      id: eventId,
-    }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
-
-  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Event Invites</Text>
+      <Text style={styles.text}>Your upcoming events</Text>
       {
-        invites.map((item, index) => (
-          <Invitation
+        events.map((item, index) => (
+          <Event
             key={index}
             nav={navigation}
-            name={item.fromUser}
+            name={item.fromUser == username ? item.toUser : item.fromUser}
             id={item.id}
-            handleRemove={handleRemove}
-            handleAccept={handleAccept}
             location={item.location}
             time={item.meetTime}
           />
         ))
       }
+      
       
       <View style={styles.bottom}>
         <NavigationBar 
@@ -81,10 +64,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  heading: {
-    fontSize: 22,
-    margin: 15
-  },
   container: {
     flex: 1,
     alignItems: 'center'
@@ -99,8 +78,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  text: {
+    fontSize: 22,
+    margin: 20
+  }, 
   
 });
 
-export default InvitesScreen
-  
+export default UpcomingEventsScreen

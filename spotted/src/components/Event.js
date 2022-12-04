@@ -3,31 +3,18 @@ import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
+import {Auth, API, graphqlOperation} from 'aws-amplify';
+import { updateEvent } from '../graphql/mutations';
 
-export default function NavigationBar({ nav }) {
+export default function Event({ nav, name, id, location, time }) {
+  
+  
   
   return (
     <View style={styles.row}>
-        <Button 
-            title="Home"
-            color="white"
-            onPress={() => nav.navigate("Home")}
-        />
-        <Button
-            title="Invites"
-            color="white"
-            onPress={() => nav.navigate("Invites")}
-        />
-        <Button
-            title="Events"
-            color="white"
-            onPress={() => nav.navigate("Events")}
-        />
-        <Button
-            title="Friends"
-            color="white"
-            onPress={() => nav.navigate("Friends")}
-        />
+      <Text style={styles.text}>{name}</Text>
+      <Text>{location}</Text>
+      <Text>{time}</Text> 
     </View>
   )
 }
@@ -46,24 +33,23 @@ const styles = StyleSheet.create({
   bottom: {
       flex: 1,
       justifyContent: 'flex-end',
-      marginBottom: 20
-      
+      marginBottom: 36
   },
   row: {
-      width: '100%',
+      width: '80%',
       height: 80,
       display: 'flex',
       padding: 20,
-      margin: 20,
+      margin: 12,
       flexDirection: 'row',
-      justifyContent: 'space-evenly',
+      justifyContent: 'space-between',
       alignItems: 'center',
-      backgroundColor: '#FF9900',
-      borderRadius: 10
+      backgroundColor: '#D3D3D3',
+      borderRadius: 8
   },
 
   text: {
-    fontSize: 12
+    fontSize: 16
   },
 
   closeButton: {
