@@ -12,10 +12,10 @@ import { shadow } from 'react-native-paper';
 import AndroidImage from '../components/AndroidImage'
 import AppleImage from '../components/AppleImage'
 
-const EventRequestScreen = ({ navigation }) => {
+const EventRequestScreen = ({ route , navigation }) => {
   const [time, setTime] = useState("15 minutes");
   const [location, setLocation] = useState("here");
-  const [phoneNumber, setPhoneNumber] = useState("4708848884");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [notes, setNotes] = useState("Hello");
 
 
@@ -29,27 +29,23 @@ const EventRequestScreen = ({ navigation }) => {
 
     const user = await Auth.currentAuthenticatedUser();
 
-    console.log("user is")
-    console.log(user.username)
+    // console.log("user is")
+    // console.log(user.username)
+
+
 
     await API.graphql({ query: createEvent, variables: {input: {
-      toUser: "test1",
-      fromUser: "DanielWang",
+      toUser: route.params.toUser,
+      fromUser: user.username,
       location: location,
       meetTime: time,
     }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
-    // await API.graphql(graphqlOperation(createEvent, { 
-    //   toUser: "test1",
-    //   fromUser: "DanielWang",
-    //   location: location,
-    //   meetTime: time
-    // }));
-
-    console.log("Locations IS " + location);
-    console.log("time IS " + time);
-    console.log("number is" + phoneNumber)
-    console.log("Notes are" + notes)
+    // console.log(route.params.toUser)
+    // console.log("Locations IS " + location);
+    // console.log("time IS " + time);
+    // console.log("number is" + phoneNumber)
+    // console.log("Notes are" + notes)
 
     /* This block is used for phones */
 

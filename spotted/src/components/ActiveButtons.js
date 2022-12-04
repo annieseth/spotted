@@ -4,19 +4,19 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 
-export default function ActiveButtons({ nav, name, uniqueID, activeSince, active}) {
+export default function ActiveButtons({ nav, toUser, uniqueID, activeSince, active}) {
   
-  if (name == null  || !active) {
+  if (toUser == null  || !active) {
     return
   }
   return (
     <View style={styles.row}>     
-      <Text style={styles.text}> {name } </Text> 
+      <Text style={styles.text}> {toUser } </Text> 
       
       <Button
         title= "Invite"
         color = '#FF9900'
-        onPress={() => nav.navigate("Event Request")}
+        onPress={() => nav.navigate("Event Request", {toUser})}
       />
     </View>
   )

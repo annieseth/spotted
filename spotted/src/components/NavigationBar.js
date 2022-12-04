@@ -31,6 +31,11 @@ export default function NavigationBar({ nav }) {
             color={buttonColor}
             onPress={() => nav.navigate("Events")}
         />
+        <Button
+            title="Friends"
+            color={buttonColor}
+            onPress={() => nav.navigate("Friends")}
+        />
     </View>
   )
 }

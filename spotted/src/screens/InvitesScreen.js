@@ -5,7 +5,7 @@ import { CommonActions } from '@react-navigation/native';
 import Invitation from '../components/Invitation';
 import {useState, useEffect} from 'react';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-import { getReqByToUser } from '../graphql/queries'; 
+import { getReqByToUser, getEventByToUser } from '../graphql/queries'; 
 import FriendReq from '../components/FriendReq';
 import NavigationBar from '../components/NavigationBar';
 import { deleteEvent } from '../graphql/mutations';
@@ -90,11 +90,13 @@ const InvitesScreen = ({ navigation }) => {
             nav={navigation}
             name={item.name}
             index={item.id}
+            handleAccept = {handleAccept}
             handleRemove={handleRemove}
           />
         ))
       }
       {/* populating friend request on screen */}
+      <Text style={styles.heading}>Friends Invites</Text>
       {
         friendReq.map((item, index) => (
           <FriendReq

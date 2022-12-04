@@ -51,7 +51,6 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        
         <Stack.Screen name="Event Request" component={EventRequestScreen} />
         <Stack.Screen name="Invites" component={InvitesScreen} />
         <Stack.Screen name="Events" component={UpcomingEventsScreen} />

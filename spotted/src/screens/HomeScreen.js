@@ -170,7 +170,7 @@ const HomeScreen = ({ navigation }) => {
           <ActiveButtons
             key={index}
             nav={navigation}
-            name={item.username}
+            toUser={item.username}
             active={item.active}
           />
         ))
