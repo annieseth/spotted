@@ -10,7 +10,7 @@ import { createEvent, createFriendRequest } from '../graphql/mutations';
 import AndroidImage from '../components/AndroidImage'
 import AppleImage from '../components/AppleImage'
 import NavigationBar from '../components/NavigationBar';
-import { getUser } from '../graphql/queries';
+import { getUser,getByUsername } from '../graphql/queries';
 
 
 const FriendRequestScreen = ({ navigation }) => {
@@ -68,8 +68,24 @@ const FriendRequestScreen = ({ navigation }) => {
     */
   const handlePress = async () => {
     console.log("pressed")
-     Auth.currentAuthenticatedUser().then(async(user) => {
+    Auth.currentAuthenticatedUser().then(async(user) => {
 
+      
+
+
+    // RETRIEVING THE USERS information based their ID 
+    const friendFinder = await API.graphql({ query: getByUsername, variables: {
+      username: search
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+    // console.log(Object.keys(friendFinder.data.getByUsername.items).length)
+    if (friendFinder.data.getByUsername.items.length === 0) {
+      alert("Not a Valid Username")
+    }
+    Promise.resolve();
+        
+    
+    
       //sending friend req to db
       const createResponse = await API.graphql({ query: createFriendRequest, variables: {input: {
         fromUser: user.username,
