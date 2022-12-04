@@ -25,8 +25,7 @@ const HomeScreen = ({ navigation }) => {
   )
 
   const [activefriends] = useState(
-    [
-    ]
+    [    ]
   )
   
   // Toggle Switch Enabled Variable
