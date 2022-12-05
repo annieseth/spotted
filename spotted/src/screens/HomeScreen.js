@@ -41,18 +41,20 @@ const HomeScreen = ({ navigation }) => {
 
   //   // Setting their three freinds user_names,uniqueID,availability  into a List
     
-  //   setFriends([
-  //     {username: getUserResponse.data.getUser.friend1 ,
-  //      active: getUserResponse.data.getUser.friend1avil ,
-  //     }, 
-  //     {username: getUserResponse.data.getUser.friend2,
-  //       active: getUserResponse.data.getUser.friend2avil }
-  //     , 
-  //     {username: getUserResponse.data.getUser.friend3,
-  //       active: getUserResponse.data.getUser.friend3avil 
-  //     }])
-  //   console.log(friends)
-  // }, 5000)
+
+    setFriends([
+      {username: getUserResponse.data.getUser.friend1 ,
+       active: getUserResponse.data.getUser.friend1avil ,
+      }, 
+      {username: getUserResponse.data.getUser.friend2,
+        active: getUserResponse.data.getUser.friend2avil }
+      , 
+      {username: getUserResponse.data.getUser.friend3,
+        active: getUserResponse.data.getUser.friend3avil 
+      }])
+    //console.log(friends)
+  }, 5000)
+
   
   // Toggle Switch Enabled Variable
   const [isEnabled, setIsEnabled] = useState(false);

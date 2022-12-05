@@ -67,10 +67,15 @@ const FriendRequestScreen = ({ navigation }) => {
           alert saying that Friend Request send
     */
   const handlePress = async () => {
+    setSearch(search.toLowerCase())
+
     console.log("pressed")
     Auth.currentAuthenticatedUser().then(async(user) => {
 
-      
+    if (search === user.username) {
+      alert("Hey! You can't be friends with yourself")
+      return;
+    }
 
 
     // RETRIEVING THE USERS information based their ID 
@@ -81,21 +86,16 @@ const FriendRequestScreen = ({ navigation }) => {
     // console.log(Object.keys(friendFinder.data.getByUsername.items).length)
     if (friendFinder.data.getByUsername.items.length === 0) {
       alert("Not a Valid Username")
+      return;
     }
+
     Promise.resolve();
         
     // console.log(friendFinder.data.getByUsername.items[0].username)
     // console.log("USER ID " + friendFinder.data.getByUsername.items[0].id)
-    
-      // sending friend req to db
-      const createResponse = await API.graphql({ query: createFriendRequest, variables: {input: {
-        fromUser: user.username,
-        fromUserId: user.attributes.user,
-        toUser: friendFinder.data.getByUsername.items[0].username,
-        toUserId: friendFinder.data.getByUsername.items[0].id
-      }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
+  
 
-      // console.log(createResponse)
+      
   
       Promise.resolve();
       
@@ -104,9 +104,24 @@ const FriendRequestScreen = ({ navigation }) => {
         id: user.attributes.sub
       }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
-      if (getUserResponse.data.getUser.friend1 != null && getUserResponse.data.getUser.friend2 != null && getUserResponse.data.getUser.friend3 != null) {
-        alert("Sorry Cant Add Anymore Friends")
+      if (getUserResponse.data.getUser.friend1 === search || getUserResponse.data.getUser.friend2 === search || getUserResponse.data.getUser.friend3 === search ) {
+        alert("You are already friends with this user!")
+        return;
       }
+      if (getUserResponse.data.getUser.friend1 != null && getUserResponse.data.getUser.friend2 != null && getUserResponse.data.getUser.friend3 != null) {
+        alert("Sorry! Can't add anymore friends")
+        return;
+      }
+
+
+
+      // sending friend req to db
+      const createResponse = await API.graphql({ query: createFriendRequest, variables: {input: {
+        fromUser: user.username,
+        fromUserId: user.attributes.sub,
+        toUser: friendFinder.data.getByUsername.items[0].username,
+        toUserId: friendFinder.data.getByUsername.items[0].id
+      }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
       
       
         Promise.resolve();
@@ -118,9 +133,11 @@ const FriendRequestScreen = ({ navigation }) => {
       //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
       //   console.log(getUserNameResponse)
       // }
+      alert("Success! Request Sent!")
       
   
     });
+    
      
 
 
