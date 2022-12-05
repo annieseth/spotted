@@ -84,15 +84,18 @@ const FriendRequestScreen = ({ navigation }) => {
     }
     Promise.resolve();
         
+    // console.log(friendFinder.data.getByUsername.items[0].username)
+    // console.log("USER ID " + friendFinder.data.getByUsername.items[0].id)
     
-    
-      //sending friend req to db
+      // sending friend req to db
       const createResponse = await API.graphql({ query: createFriendRequest, variables: {input: {
         fromUser: user.username,
-        toUser: search.toLowerCase(),
+        fromUserId: user.id,
+        toUser: friendFinder.data.getByUsername.items[0].username,
+        toUserId: friendFinder.data.getByUsername.items[0].id
       }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
-      console.log(createResponse)
+      // console.log(createResponse)
   
       Promise.resolve();
       
