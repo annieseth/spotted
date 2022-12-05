@@ -49,32 +49,7 @@ const EventRequestScreen = ({ route , navigation }) => {
     console.log("number is" + phoneNumber)
     console.log("Notes are" + notes)
 
-    /* This block is used for phones */
 
-//     Alert.alert(
-//       "Request submitted!",
-//       [
-//         { text: "OK", onPress: () => console.log("OK Pressed") }
-//       ]
-//     )
-    
-
-    
-    /* Use this to mock an popup 
-    // This part was used on mock up. 
-    // TODO does this need to be removed?
-    */
-    // wait 5 seconds
-//     await sleep(2 * 1000); 
-//     Alert.alert(
-//       "Daniel has invited you to meet up!",
-//       [
-//         { text: "View", onPress: () =>navigation.navigate("Invites") },
-//         { text: "OK", onPress: () => console.log("OK Pressed") }
-//       ]
-//     )
-    /* This block is used for web development */
-    // alert("Request submitted!")
     navigation.navigate("Home")
 
   };

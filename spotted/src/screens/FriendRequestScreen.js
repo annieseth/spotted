@@ -17,34 +17,7 @@ const FriendRequestScreen = ({ navigation }) => {
   const [ search, setSearch]    = useState('');
   
   // TODO this users list should be populated with friends who aren't friended
-  const [users, setUsers] = useState(
-    [
-      {
-        name: 'John Smith',
-        activeSince: '1:53pM',
-        username: 'User1',
-        friend: true,
-      },
-      {
-        name: 'Granny Jones',
-        activeSince: '2:22PM',
-        username: 'User2',
-        friend: false,
-      },
-      {
-        name: 'Jack Hungry',
-        activeSince: '2:53PM',
-        username: 'User3',
-        friend: false,
-      },
-      {
-        name: 'Kindle Salt',
-        activeSince: '1:34PM',
-        username: 'User4',
-        friend: true,
-      },
-    ]
-  )
+ 
 
   // used to pause runtime
   const sleep = ms => new Promise(r => setTimeout(r, ms));
