@@ -39,7 +39,8 @@ const EventRequestScreen = ({ route , navigation }) => {
       fromUser: user.username,
       location: location,
       meetTime: time,
-      // phoneNo: phoneNumber
+      phoneNo: phoneNumber, 
+      notes: notes
     }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
     console.log(route.params.toUser)

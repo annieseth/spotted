@@ -60,6 +60,7 @@ export const getEvent = /* GraphQL */ `
       meetTime
       accepted
       phoneNo
+      notes
       createdAt
       updatedAt
       owner
@@ -81,6 +82,7 @@ export const listEvents = /* GraphQL */ `
         meetTime
         accepted
         phoneNo
+        notes
         createdAt
         updatedAt
         owner
@@ -293,6 +295,7 @@ export const getEventByToUser = /* GraphQL */ `
         meetTime
         accepted
         phoneNo
+        notes
         createdAt
         updatedAt
         owner
@@ -324,6 +327,7 @@ export const getEventByFromUser = /* GraphQL */ `
         meetTime
         accepted
         phoneNo
+        notes
         createdAt
         updatedAt
         owner
