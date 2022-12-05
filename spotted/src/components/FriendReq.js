@@ -4,7 +4,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-import { updateFriendRequest, updateUser } from '../graphql/mutations';
+import { updateFriendRequest, updateUser, deleteFriendRequest } from '../graphql/mutations';
 import { getUser } from '../graphql/queries';
 
 
@@ -15,41 +15,27 @@ export default function FriendReq({ nav, name, handleRemove, index, toUserId, fr
 //to accept friend request and send to dynadb
   const acceptReq = () => {
     backendAddFriend()
-    console.log("Request accepted")
-
-
-    //handle setting response
-
-    const updateResponse = API.graphql({query: updateFriendRequest, variables: {input : {id: index, toUserResponse: true}}, authMode: "AMAZON_COGNITO_USER_POOLS"});
-    Promise.resolve();
     
-
     alert("Request accepted!")
     nav.navigate("Home");
-    //() => removeRequest(index)
+    removeRequest(index);
   }
 
 //to decline friend request and send to dynadb
   const declineReq = () => {
-    console.log("Request declined")
-
-    //handle setting response
-    const updateResponse = API.graphql({query: updateFriendRequest, variables: {input : {id: index, toUserResponse: false}}, authMode: "AMAZON_COGNITO_USER_POOLS"});
-    Promise.resolve();
-    alert("Request declined!")
+    alert("Request declined!");
     nav.navigate("Home");
-    //() => removeRequest(index)
+    removeRequest(index);
   }
 
   const removeRequest = i => {
     handleRemove(i);
-    console.log("Hello, item id is")
-    console.log(i)
+    const delReq = API.graphql({query: deleteFriendRequest, variables: {input : {id: i}}, authMode: "AMAZON_COGNITO_USER_POOLS"});
+    Promise.resolve();
   }
 
   //acceptingId is the current user == toUserId
   //sendingId is for the user who started the request == fromUserId
-  //const backendAddFriend = async(acceptingId, sendingId) => {
   const backendAddFriend = async() => {
     var acceptingId = toUserId
     var sendingId = fromUserId
@@ -110,7 +96,7 @@ export default function FriendReq({ nav, name, handleRemove, index, toUserId, fr
       Promise.resolve(); 
     } else {
       alert("Sorry Cant Add Anymore Friends")
-      //TO DO: MUST BREAK OUT OF FUNCTION !!!!
+      return;
     }
 
 
