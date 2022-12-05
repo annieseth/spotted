@@ -90,7 +90,7 @@ const FriendRequestScreen = ({ navigation }) => {
       // sending friend req to db
       const createResponse = await API.graphql({ query: createFriendRequest, variables: {input: {
         fromUser: user.username,
-        fromUserId: user.id,
+        fromUserId: user.attributes.user,
         toUser: friendFinder.data.getByUsername.items[0].username,
         toUserId: friendFinder.data.getByUsername.items[0].id
       }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
