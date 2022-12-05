@@ -127,6 +127,7 @@ const FriendRequestScreen = ({ navigation }) => {
       
   
     });
+    alert("Success! Request Sent!")
      
 
 
