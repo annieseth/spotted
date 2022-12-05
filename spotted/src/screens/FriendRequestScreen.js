@@ -70,7 +70,10 @@ const FriendRequestScreen = ({ navigation }) => {
     console.log("pressed")
     Auth.currentAuthenticatedUser().then(async(user) => {
 
-      
+    if (search === user.username) {
+      alert("Hey! You can't be friends with yourself")
+      return;
+    }
 
 
     // RETRIEVING THE USERS information based their ID 
@@ -81,7 +84,10 @@ const FriendRequestScreen = ({ navigation }) => {
     // console.log(Object.keys(friendFinder.data.getByUsername.items).length)
     if (friendFinder.data.getByUsername.items.length === 0) {
       alert("Not a Valid Username")
+      return;
     }
+
+    
     Promise.resolve();
         
     // console.log(friendFinder.data.getByUsername.items[0].username)

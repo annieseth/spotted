@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation }) => {
       {username: getUserResponse.data.getUser.friend3,
         active: getUserResponse.data.getUser.friend3avil 
       }])
-    console.log(friends)
+    //console.log(friends)
   }, 5000)
   
   // Toggle Switch Enabled Variable
