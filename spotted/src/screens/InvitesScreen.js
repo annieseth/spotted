@@ -9,6 +9,7 @@ import { getReqByToUser, getEventByToUser } from '../graphql/queries';
 import FriendReq from '../components/FriendReq';
 import NavigationBar from '../components/NavigationBar';
 import { deleteEvent } from '../graphql/mutations';
+import useInterval from '../helpers/helpers';
 
 
 
@@ -16,15 +17,25 @@ const InvitesScreen = ({ navigation }) => {
 
   const [invites, setInvites] = useState([])
 
+  const fetchInvites = async () => {
+    const user = await Auth.currentAuthenticatedUser();
+    const data = await API.graphql(graphqlOperation(getEventByToUser, { toUser: user.username }));
+    const invites = data.data.getEventByToUser.items.filter((item) => item.accepted !== true)
+    setInvites(invites)
+  }
+
+  useInterval(async () => {
+    fetchInvites()
+    fetchReq()
+    // console.log(invites)    
+  }, 5000)
+
   useEffect(() => {
-    const fetchInvites = async () => {
-      const user = await Auth.currentAuthenticatedUser();
-      const data = await API.graphql(graphqlOperation(getEventByToUser, { toUser: user.username }));
-      const invites = data.data.getEventByToUser.items.filter((item) => item.accepted !== true)
-      setInvites(invites)
-    }
+    
     fetchInvites()
       .catch(console.error);
+    fetchReq();
+    
   }, [])
 
   //TODO: format the friendReqs onto screen!!!!!!!!
@@ -46,11 +57,6 @@ const InvitesScreen = ({ navigation }) => {
       console.log(e.message);
     }
   };
-
-  //when the screen is rendered, this is called
-  useEffect(() => {
-    fetchReq();
-  }, []);
 
   const onRefresh = async () => {
     setRefreshing(true);
