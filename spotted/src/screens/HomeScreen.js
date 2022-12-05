@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
 import ActiveButtons from '../components/ActiveButtons';
 import InactiveText from '../components/InactiveText';
+import useInterval from '../helpers/helpers';
 //import defaultIcon from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 import DateTime from '../components/DateTime';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
@@ -17,6 +18,7 @@ import NavigationBar from '../components/NavigationBar';
 
 const API_KEY = '77d2cc17b9c648543c1fae370fee3226';
 
+// const no_friends = "There are no"
 
 const HomeScreen = ({ navigation }) => {
 
@@ -27,6 +29,30 @@ const HomeScreen = ({ navigation }) => {
   const [activefriends] = useState(
     [    ]
   )
+
+  // Polling
+  useInterval(async () => {
+
+    // RETRIEVING THE USERS information based their ID 
+    const user = await Auth.currentAuthenticatedUser();
+    const getUserResponse = await API.graphql({ query: getUser, variables: {
+      id: user.attributes.sub
+    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+
+    // Setting their three freinds user_names,uniqueID,availability  into a List
+    
+    setFriends([
+      {username: getUserResponse.data.getUser.friend1 ,
+       active: getUserResponse.data.getUser.friend1avil ,
+      }, 
+      {username: getUserResponse.data.getUser.friend2,
+        active: getUserResponse.data.getUser.friend2avil }
+      , 
+      {username: getUserResponse.data.getUser.friend3,
+        active: getUserResponse.data.getUser.friend3avil 
+      }])
+    console.log(friends)
+  }, 5000)
   
   // Toggle Switch Enabled Variable
   const [isEnabled, setIsEnabled] = useState(false);
@@ -254,8 +280,15 @@ const HomeScreen = ({ navigation }) => {
         <DateTime current={weatherData.current} lat={weatherData.lat} lon={weatherData.lon} rain/>
       </View>
 
-      {friendtext}
-      {friendRender}
+      <Text style={styles.text}>{friends.length === 0 ? "There are no active friends" : "Active friends"}</Text>
+      {friends.map((item, index) => (
+          <ActiveButtons
+            key={index}
+            nav={navigation}
+            toUser={item.username}
+            active={item.active}
+          />
+        ))}
       {/* <View style={styles.signOut}> */}
         <Button 
           title="Sign Out" 
