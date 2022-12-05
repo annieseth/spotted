@@ -31,29 +31,29 @@ const HomeScreen = ({ navigation }) => {
   )
 
   // Polling
-  useInterval(async () => {
+  // useInterval(async () => {
 
-    // RETRIEVING THE USERS information based their ID 
-    const user = await Auth.currentAuthenticatedUser();
-    const getUserResponse = await API.graphql({ query: getUser, variables: {
-      id: user.attributes.sub
-    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+  //   // RETRIEVING THE USERS information based their ID 
+  //   const user = await Auth.currentAuthenticatedUser();
+  //   const getUserResponse = await API.graphql({ query: getUser, variables: {
+  //     id: user.attributes.sub
+  //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
-  //   // Setting their three freinds user_names,uniqueID,availability  into a List
+  // //   // Setting their three freinds user_names,uniqueID,availability  into a List
     
 
-    setFriends([
-      {username: getUserResponse.data.getUser.friend1 ,
-       active: getUserResponse.data.getUser.friend1avil ,
-      }, 
-      {username: getUserResponse.data.getUser.friend2,
-        active: getUserResponse.data.getUser.friend2avil }
-      , 
-      {username: getUserResponse.data.getUser.friend3,
-        active: getUserResponse.data.getUser.friend3avil 
-      }])
-    console.log(friends)
-  }, 5000)
+  //   setFriends([
+  //     {username: getUserResponse.data.getUser.friend1 ,
+  //      active: getUserResponse.data.getUser.friend1avil ,
+  //     }, 
+  //     {username: getUserResponse.data.getUser.friend2,
+  //       active: getUserResponse.data.getUser.friend2avil }
+  //     , 
+  //     {username: getUserResponse.data.getUser.friend3,
+  //       active: getUserResponse.data.getUser.friend3avil 
+  //     }])
+  //   console.log(friends)
+  // }, 5000)
 
   
   // Toggle Switch Enabled Variable
@@ -192,7 +192,7 @@ const HomeScreen = ({ navigation }) => {
     } else {
 
       friendtext = <Text style={styles.text} >Active Friends</Text>
-
+      // console.log(friends)
       friendRender =
         friends.map((item, index) => (
           <ActiveButtons
@@ -265,6 +265,8 @@ const HomeScreen = ({ navigation }) => {
     
   }
 
+
+
   return (
     <View style={styles.container}>
       {/* View for Status Bar */}
@@ -281,16 +283,8 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.weather}>
         <DateTime current={weatherData.current} lat={weatherData.lat} lon={weatherData.lon} rain/>
       </View>
-
-      <Text style={styles.text}>{friends.length === 0 ? "There are no active friends" : "Active friends"}</Text>
-      {friends.map((item, index) => (
-          <ActiveButtons
-            key={index}
-            nav={navigation}
-            toUser={item.username}
-            active={item.active}
-          />
-        ))}
+      {friendtext}
+      {friendRender}
       {/* <View style={styles.signOut}> */}
         <Button 
           title="Sign Out" 
