@@ -24,11 +24,11 @@ const InvitesScreen = ({ navigation }) => {
     setInvites(invites)
   }
 
-  useInterval(async () => {
-    fetchInvites()
-    fetchReq()
-    // console.log(invites)    
-  }, 5000)
+  // useInterval(async () => {
+  //   fetchInvites()
+  //   fetchReq()
+  //   // console.log(invites)    
+  // }, 100000)
 
   useEffect(() => {
     

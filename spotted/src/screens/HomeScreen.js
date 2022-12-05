@@ -31,28 +31,28 @@ const HomeScreen = ({ navigation }) => {
   )
 
   // Polling
-  useInterval(async () => {
+  // useInterval(async () => {
 
-    // RETRIEVING THE USERS information based their ID 
-    const user = await Auth.currentAuthenticatedUser();
-    const getUserResponse = await API.graphql({ query: getUser, variables: {
-      id: user.attributes.sub
-    }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
+  //   // RETRIEVING THE USERS information based their ID 
+  //   const user = await Auth.currentAuthenticatedUser();
+  //   const getUserResponse = await API.graphql({ query: getUser, variables: {
+  //     id: user.attributes.sub
+  //   }, authMode: "AMAZON_COGNITO_USER_POOLS" });  
 
-    // Setting their three freinds user_names,uniqueID,availability  into a List
+  //   // Setting their three freinds user_names,uniqueID,availability  into a List
     
-    setFriends([
-      {username: getUserResponse.data.getUser.friend1 ,
-       active: getUserResponse.data.getUser.friend1avil ,
-      }, 
-      {username: getUserResponse.data.getUser.friend2,
-        active: getUserResponse.data.getUser.friend2avil }
-      , 
-      {username: getUserResponse.data.getUser.friend3,
-        active: getUserResponse.data.getUser.friend3avil 
-      }])
-    console.log(friends)
-  }, 5000)
+  //   setFriends([
+  //     {username: getUserResponse.data.getUser.friend1 ,
+  //      active: getUserResponse.data.getUser.friend1avil ,
+  //     }, 
+  //     {username: getUserResponse.data.getUser.friend2,
+  //       active: getUserResponse.data.getUser.friend2avil }
+  //     , 
+  //     {username: getUserResponse.data.getUser.friend3,
+  //       active: getUserResponse.data.getUser.friend3avil 
+  //     }])
+  //   console.log(friends)
+  // }, 5000)
   
   // Toggle Switch Enabled Variable
   const [isEnabled, setIsEnabled] = useState(false);
