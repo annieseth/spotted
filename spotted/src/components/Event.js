@@ -6,15 +6,18 @@ import { CommonActions } from '@react-navigation/native';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 import { updateEvent } from '../graphql/mutations';
 
-export default function Event({ nav, name, id, location, time }) {
+export default function Event({ nav, name, id, location, time, phoneNo,notes }) {
   
-  
+  console.log(phoneNo)
   
   return (
     <View style={styles.row}>
       <Text style={styles.text}>{name}</Text>
       <Text>{location}</Text>
       <Text>{time}</Text> 
+      <Text>{phoneNo}</Text>
+      <Text>{notes}</Text>
+
     </View>
   )
 }

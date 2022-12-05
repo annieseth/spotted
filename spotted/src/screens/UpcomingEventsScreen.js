@@ -12,6 +12,8 @@ import Event from '../components/Event';
 
 const UpcomingEventsScreen = ({ navigation }) => {
 
+
+
   const [events, setEvents] = useState([])
   const [username, setUsername] = useState("");
   useEffect(() => {
@@ -40,6 +42,8 @@ const UpcomingEventsScreen = ({ navigation }) => {
             nav={navigation}
             name={item.fromUser == username ? item.toUser : item.fromUser}
             id={item.id}
+            phoneNo = {item.phoneNo}
+            notes = {item.notes}
             location={item.location}
             time={item.meetTime}
           />

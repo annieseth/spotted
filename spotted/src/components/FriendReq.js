@@ -163,7 +163,7 @@ export default function FriendReq({ nav, name, handleRemove, index, toUserId, fr
   
   return (
     <View style={styles.row}>
-      <Text>{name}</Text>
+      <Text style={styles.text}>{name}</Text>
       <Button 
         title="X"
         color="red"
@@ -171,33 +171,40 @@ export default function FriendReq({ nav, name, handleRemove, index, toUserId, fr
       />
       <Button
         title="Accept"
+        color="#FF9900"
         onPress={acceptReq}
       />
     </View>
+      
   )
 }
 
 const styles = StyleSheet.create({
-  input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
+  text: {
   },
-  container: {
-      flex: 1,
-      alignItems: 'center'
-  },
-  bottom: {
-      flex: 1,
-      justifyContent: 'flex-end',
-      marginBottom: 36
-  },
+  
   row: {
-      maxWidth: 200,
+      width: '80%',
       display: 'flex',
+      padding: 15,
       flexDirection: 'row',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: '#D3D3D3',
+      borderRadius: 8,
+      borderColor: 'black',
+      borderWidth: 2,
   },
+
+  closeButton: {
+    color: 'red'
+  },
+
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: '100%'
+  }
+
 
 });
