@@ -28,6 +28,7 @@ type Event
   location: String
   meetTime: String
   accepted: Boolean
+  phoneNo: String
 }
 
 type FriendRequest

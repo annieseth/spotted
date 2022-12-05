@@ -59,6 +59,7 @@ export const getEvent = /* GraphQL */ `
       location
       meetTime
       accepted
+      phoneNo
       createdAt
       updatedAt
       owner
@@ -79,6 +80,7 @@ export const listEvents = /* GraphQL */ `
         location
         meetTime
         accepted
+        phoneNo
         createdAt
         updatedAt
         owner
@@ -290,6 +292,7 @@ export const getEventByToUser = /* GraphQL */ `
         location
         meetTime
         accepted
+        phoneNo
         createdAt
         updatedAt
         owner
@@ -320,6 +323,7 @@ export const getEventByFromUser = /* GraphQL */ `
         location
         meetTime
         accepted
+        phoneNo
         createdAt
         updatedAt
         owner

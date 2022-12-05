@@ -39,13 +39,14 @@ const EventRequestScreen = ({ route , navigation }) => {
       fromUser: user.username,
       location: location,
       meetTime: time,
+      // phoneNo: phoneNumber
     }}, authMode: "AMAZON_COGNITO_USER_POOLS" });
 
-    // console.log(route.params.toUser)
-    // console.log("Locations IS " + location);
-    // console.log("time IS " + time);
-    // console.log("number is" + phoneNumber)
-    // console.log("Notes are" + notes)
+    console.log(route.params.toUser)
+    console.log("Locations IS " + location);
+    console.log("time IS " + time);
+    console.log("number is" + phoneNumber)
+    console.log("Notes are" + notes)
 
     /* This block is used for phones */
 

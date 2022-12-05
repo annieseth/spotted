@@ -1,4 +1,4 @@
-import { Button, View, Text, Switch, TextInput, StyleSheet } from 'react-native';
+import { Button, View, Text, Switch, TextInput, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { CommonActions } from '@react-navigation/native';
@@ -88,10 +88,12 @@ const InvitesScreen = ({ navigation }) => {
           <Invitation
             key={index}
             nav={navigation}
-            name={item.name}
-            index={item.id}
-            handleAccept = {handleAccept}
+            name={item.fromUser}
+            id={item.id}
             handleRemove={handleRemove}
+            handleAccept={handleAccept}
+            location={item.location}
+            time={item.meetTime}
           />
         ))
       }
@@ -117,14 +119,9 @@ const InvitesScreen = ({ navigation }) => {
       
       
       <View style={styles.bottom}>
-        <View style={styles.row}>
-          <Button 
-            title="Home" style={styles.navButton}
-            onPress={() => navigation.navigate("Home")}></Button>
-          <Button 
-            title="Invites" style={styles.navButton}
-            onPress={() => navigation.navigate("Invites")}></Button>
-        </View>
+        <NavigationBar 
+          nav={navigation}
+        />
       </View>
       
     </View>
@@ -149,7 +146,6 @@ const styles = StyleSheet.create({
   bottom: {
       flex: 1,
       justifyContent: 'flex-end',
-      marginBottom: 36
   },
   row: {
     maxWidth: 200,

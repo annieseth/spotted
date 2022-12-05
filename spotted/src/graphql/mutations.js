@@ -85,6 +85,7 @@ export const createEvent = /* GraphQL */ `
       location
       meetTime
       accepted
+      phoneNo
       createdAt
       updatedAt
       owner
@@ -103,6 +104,7 @@ export const updateEvent = /* GraphQL */ `
       location
       meetTime
       accepted
+      phoneNo
       createdAt
       updatedAt
       owner
@@ -121,6 +123,7 @@ export const deleteEvent = /* GraphQL */ `
       location
       meetTime
       accepted
+      phoneNo
       createdAt
       updatedAt
       owner
